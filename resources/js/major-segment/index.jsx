@@ -30,4 +30,5 @@ class MajorSegment extends Component {
         );
     }
 }
+
 export default MajorSegment;
