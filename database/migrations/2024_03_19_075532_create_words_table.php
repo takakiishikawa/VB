@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('words', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('jp');
-            $table->integer('frequency');
-            $table->string('parse');
-            $table->string('meaning');
+            $table->string('jp')->nullable();
+            $table->integer('frequency')->nullable();
+            $table->string('parse')->nullable();
+            $table->string('meaning')->nullable();
             $table->timestamps();
         });
     }
