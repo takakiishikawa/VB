@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import MajorSegment from './major-segment';
 
 class App extends Component {
 
@@ -17,8 +18,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Page Title</h1>
-        <button onClick={this.logout}>Logout</button>
+        <MajorSegment />
       </div>
     );
   }
