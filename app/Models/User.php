@@ -44,4 +44,34 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function userSegmentTests()
+    {
+        return $this->hasMany(UserSegmentTest::class, 'user_id');
+    }
+
+    public function userMajorSegmentStatuses()
+    {
+        return $this->hasMany(UserMajorSegmentStatus::class, 'user_id');
+    }
+
+    public function userSegmentStatuses()
+    {
+        return $this->hasMany(UserSegmentStatus::class, 'user_id');
+    }
+
+    public function userWordTests()
+    {
+        return $this->hasMany(UserWordTest::class, 'user_id');
+    }
+
+    public function userWords()
+    {
+        return $this->hasMany(UserWord::class, 'user_id');
+    }
+
+    public function userArticles()
+    {
+        return $this->hasMany(UserArticle::class, 'user_id');
+    }
 }

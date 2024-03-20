@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Word extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'jp',
+        'frequency',
+        'parse',
+        'meaning'
+    ];
+
+    public function userWord(){
+        return $this->hasMany(UserWord::class, 'word_id');
+    }
 }
