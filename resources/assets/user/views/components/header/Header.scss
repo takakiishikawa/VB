@@ -1,0 +1,65 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #cdcecf; // 非常に薄いグレー
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 少し影を入れる
+    padding: 0 16px;
+    
+    &__logo img {
+      font-weight: bold;
+      width: 70px;
+      height: auto;
+    }
+    
+    &__top-menu {
+        
+      a {
+        text-decoration: none;
+        margin: 0 10px;
+        color: #333;
+        
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+    
+    &__user-menu {
+      position: relative;
+      button {
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        &--open {
+            // メニューが開いた状態で適用されるスタイル
+            transform: translateY(0); // 例：初期位置から下に移動するアニメーションを無効化
+            visibility: visible; // メニューを見えるようにする
+            opacity: 1; // メニューを完全に不透明にする
+        }
+        
+        .arrow-down {
+          margin-left: 5px;
+        }
+      }
+    }
+      
+    &__popup-menu {
+        position: absolute;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        a {
+          display: block;
+          padding: 8px 12px;
+          text-decoration: none;
+          color: #333;
+          
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+    }
+}
