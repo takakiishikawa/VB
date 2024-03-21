@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>top</title>
-    @vite(['resources/js/index.jsx'])
+    @vite(['resources/assets/user/index.jsx'])
 </head>
 <body>
     <div id="app">
