@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import MajorSegment from './major-segment';
+import MajorSegment from '../pages/major-segment';
 
-class App extends Component {
+class Routes extends Component {
 
   render() {
     return (
@@ -12,4 +12,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Routes;

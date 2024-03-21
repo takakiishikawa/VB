@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Header from '../common/header';
+import Header from '../../components/header';
+import './MajorSegment.scss';
 
 class MajorSegment extends Component {
     constructor(props) {
