@@ -11,22 +11,11 @@ class MajorSegment extends Component {
         };
     }
 
-    logout = () => {
-        axios.post('/logout', {},{
-            withCredentails:true
-        }).then(response => {
-            window.location.href = '/login'
-        }).catch(error => {
-            console.log(error);
-        })
-    }
-    
     render() {
         return (
             <div>
                 <Header />
                 <h1>Page Title</h1>
-                <button onClick={this.logout}>Logout</button>
             </div>
         );
     }
