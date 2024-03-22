@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './Header.scss';
 import logoImage from './vb-logo-black.png';
 import axios from 'axios';
+import {fetchUser} from '../../../state/modules/user/api';
+import {connect} from 'react-redux';
+import {getUser} from '../../../state/modules/user/selectors';
 
 class Header extends Component {
     constructor(props) {
@@ -9,6 +12,10 @@ class Header extends Component {
         this.state = {
             isMenuOpen: false,
         };
+    }
+
+    componentDidMount() {
+        this.props.fetchUser();
     }
 
     logout = () => {
@@ -28,8 +35,8 @@ class Header extends Component {
     }
 
     render() {
-        const username = 'Takaki';
-        const { isMenuOpen } = this.state;
+        const {username} = this.props;
+        const {isMenuOpen} = this.state;
 
         return(
             <header className="header">
@@ -57,4 +64,12 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+    username: getUser(state),
+});
+
+const mapDispatchToProps = {
+    fetchUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
