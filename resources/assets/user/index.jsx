@@ -2,7 +2,7 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import configureAppStore from './state/configureStore';
-import Routes from './views/routes';
+import AppRoutes from './views/routes';
 
 //init store
 const store = configureAppStore();
@@ -12,6 +12,6 @@ const container = document.getElementById('app');
 const root = createRoot(container);
 root.render(
     <Provider store={store}>
-        <Routes />
+        <AppRoutes />
     </Provider>
 );

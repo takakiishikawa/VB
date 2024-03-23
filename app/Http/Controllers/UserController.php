@@ -10,7 +10,11 @@ class UserController extends Controller
 {
     public function index(){
         $user = Auth::user();
+        \Log::info('user', ['user' => $user]);
+        \Log::info('username1', ['username' => $user->name]);
+
         $username = $user->name;
+        \Log::info('username2', ['username' => $username]);
         return response()->json(['username' => $username]);
     }
 }
