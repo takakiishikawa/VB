@@ -1,0 +1,1 @@
+export const getMajorSegment = state => state.majorSegment.major_segments;
