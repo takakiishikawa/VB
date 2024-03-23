@@ -8,10 +8,7 @@ use App\Models\MajorSegment;
 class MajorSegmentController extends Controller
 {
     public function index() {
-
-        //major_segmentの全レコードを取得　idのみ取得
-        $major_segments = MajorSegment::all('id');
-        \Log::info('major-segment', ['major_segments' => $major_segments]);
+        $major_segments = MajorSegment::orderByDesc('id')->get('id')->toArray();
         return response()->json(["major_segments" => $major_segments]);
     }
 }

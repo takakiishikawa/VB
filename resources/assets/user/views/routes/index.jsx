@@ -15,7 +15,7 @@ class AppRoutes extends Component {
       <Router>
         <Routes>
           <Route exact path="/" element={<MajorSegment />} />
-          <Route exact path="/segment" element={<Segment />} />
+          <Route exact path="/segment/:id" element={<Segment />} />
           <Route exact path="/tag" element={<Tag />} />
           <Route exact path="/article" element={<Article />} />
           <Route exact path="/word" element={<Word />} />

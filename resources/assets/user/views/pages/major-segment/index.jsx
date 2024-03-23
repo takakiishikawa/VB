@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from '../../components/header';
 import {fetchMajorSegment, getMajorSegment} from '../../../state/modules/major-segment';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import './MajorSegment.scss';
 
 class MajorSegment extends Component {
@@ -18,17 +19,17 @@ class MajorSegment extends Component {
 
     render() {
         const {major_segments} = this.props;
-        console.log(12);
-        console.log(major_segments);
         return (
             <div>
                 <Header />
                 <div className="major-segment">
                     {/* onClick追加する */}
                     {major_segments && major_segments.map((segment)=>(
-                        <div key={segment.id} className="major-segment__item">
-                            VB {segment.id*1000}
-                        </div>
+                        <Link to={`./segment/${segment.id}`} key={segment.id} style={{textDecoration: 'none', color: 'inherit' }} >
+                            <div key={segment.id} className="major-segment__item">
+                                VB {segment.id*1000}
+                            </div>
+                        </Link>
                     ))}
                 </div>
             </div>
