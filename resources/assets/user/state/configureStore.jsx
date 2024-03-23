@@ -1,26 +1,20 @@
-import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import {configureStore} from '@reduxjs/toolkit';
+import rootReducer from './root-reducer';
+import rootSaga from './root-saga';
 
-const configureStore = (initialState = {}, history, rootReducer) => {
-    const sagaMiddleware = createSagaMiddleware();
+//createStore非推奨, configureStoreのみtoolkit導入
+const sagaMiddleware = createSagaMiddleware();
 
-    const enhancers = [applyMiddleware(sagaMiddleware)];
+const configureAppStore = () => {
+    const store = configureStore({
+        reducer: rootReducer,
+        middleware: (getDefaultMiddleware) => 
+            getDefaultMiddleware().concat(sagaMiddleware),
+    });
 
-    // Redux DevTools Extensionを使用する場合
-    const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-    const store = createStore(
-        initialState,
-        rootReducer(history),
-        composeEnhancers(...enhancers),
-    );
-
-    store.runSaga = sagaMiddleware.run;
-    store.injectedReducers = {};
-    store.injectedSaga = {};
-    
+    sagaMiddleware.run(rootSaga);
     return store;
-}
+};
 
-export default configureStore;
+export default configureAppStore;

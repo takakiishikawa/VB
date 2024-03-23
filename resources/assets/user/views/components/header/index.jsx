@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import './Header.scss';
 import logoImage from './vb-logo-black.png';
 import axios from 'axios';
-import {fetchUser} from '../../../state/modules/user/api';
+import {fetchUser, getUser} from '../../../state/modules/user';
 import {connect} from 'react-redux';
-import {getUser} from '../../../state/modules/user/selectors';
 
 class Header extends Component {
     constructor(props) {

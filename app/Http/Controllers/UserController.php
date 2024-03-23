@@ -9,8 +9,8 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function index(){
-        $user = User::Auth();
-        $username = $user->username;
+        $user = Auth::user();
+        $username = $user->name;
         return response()->json(['username' => $username]);
     }
 }

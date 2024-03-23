@@ -1,22 +1,17 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
-import configureStore from './state/configureStore'
-import rootReducer from './state/root-reducer';
-import rootSaga from './state/root-saga';
+import configureAppStore from './state/configureStore';
 import Routes from './views/routes';
-import history from './views/routes/history';
 
-const intialState = {};
-const store = configureStore(intialState, history, rootReducer);
-store.runSaga(rootSaga);
+//init store
+const store = configureAppStore();
 
-const Root = () => (
+//render<Root />の場合動かない。原因不明
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(
     <Provider store={store}>
         <Routes />
     </Provider>
 );
-
-const container = document.getElementById('app');
-const appRoot = createRoot(container);
-appRoot.render(<Root />);
