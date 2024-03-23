@@ -20,4 +20,3 @@ class AppRoutes extends Component {
 }
 
 export default AppRoutes;
-

@@ -3,7 +3,6 @@ const initialState = {
 }
 
 const userReducer = (state = initialState, action) => {
-    console.log(action, state, 'reducer')
     switch(action.type) {
         case 'FETCH_USER':
             return {...state};

@@ -8,10 +8,7 @@ export default function* userSaga() {
 
 function* fetchUserSaga() {
     try {
-        console.log(1);
         const response = yield call(fetchUser);
-        console.log(2);
-        console.log(response, 'response');
         yield put(fetchUserSuccess(response.data));
     } catch (error) {
         console.log(error);   

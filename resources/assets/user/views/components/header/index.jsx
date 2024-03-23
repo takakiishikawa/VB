@@ -36,7 +36,6 @@ class Header extends Component {
     render() {
         const {username} = this.props;
         const {isMenuOpen} = this.state;
-        console.log(this.props, 'this.props')
 
         return(
             <header className="header">

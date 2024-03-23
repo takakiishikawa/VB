@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
 
-//user
-Route::get('/user',[UserController::class, 'index']);
 
 
 Route::middleware('auth')->group(function () {
@@ -16,14 +14,12 @@ Route::middleware('auth')->group(function () {
 });
 
 
+//user
+Route::get('/user',[UserController::class, 'index']);
 
 
-
-
-
-
-
-//admin
+//auth
+require __DIR__.'/auth.php';
 
 
 //apiを通すために、最後の記述する
@@ -32,4 +28,3 @@ Route::get('/{reactRoutes?}', function () {
 })->where('reactRoutes', '.*')->middleware(['auth', 'verified'])->name('top');
 
 
-require __DIR__.'/auth.php';
