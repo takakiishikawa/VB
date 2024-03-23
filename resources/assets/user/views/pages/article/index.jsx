@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Header from '../../components/header';
-import './Tag.scss';
+import './Article.scss';
 
-class Tag extends Component {
+class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,10 +14,10 @@ class Tag extends Component {
         return (
             <div>
                 <Header />
-                <h1>Tag Title</h1>
+                <h1>Article Title</h1>
             </div>
         );
     }
 }
 
-export default Tag;
+export default Article;
