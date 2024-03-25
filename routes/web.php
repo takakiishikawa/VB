@@ -17,7 +17,10 @@ require __DIR__.'/auth.php';
 //user_api
 Route::prefix('/api')->group(function () {
     Route::get('/user',[UserController::class, 'index']);
-    Route::get('/major-segment',[MajorSegmentController::class, 'index']);
+    Route::prefix('/major-segment')->group(function () {
+        Route::get('/',[MajorSegmentController::class, 'index']);
+        Route::get('/statuses',[MajorSegmentController::class, 'userMajorSegmentStatus']);
+    });
 });
 
 //apiを通すために、最後の記述する

@@ -3,20 +3,39 @@
     grid-template-columns: repeat(3, 1fr); // 3列のグリッドレイアウト
     gap: 20px; // グリッドアイテム間の間隔
     padding: 20px;
-  
+
     &__item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100px; // 各セグメントの高さ
-      background-color: #fff; // 背景色
-      cursor: pointer; // ホバー時のカーソル変更
-      border-radius: 5px;
-      transition: background-color 0.3s;
-  
-      &:hover {
-        background-color: #c5e6d9; // ホバー時の背景色変更
-      }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100px; // 各セグメントの高さ
+        background-color: #fff; // 背景色
+        cursor: pointer; // ホバー時のカーソル変更
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        position: relative; // アイコン位置調整のため
+
+        &:hover {
+            background-color: #c5e6d9; // ホバー時の背景色変更
+        }
+        
+        &--close {
+            background-color: #e0e0e0; // 非活性状態の背景色
+            cursor: not-allowed;
+            
+            &:hover {
+              background-color: #e0e0e0;
+            }
+        }
+        
+        &--completed {
+            .completed-icon {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                font-size: 24px;
+                color: #4CAF50; // 完了アイコンの色
+            }
+        }
     }
-  }
-  
+}

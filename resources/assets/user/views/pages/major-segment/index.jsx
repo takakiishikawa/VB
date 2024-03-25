@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import Header from '../../components/header';
-import {fetchMajorSegment, getMajorSegment} from '../../../state/modules/major-segment';
-import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import './MajorSegment.scss';
 
@@ -9,40 +7,50 @@ class MajorSegment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            major_segments: []
+            major_segments: [],
+            user_major_segment_statuses: []
         };
     }
 
-    componentDidMount() {
-        this.props.fetchMajorSegment();
+    statusClass = (id) => {
+        const statusObj = this.props.user_major_segment_statuses.find(status => status.major_segment_id === id);
+        return !statusObj ? "major-segment__item--close" : statusObj.status === "2" ? "major-segment__item--completed" : "";
     }
 
     render() {
         const {major_segments} = this.props;
+        console.log(this.props, 'this.props')
         return (
             <div>
                 <Header />
                 <div className="major-segment">
                     {/* onClick追加する */}
-                    {major_segments && major_segments.map((segment)=>(
-                        <Link to={`./segment/${segment.id}`} key={segment.id} style={{textDecoration: 'none', color: 'inherit' }} >
-                            <div key={segment.id} className="major-segment__item">
-                                VB {segment.id*1000}
+                    {major_segments && major_segments.map((segment)=>{
+                        const statusClassName = `major-segment__item ${this.statusClass(segment.id)}`;
+                        const isClose = this.statusClass(segment.id).includes("close");
+                        return (
+                            <div key={segment.id} className={statusClassName}>
+                                {isClose ? (
+                                    <div>
+                                        VB {segment.id*1000}
+                                    </div>
+                                ) : (
+                                    <Link to={`./segment/${segment.id}`} style={{textDecoration: 'none', color: 'inherit'}}>
+                                        {console.log(1)}
+                                        <div>
+                                            VB {segment.id*1000}
+                                            {console.log(this.statusClass(segment.id).includes("completed"))}
+                                            {this.statusClass(segment.id).includes("completed") && <span className="completed-icon">✔</span>}
+                                        </div>
+                                    </Link>
+                                )}
                             </div>
-                        </Link>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         );
     }
 }
 
-const mapToStateProps = state => ({
-    major_segments: getMajorSegment(state),
-});
-
-const mapDispatchToProps = {
-    fetchMajorSegment,
-};
-
-export default connect(mapToStateProps, mapDispatchToProps)(MajorSegment);
+export default MajorSegment;
