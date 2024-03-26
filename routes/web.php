@@ -21,6 +21,9 @@ Route::prefix('/api')->group(function () {
         Route::get('/',[MajorSegmentController::class, 'index']);
         Route::get('/statuses',[MajorSegmentController::class, 'userMajorSegmentStatus']);
     });
+    Route::prefix('/segment')->group(function () {
+        Route::get('/',[SegmentController::class, 'index']);
+    });
 });
 
 //apiを通すために、最後の記述する

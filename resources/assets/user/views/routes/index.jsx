@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import MajorSegmentContainer from '../pages/major-segment/MajorSegmentContainer';
-import Segment from '../pages/segment';
+import SegmentContainer from '../pages/segment/SegmentContainer';
 import Tag from '../pages/tag';
 import Article from '../pages/article';
 import Word from '../pages/word';
@@ -15,7 +15,7 @@ class AppRoutes extends Component {
       <Router>
         <Routes>
           <Route exact path="/" element={<MajorSegmentContainer />} />
-          <Route exact path="/segment/:id" element={<Segment />} />
+          <Route exact path="/segment/:id" element={<SegmentContainer />} />
           <Route exact path="/tag" element={<Tag />} />
           <Route exact path="/article" element={<Article />} />
           <Route exact path="/word" element={<Word />} />

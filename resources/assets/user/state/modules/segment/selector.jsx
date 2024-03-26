@@ -1,0 +1,1 @@
+export const getSegments = (state) => state.segment.segments;

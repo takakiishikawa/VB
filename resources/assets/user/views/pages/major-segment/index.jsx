@@ -25,22 +25,26 @@ class MajorSegment extends Component {
                 <Header />
                 <div className="major-segment">
                     {/* onClick追加する */}
-                    {major_segments && major_segments.map((segment)=>{
-                        const statusClassName = `major-segment__item ${this.statusClass(segment.id)}`;
-                        const isClose = this.statusClass(segment.id).includes("close");
+                    {major_segments && major_segments.map((major_segment)=>{
+                        const statusClassName = `major-segment__item ${this.statusClass(major_segment.id)}`;
+                        const isClose = this.statusClass(major_segment.id).includes("close");
                         return (
-                            <div key={segment.id} className={statusClassName}>
+                            <div key={major_segment.id} className={statusClassName}>
                                 {isClose ? (
                                     <div>
-                                        VB {segment.id*1000}
+                                        VB {major_segment.id*1000}
                                     </div>
                                 ) : (
-                                    <Link to={`./segment/${segment.id}`} style={{textDecoration: 'none', color: 'inherit'}}>
-                                        {console.log(1)}
+                                    <Link
+                                        to={{
+                                            pathname: `./segment/${major_segment.id}`,
+                                            state: {major_segment_id: major_segment.id}
+                                        }}
+                                        style={{textDecoration: 'none', color: 'inherit'}}>
                                         <div>
-                                            VB {segment.id*1000}
-                                            {console.log(this.statusClass(segment.id).includes("completed"))}
-                                            {this.statusClass(segment.id).includes("completed") && <span className="completed-icon">✔</span>}
+                                            VB {major_segment.id*1000}
+                                            {console.log(this.statusClass(major_segment.id).includes("completed"))}
+                                            {this.statusClass(major_segment.id).includes("completed") && <span className="completed-icon">✔</span>}
                                         </div>
                                     </Link>
                                 )}
