@@ -10,7 +10,6 @@ class MajorSegmentContainer extends Component {
         this.props.fetchUserMajorSegmentStatuses();
     }
     render() {
-        console.log(this.props, 'this.props-1')
         return (
             <MajorSegment
                 major_segments={this.props.major_segments}

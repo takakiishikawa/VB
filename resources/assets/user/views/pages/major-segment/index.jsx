@@ -19,7 +19,6 @@ class MajorSegment extends Component {
 
     render() {
         const {major_segments} = this.props;
-        console.log(this.props, 'this.props')
         return (
             <div>
                 <Header />
@@ -43,7 +42,6 @@ class MajorSegment extends Component {
                                         style={{textDecoration: 'none', color: 'inherit'}}>
                                         <div>
                                             VB {major_segment.id*1000}
-                                            {console.log(this.statusClass(major_segment.id).includes("completed"))}
                                             {this.statusClass(major_segment.id).includes("completed") && <span className="completed-icon">✔</span>}
                                         </div>
                                     </Link>

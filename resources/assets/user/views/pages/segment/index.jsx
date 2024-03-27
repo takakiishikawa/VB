@@ -15,8 +15,6 @@ class Segment extends Component {
         this.setState({selectedSegment: id});
     }
 
-
-
     getSegmentRange = (segment_id, major_segment_id) => {
         const thousand = major_segment_id * 1000;
         const major_segment_id_minus_one = major_segment_id - 1;
