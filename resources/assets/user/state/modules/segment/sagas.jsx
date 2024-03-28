@@ -11,12 +11,9 @@ export default function* segmentsSaga() {
 }
 
 function* fetchSegmentsSaga(action) {
-    console.log(action,'action')
     try {
-        const {id} = action.payload;
-        console.log(id,'id');
+        const id = action.payload;
         const response = yield call(fetchSegments, id);
-        console.log(response,'response')
         yield put(fetchSegmentsSuccess(response.data));
     }
     catch (error) {

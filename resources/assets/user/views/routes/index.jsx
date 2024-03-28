@@ -15,14 +15,13 @@ class AppRoutes extends Component {
     return (
       <HashRouter>
         <Switch>
-          <Route path="/" component={MajorSegmentContainer} />
-          <Route path="/segment:id" component={Tag} />
-          
-          <Route path="/tag" component={Tag} />
-          <Route path="/article" component={Article} />
-          <Route path="/word" component={Word} />
-          <Route path="/profile" component={Profile} />
-          <Route path="*" component={PageNotFound} />
+          <Route exact path="/" component={MajorSegmentContainer} />
+          <Route exact path="/segment/:id" component={SegmentContainer} />
+          <Route exact path="/tag" component={Tag} />
+          <Route exact path="/article" component={Article} />
+          <Route exact path="/word" component={Word} />
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="*" component={PageNotFound} />
         </Switch>
       </HashRouter>
     )
@@ -30,7 +29,6 @@ class AppRoutes extends Component {
 };
 
 export default AppRoutes;
-
 
 /*
 const AppRoutes = () => (

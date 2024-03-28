@@ -14,6 +14,6 @@ class SegmentController extends Controller
         $major_segment_id = $majorSegment->id;
         $segments = Segment::where('major_segment_id', $major_segment_id)->get('id');
         
-        return response()->json($segments);
+        return response()->json(['segments' => $segments]);
     }
 }

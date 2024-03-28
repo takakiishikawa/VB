@@ -16,6 +16,7 @@ class Segment extends Component {
     }
 
     getSegmentRange = (segment_id, major_segment_id) => {
+        console.log(segment_id, major_segment_id, 'segment_id, major_segment_id')
         const thousand = major_segment_id * 1000;
         const major_segment_id_minus_one = major_segment_id - 1;
         const segmentNumber = segment_id - major_segment_id_minus_one * 10;
@@ -26,9 +27,9 @@ class Segment extends Component {
     } 
 
     render() {
-        const {major_segment_id} = this.props.location?.state || {};
+        const {major_segment_id, segments} = this.props;
         const {selectedSegment} = this.state;
-        const {segments} = this.props;
+        console.log(segments, major_segment_id,  'segments')
 
         return (
             <div className="segment">

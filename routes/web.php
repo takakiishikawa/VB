@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MajorSegmentController;
+use App\Http\Controllers\SegmentController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -22,7 +23,7 @@ Route::prefix('/api')->group(function () {
         Route::get('/statuses',[MajorSegmentController::class, 'userMajorSegmentStatus']);
     });
     Route::prefix('/segment')->group(function () {
-        Route::get('/',[SegmentController::class, 'index']);
+        Route::get('/{id}',[SegmentController::class, 'index']);
     });
 });
 
