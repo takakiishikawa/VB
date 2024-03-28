@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import React,{Component} from 'react';
+import {Switch, Route, HashRouter} from 'react-router-dom';
 import MajorSegmentContainer from '../pages/major-segment/MajorSegmentContainer';
 import SegmentContainer from '../pages/segment/SegmentContainer';
 import Tag from '../pages/tag';
@@ -9,22 +9,39 @@ import Profile from '../components/profile';
 import PageNotFound from '../components/page-not-found';
 import './global.scss';
 
+
 class AppRoutes extends Component {
-  render() {
+  render (){
     return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<MajorSegmentContainer />} />
-          <Route path="/segment/:id" element={<SegmentContainer/>} />
-          <Route path="/tag" element={<Tag />} />
-          <Route path="/article" element={<Article />} />
-          <Route path="/word" element={<Word />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </Router>
-    ) 
+      <HashRouter>
+        <Switch>
+          <Route path="/" component={MajorSegmentContainer} />
+          <Route path="/segment:id" component={Tag} />
+          
+          <Route path="/tag" component={Tag} />
+          <Route path="/article" component={Article} />
+          <Route path="/word" component={Word} />
+          <Route path="/profile" component={Profile} />
+          <Route path="*" component={PageNotFound} />
+        </Switch>
+      </HashRouter>
+    )
   }
-}
+};
 
 export default AppRoutes;
+
+
+/*
+const AppRoutes = () => (
+    <Switch>
+      <Route path="/" component={MajorSegmentContainer} />
+      <Route path="/segment/:id" component={SegmentContainer} />
+      <Route path="/tag" component={Tag} />
+      <Route path="/article" component={Article} />
+      <Route path="/word" component={Word} />
+      <Route path="/profile" component={Profile} />
+      <Route path="*" component={PageNotFound} />
+  </Switch>
+)
+*/

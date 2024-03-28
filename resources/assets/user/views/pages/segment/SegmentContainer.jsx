@@ -5,9 +5,8 @@ import {connect} from 'react-redux';
 
 class SegmentContainer extends Component {
     componentDidMount() {
-        const { location } = this.props
-        console.log(location, 'location')
-        this.props.fetchSegments(id);
+        console.log(this.props, 'props')
+        this.props.fetchSegments(1);
     }
 
     render(){

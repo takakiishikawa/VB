@@ -35,10 +35,7 @@ class MajorSegment extends Component {
                                     </div>
                                 ) : (
                                     <Link
-                                        to={{
-                                            pathname: `./segment/${major_segment.id}`,
-                                            state: {major_segment_id: major_segment.id}
-                                        }}
+                                        to={`/segment/${major_segment.id}`}
                                         style={{textDecoration: 'none', color: 'inherit'}}>
                                         <div>
                                             VB {major_segment.id*1000}
