@@ -14,7 +14,7 @@ class Tag extends Component {
         return (
             <div>
                 <Header />
-                <h1>Tag Title</h1>
+                <p className="xxx">yyy</p>
             </div>
         );
     }
