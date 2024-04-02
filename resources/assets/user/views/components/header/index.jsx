@@ -47,6 +47,7 @@ class Header extends Component {
                 <nav className="header__top-menu">
                     <Link to="/">VB</Link>
                     <Link to="/tag">Tag</Link>
+                    <Link to="/analytics">Analytics</Link>
                 </nav>
                 <div className={`header__user-menu ${isMenuOpen ? "header__user-menu--open" : ""}`}>
                     <button onClick={this.toggleMenu}>
