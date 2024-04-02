@@ -38,7 +38,7 @@
       }
 
       .header__popup-menu {
-        display: none; /* 初期状態では非表示 */
+        display: none; 
         position: absolute;
         right: 0;
         background-color: #fff;
@@ -59,7 +59,7 @@
       }
       
       &.header__user-menu--open .header__popup-menu {
-          display: block; /* メニューが開いた状態で表示 */
+          display: block;
       }
     }
 }
