@@ -31,17 +31,3 @@ class AppRoutes extends Component {
 };
 
 export default AppRoutes;
-
-/*
-const AppRoutes = () => (
-    <Switch>
-      <Route path="/" component={MajorSegmentContainer} />
-      <Route path="/segment/:id" component={SegmentContainer} />
-      <Route path="/tag" component={Tag} />
-      <Route path="/article" component={Article} />
-      <Route path="/word" component={Word} />
-      <Route path="/profile" component={Profile} />
-      <Route path="*" component={PageNotFound} />
-  </Switch>
-)
-*/

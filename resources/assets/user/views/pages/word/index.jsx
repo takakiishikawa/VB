@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from '../../components/header';
+import Sidebar from '../../components/sidebar';
 import './Word.scss';
 
 class Word extends Component {
@@ -13,7 +13,7 @@ class Word extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <Sidebar />
                 <h1>Word Title</h1>
             </div>
         );

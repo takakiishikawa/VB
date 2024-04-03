@@ -1,11 +1,9 @@
+@import "../styles/color";
+
 //base style
 body {
-    color: #222;
+    color: $color-font;
     font-family: "Inter", sans-serif;
     line-height: 1.5;
-}
-
-img {
-    max-width: 100%;
-    vertical-align: top;
+    margin: 0;
 }

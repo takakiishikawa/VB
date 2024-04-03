@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from '../../components/header';
+import Sidebar from '../../components/sidebar';
 import './Segment.scss';
 
 class Segment extends Component {
@@ -33,7 +33,7 @@ class Segment extends Component {
 
         return (
             <div className="segment">
-                <Header />
+                <Sidebar />
                 <div className="segment__list">
                         <div className="segment__list__item">
                             VB {major_segment_id * 1000}

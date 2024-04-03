@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import Header from '../header';
+import Sidebar from '../sidebar';
 
 class Profile extends Component {
 
     render() {
         return (
             <div>
-                <Header />
+                <Sidebar />
                 <h1>Profile</h1>
             </div>
         );

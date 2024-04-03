@@ -1,0 +1,97 @@
+@import "../../styles/color.scss";
+
+.sidebar {
+  width: 17.8vw;
+  background-color: #fff;
+  height: 100vh;
+  border-right: 1px solid $color-primary;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__container {
+    width: 15.2vw;
+    padding-top: 24px;
+  }
+
+  &__logo {
+    height: 76px;
+    font-weight: 600;
+    padding-left: 16px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+  }
+  &__nav {
+    &__item {
+      margin-bottom: 4px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding-right: 16px;
+      padding-left: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover,
+      &.active {
+        background-color: $color-secondary;
+      }
+
+      &-icon {
+        display: flex;
+        align-items: center;
+        color: $color-base-icon;
+      }
+
+      &-text {
+        padding-left: 16px;
+        text-decoration: none;
+        color: $color-font;
+      }
+
+    }
+  }
+}
+
+/*
+&__container {
+  padding: 20px;
+}
+
+&__logo {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+&__nav {
+  .nav__item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover,
+    &:focus {
+      background-color: #f0f0f0; // メニューをhoverした時の背景色
+    }
+
+    .item__icon {
+      color: #add8e6; // アイコンの色
+      margin-right: 10px;
+    }
+
+    .item__text {
+      color: #333; // テキストの色
+      text-decoration: none; // リンクの下線を消す
+
+      &:visited {
+        color: #333; // 訪問済みリンクの色
+      }
+    }
+  }
+}
+*/

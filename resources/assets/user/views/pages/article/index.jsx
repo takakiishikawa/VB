@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from '../../components/header';
+import Sidebar from '../../components/sidebar';
 import './Article.scss';
 
 class Article extends Component {
@@ -13,7 +13,7 @@ class Article extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <Sidebar />
                 <h1>Article Title</h1>
             </div>
         );

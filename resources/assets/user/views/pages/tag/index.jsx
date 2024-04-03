@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Header from '../../components/header';
+import Sidebar from '../../components/sidebar';
 import './Tag.scss';
 
 class Tag extends Component {
@@ -13,7 +13,7 @@ class Tag extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <Sidebar />
                 <article id ="main" className="ly_cont">
                     <div className="bl_media bl_media__rev">
                         <figure className="bl_media_image-wrapper bl_media_image-wrapper__borderd">
