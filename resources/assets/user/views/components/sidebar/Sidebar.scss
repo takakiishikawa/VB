@@ -21,7 +21,10 @@
     margin-bottom: 18px;
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: $color-font;
   }
+
   &__nav {
     &__item {
       margin-bottom: 4px;
@@ -32,10 +35,16 @@
       padding-left: 16px;
       border-radius: 8px;
       cursor: pointer;
+      text-decoration: none;
+      color: $color-font;
+      transition: background-color 0.3s ease;
 
       &:hover,
       &.active {
         background-color: $color-secondary;
+      }
+      &:active {
+        background-color: $color-primary;
       }
 
       &-icon {
@@ -46,52 +55,8 @@
 
       &-text {
         padding-left: 16px;
-        text-decoration: none;
-        color: $color-font;
       }
 
     }
   }
 }
-
-/*
-&__container {
-  padding: 20px;
-}
-
-&__logo {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-&__nav {
-  .nav__item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-
-    &:hover,
-    &:focus {
-      background-color: #f0f0f0; // メニューをhoverした時の背景色
-    }
-
-    .item__icon {
-      color: #add8e6; // アイコンの色
-      margin-right: 10px;
-    }
-
-    .item__text {
-      color: #333; // テキストの色
-      text-decoration: none; // リンクの下線を消す
-
-      &:visited {
-        color: #333; // 訪問済みリンクの色
-      }
-    }
-  }
-}
-*/

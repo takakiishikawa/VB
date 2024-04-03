@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
-import "./Profile.scss";
 
-class Profile extends Component {
-
+class Concept extends Component {
     render() {
         return (
             <div>
-                <h1>Profile</h1>
+                <h1>Concept</h1>
             </div>
         );
     }
 }
 
-export default Profile;
+export default Concept;

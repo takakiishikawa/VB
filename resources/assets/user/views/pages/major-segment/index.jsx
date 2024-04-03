@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Sidebar from '../../components/sidebar';
+
 import {Link} from 'react-router-dom';
 import './MajorSegment.scss';
 
@@ -21,7 +21,7 @@ class MajorSegment extends Component {
         const {major_segments} = this.props;
         return (
             <div>
-                <Sidebar />
+
                 <div className="major-segment">
                     {/* onClick追加する */}
                     {major_segments && major_segments.map((major_segment)=>{
