@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-
+import HelpIcon from '@mui/icons-material/Help';
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {Link} from 'react-router-dom';
 import './MajorSegment.scss';
 
@@ -7,46 +11,59 @@ class MajorSegment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            major_segments: [],
-            user_major_segment_statuses: []
+            majorSegments: [],
+            userMajorSegmentStatuses: []
         };
     }
 
-    statusClass = (id) => {
-        const statusObj = this.props.user_major_segment_statuses.find(status => status.major_segment_id === id);
-        return !statusObj ? "major-segment__item--close" : statusObj.status === "2" ? "major-segment__item--completed" : "";
+    statusClass = (status) => {
+        return status == 1 ? "unlocked"
+            : status == 2 ? "completed"
+                : "locked";
+    }
+
+
+    iconCreate = (status) => {
+        return status == 1 ? <LockOpenIcon className={`major-segment__all__item-status-icon ${this.statusClass(status)}`} />
+            : status == 2 ? <CheckCircleOutlineIcon className={`major-segment__all__item-status-icon ${this.statusClass(status)}`} />
+                : <LockIcon className={`major-segment__all__item-status-icon ${this.statusClass(status)}`} />
     }
 
     render() {
-        const {major_segments} = this.props;
+        const {majorSegments, userMajorSegmentStatuses} = this.props;
+        console.log(majorSegments, "majorSegments");
+        console.log(userMajorSegmentStatuses, "userMajorSegmentStatuses");
+
+        const activeMajorSegmentId = userMajorSegmentStatuses.find(item => item.status == 1)?.major_segment_id ?? null;
         return (
             <div>
-
                 <div className="major-segment">
-                    {/* onClick追加する */}
-                    {major_segments && major_segments.map((major_segment)=>{
-                        const statusClassName = `major-segment__item ${this.statusClass(major_segment.id)}`;
-                        const isClose = this.statusClass(major_segment.id).includes("close");
-                        return (
-                            <div key={major_segment.id} className={statusClassName}>
-                                {isClose ? (
-                                    <div>
-                                        VB {major_segment.id*1000}
-                                    </div>
-                                ) : (
-                                    <Link
-                                        to={`/segment/${major_segment.id}`}
-                                        style={{textDecoration: 'none', color: 'inherit'}}>
-                                        <div>
-                                            VB {major_segment.id*1000}
-                                            {this.statusClass(major_segment.id).includes("completed") && <span className="completed-icon">✔</span>}
-                                        </div>
+                    <div className="major-segment__open">
+                        <p className="major-segment__open__text">Open</p>
+                        <Link to={`/major-segment/${activeMajorSegmentId}`} className="major-segment__open__item">
+                            <LockOpenIcon className="major-segment__open__item-locked-icon" />
+                            <HelpIcon className="major-segment__open__item-help-icon" />
+                            <MenuBookIcon className="major-segment__open__item-book-icon" />
+                            <span className="major-segment__open__item-level">Level xx</span>
+                        </Link>
+                    </div>
+                    <div className="major-segment__all">
+                        <p className="major-segment__all__text">All</p>
+                            {majorSegments && majorSegments.map((majorSegment) => {
+                                //status1: unlocked, status2: completed, statusnull: locked
+                                const status = userMajorSegmentStatuses.find(item => item.major_segment_id === majorSegment.id)?.status ?? null;
+                                return (
+                                    <Link to={`/segment/${majorSegment.id}`} className="major-segment__all__item" key={majorSegment.id}>
+                                        {this.iconCreate(status)}
+                                        <HelpIcon className="major-segment__all__item-help-icon" />
+                                        <MenuBookIcon className={`major-segment__open__item-book-icon ${this.statusClass(status)}`} />
+                                         <span className="major-segment__all__item-level">Level {majorSegment.id}</span>
                                     </Link>
-                                )}
-                            </div>
-                        );
-                    })}
+                                )
+                            })}
+                    </div>
                 </div>
+
             </div>
         );
     }

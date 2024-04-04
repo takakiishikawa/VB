@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
         UserMajorSegmentStatus::create([
             'user_id' => $user->id,
             'major_segment_id' => 1,
-            'status' => UserMajorSegmentStatus::STATUS_OPEN,
+            'status' => UserMajorSegmentStatus::STATUS_UNLOCKED,
         ]);
 
         event(new Registered($user));

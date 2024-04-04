@@ -9,7 +9,7 @@ class UserMajorSegmentStatus extends Model
 {
     use HasFactory;
 
-    const STATUS_OPEN = 1;
+    const STATUS_UNLOCKED = 1;
     const STATUS_COMPLETED = 2;
 
     protected $fillable = [

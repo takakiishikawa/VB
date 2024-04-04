@@ -12,16 +12,16 @@ class MajorSegmentContainer extends Component {
     render() {
         return (
             <MajorSegment
-                major_segments={this.props.major_segments}
-                user_major_segment_statuses={this.props.user_major_segment_statuses}
+                majorSegments={this.props.majorSegments}
+                userMajorSegmentStatuses={this.props.userMajorSegmentStatuses}
             />
         );
     }
 }
 
 const mapToStateProps = state => ({
-    major_segments: getMajorSegment(state),
-    user_major_segment_statuses: getUserMajorSegmentStatuses(state),
+    majorSegments: getMajorSegment(state),
+    userMajorSegmentStatuses: getUserMajorSegmentStatuses(state),
 });
 
 const mapDispatchToProps = {
