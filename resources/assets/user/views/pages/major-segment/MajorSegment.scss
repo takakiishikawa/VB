@@ -54,7 +54,7 @@
             background-color: $color-secondary;
           }
 
-          &-status-icon, &-help-icon, &-book-icon, &-level {
+          &-status-icon, &-book-icon, &-level {
             position: absolute;
           }
 
@@ -74,9 +74,15 @@
             }
           }
 
-          &-help-icon {
+          &-help-container {
             left: 75.5%;
             top: 5.5%;
+            width: 35px;
+            position: relative;
+            cursor: default;
+          }
+
+          &-help-icon {
             color: $color-question;
           }
 

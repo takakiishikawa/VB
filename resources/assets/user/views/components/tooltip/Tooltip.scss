@@ -1,0 +1,39 @@
+@import "../../styles/color.scss";
+
+//common
+.tooltip {
+    position: absolute;
+    top: -175%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 8px;
+    background-color: $color-font;
+    color: $color-white;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+
+    &::after {
+        position: absolute;
+        content: "";
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 10px solid transparent; // 左側の透明なボーダー
+        border-right: 10px solid transparent; // 右側の透明なボーダー
+        border-top: 10px solid $color-font; // 上向きの三角形（ツールチップの背景色と同じ）
+    }
+
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+
+        &-text {
+            color: $color-white;
+            font-size: 10px;
+        }
+    }
+}
+
