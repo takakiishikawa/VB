@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {getSidebarState} from '../../../state/modules/sidebar';
 import HomeIcon from '@mui/icons-material/Home';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
@@ -10,6 +12,8 @@ import './Sidebar.scss';
 class Sidebar extends Component {
     render() {
         const pathName = this.props.location.pathname;
+        const {majorSegment} = this.props;
+        console.log(majorSegment, "majorSegment")
 
         return(
             <div className="sidebar">
@@ -38,6 +42,9 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar = withRouter(Sidebar);
+const mapStateToProps = (state) => ({
+    majorSegment: getSidebarState(state),
+});
 
 
+export default withRouter(connect(mapStateToProps)(Sidebar));

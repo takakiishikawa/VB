@@ -18,7 +18,7 @@ class AppRoutes extends Component {
   render (){
     return (
       <HashRouter>
-        <div className="app-container">
+        <div className="sidebar-container">
           <Sidebar />
           <div className="main-container">
             <UserMenu />

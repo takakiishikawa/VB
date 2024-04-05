@@ -5,8 +5,10 @@ import LockOpenIcon from '@mui/icons-material/Lockopen';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import Tooltip from '../../components/tooltip';
 import levelSentence from './level-sentence';
+import {fetchSidebarState} from '../../../state/modules/sidebar';
 import './MajorSegment.scss';
 
 class MajorSegment extends Component {
@@ -61,7 +63,11 @@ class MajorSegment extends Component {
                         <div className="major-segment__wrapper">
                             <Tooltip />
                             <div className="major-segment__wrapper__text">Active</div>
-                            <Link to={`/major-segment/${activeMajorSegmentId}`} className="major-segment__wrapper__item active">
+                            <Link 
+                                to={`/major-segment/${activeMajorSegmentId}`} 
+                                className="major-segment__wrapper__item active"
+                                onClick={() => this.props.fetchSidebarState(activeMajorSegmentId)}
+                            >
                                 <LockOpenIcon className="major-segment__wrapper__item-status-icon unlocked" style={{fontSize: 35}} />
                                 <div className="major-segment__wrapper__item-help-container"
                                     onClick={this.preventLink}
@@ -94,7 +100,7 @@ class MajorSegment extends Component {
                                             to={`/segment/${majorSegment.id}`} 
                                             className={`major-segment__wrapper__item ${this.statusClass(status)}`} 
                                             key={majorSegment.id}
-                                            onClick={this.statusClass(status)=="locked" ? this.preventLink : null}
+                                            onClick={() => this.statusClass(status)=="locked" ? this.preventLink : this.props.fetchSidebarState(majorSegment.id)}
                                         >
                                             {this.iconCreate(status)}
                                             <div className="major-segment__wrapper__item-help-container all"
@@ -124,4 +130,8 @@ class MajorSegment extends Component {
     }
 }
 
-export default MajorSegment;
+const mapDispatchToProps = {
+    fetchSidebarState,
+}
+
+export default connect(null, mapDispatchToProps)(MajorSegment);
