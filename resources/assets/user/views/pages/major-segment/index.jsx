@@ -15,11 +15,12 @@ class MajorSegment extends Component {
         this.state = {
             majorSegments: [],
             userMajorSegmentStatuses: [],
-            changeTooltip: false
+            showTooltipId: null
         };
     }
 
     statusClass = (status) => {
+        //status1: unlocked, status2: completed, statusnull: locked
         return status == 1 ? "unlocked"
             : status == 2 ? "completed"
                 : "locked";
@@ -37,9 +38,15 @@ class MajorSegment extends Component {
         event.stopPropagation();
     };
 
-    changeTooltip = () => {
+    showTooltip = (id) => {
         this.setState({
-            changeTooltip: !this.state.changeTooltip
+            showTooltipId: id
+        })
+    }
+
+    hideTooltip = () => {
+        this.setState({
+            showTooltipId:null
         })
     }
 
@@ -58,19 +65,20 @@ class MajorSegment extends Component {
                                 <LockOpenIcon className="major-segment__wrapper__item-status-icon unlocked" style={{fontSize: 35}} />
                                 <div className="major-segment__wrapper__item-help-container"
                                     onClick={this.preventLink}
-                                    onMouseEnter={this.changeTooltip}
-                                    onMouseLeave={this.changeTooltip}
+                                    //0: unique id for active major segment
+                                    onMouseEnter={() => this.showTooltip(0)}
+                                    onMouseLeave={() => this.hideTooltip()}
                                 >
                                     <HelpIcon
                                         className="major-segment__wrapper__item-help-icon"
                                         style={{fontSize: 35}}
                                     />
-                                    {this.state.changeTooltip && 
+                                    {this.state.showTooltipId === 0 ?
                                         <Tooltip 
-                                            levelSentence={levelSentence[1]}
+                                            levelSentence={levelSentence[activeMajorSegmentId]}
                                             majorSegmentId={activeMajorSegmentId}
                                             className="help-icon"
-                                        />}
+                                        /> : null }
                                 </div>
                                 <MenuBookIcon className="major-segment__wrapper__item-book-icon unlocked" style={{fontSize: 115}} />
                                 <span className="major-segment__wrapper__item-level unlocked">Level {activeMajorSegmentId}</span>
@@ -80,17 +88,28 @@ class MajorSegment extends Component {
                             <div className="major-segment__wrapper__text">All</div>
                             <div className="major-segment__wrapper__list">
                                 {majorSegments && majorSegments.map((majorSegment) => {
-                                    //status1: unlocked, status2: completed, statusnull: locked
                                     const status = userMajorSegmentStatuses.find(item => item.major_segment_id === majorSegment.id)?.status ?? null;
                                     return (
-                                        <Link to={`/segment/${majorSegment.id}`} className={`major-segment__wrapper__item ${this.statusClass(status)}`} key={majorSegment.id}>
+                                        <Link 
+                                            to={`/segment/${majorSegment.id}`} 
+                                            className={`major-segment__wrapper__item ${this.statusClass(status)}`} 
+                                            key={majorSegment.id}
+                                            onClick={this.statusClass(status)=="locked" ? this.preventLink : null}
+                                        >
                                             {this.iconCreate(status)}
-                                            <HelpIcon className="major-segment__wrapper__item-help-icon" style={{fontSize: 25}} onClick={this.preventLink} />
-                                            <Tooltip 
-                                                levelSentence={levelSentence[activeMajorSegmentId]}
-                                                majorSegmentId={activeMajorSegmentId}
-                                                className="major-segment__wrapper__item-help-icon__tooltip"
-                                            />    
+                                            <div className="major-segment__wrapper__item-help-container all"
+                                                onClick={this.preventLink}
+                                                onMouseEnter={() => this.showTooltip(majorSegment.id)}
+                                                onMouseLeave={() => this.hideTooltip()}
+                                            >
+                                                <HelpIcon className="major-segment__wrapper__item-help-icon" style={{fontSize: 25}} onClick={this.preventLink} />
+                                                {this.state.showTooltipId === majorSegment.id ? 
+                                                    <Tooltip 
+                                                        levelSentence={levelSentence[majorSegment.id]}
+                                                        majorSegmentId={majorSegment.id}
+                                                        className="help-icon-all"
+                                                    /> : null}
+                                            </div>
                                             <MenuBookIcon className={`major-segment__wrapper__item-book-icon ${this.statusClass(status)}`}  style={{fontSize: 85}} />
                                             <span className="major-segment__wrapper__item-level all">Level {majorSegment.id}</span>
                                         </Link>

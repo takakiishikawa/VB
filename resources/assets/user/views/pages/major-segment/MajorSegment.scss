@@ -40,6 +40,7 @@
           }
           &.locked {
             background-color: $color-secondary;
+            cursor: not-allowed;
           }
 
           &.all {
@@ -80,6 +81,10 @@
             width: 35px;
             position: relative;
             cursor: default;
+
+            &.all {
+              width: 25px;
+            }
           }
 
           &-help-icon {
@@ -110,10 +115,10 @@
             color: $color-font;
 
             &.unlocked {
-              font-size: 20px;
+              font-size: 16px;
             }
             &.all {
-              font-size: 16px;
+              font-size: 12px;
             }
           }
 
