@@ -1,52 +1,118 @@
-//.major-segment {
+@import "../../styles/color.scss";
 
-//}
-
-
-
-
-
-
-/*
 .major-segment {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); // 3列のグリッドレイアウト
-    gap: 20px; // グリッドアイテム間の間隔
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 82.2vw;
 
-    &__item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100px; // 各セグメントの高さ
-        background-color: #fff; // 背景色
-        cursor: pointer; // ホバー時のカーソル変更
-        border-radius: 5px;
-        transition: background-color 0.3s;
-        position: relative; // アイコン位置調整のため
+    &__container {
+      width: 71.1vw;
 
-        &:hover {
-            background-color: #c5e6d9; // ホバー時の背景色変更
+    }
+
+    &__wrapper {
+      margin-bottom: 39px;
+        &__text {
+          font-size: 28px;
+          font-weight: 510;
+          margin-bottom: 2.5vh;
         }
-        
-        &--close {
-            background-color: #e0e0e0; // 非活性状態の背景色
-            cursor: not-allowed;
-            
-            &:hover {
-              background-color: #e0e0e0;
-            }
+
+        &__list {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          grid-gap: 32px;
         }
-        
-        &--completed {
-            .completed-icon {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                font-size: 24px;
-                color: #4CAF50; // 完了アイコンの色
+
+        &__item {
+          display: block;
+          border: 1px solid $color-primary;
+          border-radius: 8px;
+          aspect-ratio: 1/1;
+          position: relative;
+          text-decoration: none;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &.active {
+            width: 13.8vw;
+          }
+          &.locked {
+            background-color: $color-secondary;
+          }
+
+          &.all {
+            width: 10vw;
+          }
+
+          &:active {
+            background-color: $color-primary;
+          }
+
+          &:hover {
+            background-color: $color-secondary;
+          }
+
+          &-status-icon, &-help-icon, &-book-icon, &-level {
+            position: absolute;
+          }
+
+          &-status-icon {
+            left: 5.5%;
+            top: 5.5%; 
+            color: $color-base-icon;
+
+            &.unlocked {
+              color: $color-base-icon;
             }
+            &.locked {
+              color: $color-hide;
+            }
+            &.completed {
+              color: $color-completed;
+            }
+          }
+
+          &-help-icon {
+            left: 75.5%;
+            top: 5.5%;
+            color: $color-question;
+          }
+
+          &-book-icon {
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: $color-base-icon;
+
+            &.unlocked {
+              color: $color-base-icon;
+            }
+            &.locked {
+              color: $color-hide;
+            }
+            &.completed {
+              color: $color-completed;
+            }
+          }
+
+          &-level {
+            left: 50%;
+            top: 77.5%;
+            transform: translateX(-50%);
+            color: $color-font;
+
+            &.unlocked {
+              font-size: 20px;
+            }
+            &.all {
+              font-size: 16px;
+            }
+          }
+
         }
     }
+
+ 
 }
-*/
