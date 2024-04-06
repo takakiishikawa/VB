@@ -102,7 +102,7 @@ class MajorSegment extends Component {
                                         const status = userMajorSegmentStatuses.find(item => item.major_segment_id === majorSegment.id)?.status ?? null;
                                         return (
                                             <Link 
-                                                to={`/segment/${majorSegment.id}`} 
+                                                to={`/segment/${majorSegment.id}/1`} 
                                                 className={`major-segment__wrapper__item ${this.statusClass(status)}`} 
                                                 key={majorSegment.id}
                                                 onClick={(e) => this.statusClass(status)=="locked" ? this.preventLink(e) : this.props.fetchSidebarState(majorSegment.id)}

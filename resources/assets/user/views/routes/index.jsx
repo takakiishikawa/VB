@@ -18,7 +18,7 @@ class AppRoutes extends Component {
       <HashRouter>
             <Switch>
                 <Route exact path="/" component={MajorSegmentContainer} />
-                <Route exact path="/segment/:id" component={SegmentContainer} />
+                <Route exact path="/segment/:majorSegmentId/:segmentId" component={SegmentContainer} />
                 <Route exact path="/tag" component={Tag} />
                 <Route exact path="/analytics" component={Analytics} />
                 <Route exact path="/article" component={Article} />

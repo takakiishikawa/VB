@@ -40,9 +40,6 @@ class SegmentSidebar extends Component {
 
     render() {
         const {majorSegment, segments, userSegmentStatuses} = this.props;
-        console.log(majorSegment, "majorSegment");
-        console.log(segments, "segments");
-        console.log(userSegmentStatuses, "userSegmentStatuses");
 
         return (
             //ほかsegmentcomponent画面遷移、lockedのprevntLink, segmentCへのstatus + segment_id受け渡し
@@ -61,10 +58,15 @@ class SegmentSidebar extends Component {
                     {segments.map((segment) => {
                         const status = userSegmentStatuses[segment.id];
                         return (
-                            <div className="sidebar__item">
+                            <Link 
+                                to={`/segment/${majorSegment}/${segment.id}`} 
+                                className="sidebar__item" 
+                                key={segment.id}
+                                style={{textDecoration: "none"}}
+                            >
                                 {this.iconCreate(status)}
                                 <span className="sidebar__item-text">{this.getSegmentRange(segment.id, majorSegment)}</span>
-                            </div>
+                            </Link>
                         )
                     })}
                 </div>
@@ -74,19 +76,4 @@ class SegmentSidebar extends Component {
     }
 }
 
-
-
 export default SegmentSidebar;
-
-/*
-
-                        <div className="content">
-                            {selectedSegment && <div>Selected Segment: VB {selectedSegment*1000}を表示中!</div>}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
-*/

@@ -12,15 +12,19 @@ class Segment extends Component {
     }
 
     render() {
-        const {majorSegmentId} = this.props;
+        const {majorSegmentId, segmentId, userSegmentStatuses} = this.props;
+        const status = userSegmentStatuses[segmentId];
 
         return (
             <div className="sidebar-container">
-                <SegmentSidebarContainer majorSegmentId={majorSegmentId} />
+                <SegmentSidebarContainer
+                    majorSegmentId={majorSegmentId}
+                    userSegmentStatuses={userSegmentStatuses}
+                />
                 <div className="main-container">
                     <UserMenu />
-                    <div className="segment">
-                        xxx
+                    <div>
+                        {status}
                     </div>
                 </div>
             </div>
