@@ -100,7 +100,7 @@ class MajorSegment extends Component {
                                             to={`/segment/${majorSegment.id}`} 
                                             className={`major-segment__wrapper__item ${this.statusClass(status)}`} 
                                             key={majorSegment.id}
-                                            onClick={() => this.statusClass(status)=="locked" ? this.preventLink : this.props.fetchSidebarState(majorSegment.id)}
+                                            onClick={(e) => this.statusClass(status)=="locked" ? this.preventLink(e) : this.props.fetchSidebarState(majorSegment.id)}
                                         >
                                             {this.iconCreate(status)}
                                             <div className="major-segment__wrapper__item-help-container all"
