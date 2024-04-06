@@ -1,5 +1,14 @@
 @import "../../styles/color.scss";
 
+.sidebar-container {
+  display: flex;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .major-segment {
   display: flex;
   flex-direction: column;
