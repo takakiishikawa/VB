@@ -15,48 +15,17 @@ class SegmentSidebar extends Component {
         }
     }
 
-    render() {
-        const {majorSegment, segments, userSegmentStatuses} = this.props;
-        console.log(majorSegment, "majorSegment");
-        console.log(segments, "segments");
-        console.log(userSegmentStatuses, "userSegmentStatuses");
-
-        return (
-            <div className="sidebar">
-                <div className="sidebar__container">
-                    <Link to="/" className="sidebar__logo">
-                        VB
-                    </Link>
-                    <div className="sidebar__back">
-                        <ArrowBackIcon className="sidebar__back-icon" />
-                        <span className="sidebar__back-text">Back To Home</span>
-                    </div>
-                    <div className="sidebar__vb-count">
-                        VB {majorSegment*1000}
-                    </div>
-                    <div className="segment">
-                        <div className="segment__item">
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-            
-        )
+    statusClass = (status) => {
+        //status1: unlocked, status2: completed, statusnull: locked
+        return (status == 1 || status == 2 || status == 3) ? "unlocked"
+            : status == 4 ? "completed"
+                : "locked";
     }
-}
 
-
-
-export default SegmentSidebar;
-
-/*
-    selectedSegment = (id) => {
-        this.setState({selectedSegment: id});
+    iconCreate = (status) => {
+        return (status == 1 || status == 2 || status == 3) ? <LockOpenIcon className={`sidebar__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 25}} />
+            : status == 4 ? <CheckCircleOutlineIcon className={`sidebar__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 25}} />
+                : <LockIcon className={`sidebar__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 25}} />
     }
 
     getSegmentRange = (segment_id, major_segment_id) => {
@@ -70,26 +39,48 @@ export default SegmentSidebar;
     } 
 
     render() {
-        const {major_segment_id, segments} = this.props;
-        const {selectedSegment} = this.state;
+        const {majorSegment, segments, userSegmentStatuses} = this.props;
+        console.log(majorSegment, "majorSegment");
+        console.log(segments, "segments");
+        console.log(userSegmentStatuses, "userSegmentStatuses");
 
         return (
-            <div className="sidebar-container">
-                <SegmentSidebar />
-                <div className="main-container">
-                    <UserMenu />
-                    <div className="segment">
-                        <div className="segment__list">
-                                <div className="segment__list__item">
-                                    VB {major_segment_id * 1000}
-                                </div>
-                            {segments.map((segment) => (
-                                <div key={segment.id} className="segment__list__item" onClick={() => this.selectedSegment(segment.id)}>
-                                    {this.getSegmentRange(segment.id, major_segment_id)}
-                                </div>
-                            ))}
-                        </div>
-                        <div className="segment__content">
+            //ほかsegmentcomponent画面遷移、lockedのprevntLink, segmentCへのstatus + segment_id受け渡し
+            <div className="sidebar">
+                <div className="sidebar__container">
+                    <Link to="/" className="sidebar__logo">
+                        VB
+                    </Link>
+                    <Link to="/" className="sidebar__back" style={{textDecoration: "none"}}>
+                        <ArrowBackIcon className="sidebar__back-icon" />
+                        <span className="sidebar__back-text">Back To Home</span>
+                    </Link>
+                    <div className="sidebar__title">
+                        VB {majorSegment*1000}
+                    </div>
+                    {segments.map((segment) => {
+                        const status = userSegmentStatuses[segment.id];
+                        return (
+                            <div className="sidebar__item">
+                                {this.iconCreate(status)}
+                                <span className="sidebar__item-text">{this.getSegmentRange(segment.id, majorSegment)}</span>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+            
+        )
+    }
+}
+
+
+
+export default SegmentSidebar;
+
+/*
+
+                        <div className="content">
                             {selectedSegment && <div>Selected Segment: VB {selectedSegment*1000}を表示中!</div>}
                         </div>
                     </div>
@@ -98,50 +89,4 @@ export default SegmentSidebar;
         );
     }
 }
-*/
-
-
-
-
-/*
-class TopSidebar extends Component {
-    render() {
-        const pathName = this.props.location.pathname;
-        const {majorSegment} = this.props;
-        console.log(majorSegment, "majorSegment")
-
-        return(
-            <div className="sidebar">
-                <div className="sidebar__container">
-                    <Link to="/" className="sidebar__logo">
-                        VB
-                    </Link>
-                    <nav className="sidebar__nav">
-                        <Link to="/" className={`sidebar__nav__item ${pathName === "/" ? "active" : ""} `}>
-                            <span className="sidebar__nav__item-icon"><HomeIcon /></span>
-                            <span className="sidebar__nav__item-text">Home</span>
-                        </Link>
-
-                        <Link to="/tag" className={`sidebar__nav__item ${pathName === "/tag" ? "active" : ""}`}>
-                            <span className="sidebar__nav__item-icon"><FormatListBulletedIcon /></span>
-                            <span className="sidebar__nav__item-text">Tag</span>
-                        </Link>
-                        <Link to="/analytics" className={`sidebar__nav__item ${pathName === "/analytics" ? "active" : ""} `}>
-                            <span className="sidebar__nav__item-icon"><QueryStatsIcon /></span>
-                            <span className="sidebar__nav__item-text">Analytics</span>
-                        </Link>
-                    </nav>
-                </div>
-            </div>
-        );
-    }
-}
-
-const mapStateToProps = (state) => ({
-    majorSegment: getSidebarState(state),
-});
-
-
-export default withRouter(connect(mapStateToProps)(TopSidebar));
-
 */

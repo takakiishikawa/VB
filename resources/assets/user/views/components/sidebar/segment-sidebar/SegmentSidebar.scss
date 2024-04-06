@@ -1,5 +1,86 @@
 @import "../../../styles/color.scss";
 
+.sidebar {
+  &__container {
+    width: 15.2vw;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+  }
+    &__back {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border-radius: 8px;
+      color: inherit;
+
+      &:hover {
+        background-color: $color-secondary;
+      }
+      &:active {
+        background-color: $color-primary;
+      }
+
+      &-icon {
+        font-size: 25px;
+        padding-left: 16px;
+      }
+      &-text {
+        padding-left: 16px;
+      }
+    }
+    &__title {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+      font-weight: 510;
+      padding-left: 16px;
+    }
+    &__item {
+      height: 40px;
+      display:flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      border-radius: 8px;
+
+      &:hover {
+        background-color: $color-secondary;
+      }
+      &:active {
+        background-color: $color-primary;
+      }
+      
+      &-status-icon {
+        font-size: 25px;
+        padding-left: 16px;
+
+        &.unlocked {
+          color: $color-base-icon;
+        }
+        &.locked {
+          color: $color-question;
+        }
+        &.completed {
+          color: $color-completed;
+        }
+      }
+
+      &-text {
+        padding-left: 16px;
+      }
+
+    }
+
+  
+}
 
 
 
@@ -8,13 +89,13 @@
 
 /*
 .sidebar {
-  width: 17.8vw;
-  background-color: #fff;
-  height: 100vh;
-  border-right: 1px solid $color-primary;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 17.8vw;
+    background-color: #fff;
+    height: 100vh;
+    border-right: 1px solid $color-primary;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
   &__container {
     width: 15.2vw;
