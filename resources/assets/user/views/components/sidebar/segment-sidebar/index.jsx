@@ -28,6 +28,11 @@ class SegmentSidebar extends Component {
                 : <LockIcon className={`sidebar__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 25}} />
     }
 
+    preventLink = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     getSegmentRange = (segment_id, major_segment_id) => {
         const thousand = major_segment_id * 1000;
         const major_segment_id_minus_one = major_segment_id - 1;
@@ -60,9 +65,10 @@ class SegmentSidebar extends Component {
                         return (
                             <Link 
                                 to={`/segment/${majorSegment}/${segment.id}`} 
-                                className="sidebar__item" 
+                                className={`sidebar__item ${this.statusClass(status)} `}
                                 key={segment.id}
                                 style={{textDecoration: "none"}}
+                                onClick={!status ? this.preventLink : null}
                             >
                                 {this.iconCreate(status)}
                                 <span className="sidebar__item-text">{this.getSegmentRange(segment.id, majorSegment)}</span>

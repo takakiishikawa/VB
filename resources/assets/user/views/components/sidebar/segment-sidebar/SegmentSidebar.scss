@@ -50,13 +50,17 @@
       transition: background-color 0.3s ease;
       color: inherit;
       border-radius: 8px;
-
+      margin-bottom: 4px;
 
       &:hover {
         background-color: $color-secondary;
       }
       &:active {
         background-color: $color-primary;
+      }
+      &.locked {
+        cursor: not-allowed;
+        background-color: $color-white;
       }
       
       &-status-icon {
