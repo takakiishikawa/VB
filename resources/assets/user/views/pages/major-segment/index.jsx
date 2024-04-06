@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import HelpIcon from '@mui/icons-material/Help';
 import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/Lockopen';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {Link} from 'react-router-dom';

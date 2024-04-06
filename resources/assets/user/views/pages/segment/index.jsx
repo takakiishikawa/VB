@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import UserMenu from '../../components/user-menu';
-import TopSidebar from '../../components/sidebar/top-sidebar';
+import SegmentSidebarContainer from '../../components/sidebar/segment-sidebar/SegmentSidebarContainer';
 
 import './Segment.scss';
 
@@ -17,10 +17,10 @@ class Segment extends Component {
         this.setState({selectedSegment: id});
     }
 
-    getSegmentRange = (segment_id, major_segment_id) => {
-        const thousand = major_segment_id * 1000;
-        const major_segment_id_minus_one = major_segment_id - 1;
-        const segmentNumber = segment_id - major_segment_id_minus_one * 10;
+    getSegmentRange = (segment_id, majorSegmentId) => {
+        const thousand = majorSegmentId * 1000;
+        const majorSegmentId_minus_one = majorSegmentId - 1;
+        const segmentNumber = segment_id - majorSegmentId_minus_one * 10;
         const end = thousand + segmentNumber * 100;
         const start = end - 99;
 
@@ -28,22 +28,22 @@ class Segment extends Component {
     } 
 
     render() {
-        const {major_segment_id, segments} = this.props;
+        const {majorSegmentId, segments} = this.props;
         const {selectedSegment} = this.state;
 
         return (
             <div className="sidebar-container">
-                <TopSidebar />
+                <SegmentSidebarContainer majorSegmentId={majorSegmentId} />
                 <div className="main-container">
                     <UserMenu />
                     <div className="segment">
                         <div className="segment__list">
                                 <div className="segment__list__item">
-                                    VB {major_segment_id * 1000}
+                                    VB {majorSegmentId * 1000}
                                 </div>
                             {segments.map((segment) => (
                                 <div key={segment.id} className="segment__list__item" onClick={() => this.selectedSegment(segment.id)}>
-                                    {this.getSegmentRange(segment.id, major_segment_id)}
+                                    {this.getSegmentRange(segment.id, majorSegmentId)}
                                 </div>
                             ))}
                         </div>

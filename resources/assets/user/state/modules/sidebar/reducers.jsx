@@ -7,7 +7,6 @@ const initialState = {
 const sidebarReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_SIDEBAR_STATE:
-            console.log(action.payload,'fetch sidebar state');
             return {
                 ...state,
                 major_segment: action.payload,

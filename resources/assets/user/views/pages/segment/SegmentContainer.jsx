@@ -10,12 +10,12 @@ class SegmentContainer extends Component {
     }
 
     render(){
-        const major_segment_id = this.props.match.params.id;
+        const majorSegmentId = this.props.match.params.id;
 
         return (
             <Segment
                 segments={this.props.segments}
-                major_segment_id={major_segment_id}
+                majorSegmentId={majorSegmentId}
             />
         )
     }

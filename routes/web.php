@@ -24,6 +24,7 @@ Route::prefix('/api')->group(function () {
     });
     Route::prefix('/segment')->group(function () {
         Route::get('/{id}',[SegmentController::class, 'index']);
+        Route::get('/statuses/{id}', [SegmentController::class, 'userMajorSegmentStatus']);
     });
 });
 

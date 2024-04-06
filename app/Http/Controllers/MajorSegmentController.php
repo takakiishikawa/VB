@@ -22,4 +22,3 @@ class MajorSegmentController extends Controller
         return response()->json(['user_major_segment_statuses' => $user_major_segment_statuses]);
     }
 }
-

@@ -13,7 +13,6 @@ class TopSidebar extends Component {
     render() {
         const pathName = this.props.location.pathname;
         const {majorSegment} = this.props;
-        console.log(majorSegment, "majorSegment")
 
         return(
             <div className="sidebar">
