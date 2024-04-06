@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Tooltip from '../../components/tooltip';
 import UserMenu from '../../components/user-menu';
-import Sidebar from '../../components/sidebar';
+import TopSidebar from '../../components/sidebar/top-sidebar';
 import levelSentence from './level-sentence';
 import {fetchSidebarState} from '../../../state/modules/sidebar';
 import './MajorSegment.scss';
@@ -60,7 +60,7 @@ class MajorSegment extends Component {
         
         return (
             <div className="sidebar-container">
-                <Sidebar />
+                <TopSidebar />
                 <div className="main-container">
                     <UserMenu />
                     <div className="major-segment">

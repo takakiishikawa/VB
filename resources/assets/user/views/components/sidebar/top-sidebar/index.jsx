@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getSidebarState} from '../../../state/modules/sidebar';
+import {getSidebarState} from '../../../../state/modules/sidebar';
 import HomeIcon from '@mui/icons-material/Home';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 
-import './Sidebar.scss';
+import './TopSidebar.scss';
 
 
-class Sidebar extends Component {
+class TopSidebar extends Component {
     render() {
         const pathName = this.props.location.pathname;
         const {majorSegment} = this.props;
@@ -47,4 +47,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default withRouter(connect(mapStateToProps)(Sidebar));
+export default withRouter(connect(mapStateToProps)(TopSidebar));

@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import UserMenu from '../../components/user-menu';
+import TopSidebar from '../../components/sidebar/top-sidebar';
 
 import './Segment.scss';
 
@@ -30,21 +32,25 @@ class Segment extends Component {
         const {selectedSegment} = this.state;
 
         return (
-            <div className="segment">
-
-                <div className="segment__list">
-                        <div className="segment__list__item">
-                            VB {major_segment_id * 1000}
+            <div className="sidebar-container">
+                <TopSidebar />
+                <div className="main-container">
+                    <UserMenu />
+                    <div className="segment">
+                        <div className="segment__list">
+                                <div className="segment__list__item">
+                                    VB {major_segment_id * 1000}
+                                </div>
+                            {segments.map((segment) => (
+                                <div key={segment.id} className="segment__list__item" onClick={() => this.selectedSegment(segment.id)}>
+                                    {this.getSegmentRange(segment.id, major_segment_id)}
+                                </div>
+                            ))}
                         </div>
-                    {segments.map((segment) => (
-                        <div key={segment.id} className="segment__list__item" onClick={() => this.selectedSegment(segment.id)}>
-                            {this.getSegmentRange(segment.id, major_segment_id)}
+                        <div className="segment__content">
+                            {selectedSegment && <div>Selected Segment: VB {selectedSegment*1000}を表示中!</div>}
                         </div>
-                    ))}
-                </div>
-                <div className="segment__content">
-                    {selectedSegment && <div>Selected Segment: VB {selectedSegment*1000}を表示中!</div>}
-
+                    </div>
                 </div>
             </div>
         );
