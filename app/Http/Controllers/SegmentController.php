@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Segment;
 use App\Models\MajorSegment;
 use App\Models\UserSegmentStatus;
+use App\Models\ArticleTheme;
+use App\Models\Word;
+use App\Models\UserWord;
+use App\Models\UserArticle;
 use Illuminate\Support\Facades\Auth;
-
 
 class SegmentController extends Controller
 {
@@ -41,5 +44,118 @@ class SegmentController extends Controller
         \Log::info('user_segment_statuses', ['user_segment_statuses' => $user_segment_statuses]);
         return response()->json(['user_segment_statuses' => $user_segment_statuses]);
     }
-}
 
+    public function generateArticle($segmentId) {
+        try {
+            $response = $this.generateArticleApi($segmentId);
+            
+            if ($response['error']){
+                return response()->json(['error' => $response['message']], 400);
+            }
+            return response()->json(['message' => 'Article generated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unexpected error occurred while generating the article.'], 500);
+        }
+    }
+
+    public function generateArticleApi($segmentId) {
+        //前準備
+        $userId = Auth::id();
+        \Log::info('userId', ['userId' => $userId]);
+
+        $segmentId = Segment::find($segment_id)->$id;
+        \Log::info('segmentId', ['segmentId' => $segmentId]);
+        $selectWordCount = 50;
+        $articleCount = 0;
+
+        //記事生成開始
+        while ($articleCount < 1) {
+            //prompt準備
+            $articleTheme = ArticleTheme::inRandomOrder()->first();
+            \Log::info('articleTheme', ['articleTheme' => $articleTheme]);
+
+            $userWordIdList = UserWord::where('user_id', $userId)->pluck('word_id')->toArray();
+            $wordList = Word::whereNotIn('id', $userWordIdList)
+                ->orderByDesc('frequency')
+                ->limit($selectWordCount)
+                ->pluck('name');
+            $promptWordList = implode(', ', $wordList->pluck('name')->toArray());
+
+            //prompt生成
+            $prompt = "Create a simple English article with the following details:\n" .
+            "- Topic: {$articleTheme->name}\n" .
+            "- Use at least 10 words from this list: {$promptWordList}\n" .
+            "- This article used should be easy to understand, using simple vocabulary and grammar structures.\n" .
+            "- Keep the article under 500 characters in length.\n" .
+            "Only return a JSON with 'title' and 'article'.\n" .
+            '{"title": "Your Article Title Here", "article": "Your article content goes here."}';
+
+            \Log::info('prompt', ['prompt' => $prompt]);
+
+            //chat GPT API実行
+            $url = "https://api.openai.com/v1/chat/completions";
+
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . env('OPENAI_API_KEY')
+            ])->withOptions(['timeout' => 300])->post($url, [
+                'model' => 'gpt-3.5',
+                'messages' => [
+                    ['role' => 'user', 'content' => $prompt]
+                ],
+                'temperature' => 0.7
+            ]);
+
+            \Log::info('response', ['response' => $response]);
+
+            $jsonResponse = $response->json();
+
+            //API実行後データ処理
+            $beforeDecodeContent = preg_replace('/[\x00-\x1F\x7F]/u', '', $jsonResponse['choices'][0]['message']['content']);
+            $content = json_decode($beforeDecodeContent, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+            }
+            $titleData = $content['title'];
+            $articleData = $content['article'];
+            \Log::info('titleData', ['titleData' => $titleData]);
+            \Log::info('articleData', ['articleData' => $articleData]);
+
+            //記事生成に使用した英単語取得
+            $articleWordAll = preg_split('/[\s,\.]+/', $articleData, -1, PREG_SPLIT_NO_EMPTY);
+            $articleWordList = array_intersect($articleWordAll, $promptWordList);
+
+            //error handling
+            if (count($articleWordList) < 10) {
+                return ['error' => true, 'message' => 'Failed to generate an article with the required number of words.'];
+            }
+            
+            if (!$articleData || !$titleData) {
+                return ['error' => true, 'message' => 'Failed to generate an article.'];
+            }
+
+            //DB保存
+            $UserArticle = UserArticle::create([
+                'user_id' => $userId,
+                'article_theme_id' => $articleTheme->id,
+                'segment_id' => $segmentId,
+                'article' => $articleData,
+                'title' => $titleData,
+                'read_count' => 0
+            ]);
+
+            $selectedWordList = array_slice($articleWordList, 0, 10);
+            foreach ($articleWordList as $word) {
+                $wordId = Word::where('name', $word)->value('id');
+                UserWord::create([
+                    'user_id' => $userId,
+                    'user_article_id' => $UserArticle->id,
+                    'word_id' => $wordId,
+                    'segment_id' => $segmentId
+                ]);
+            }
+            $articleCount++;
+        }
+
+        return;
+    }
+}
