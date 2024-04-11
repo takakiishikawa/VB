@@ -7,3 +7,7 @@ export const fetchSegments = (id) => {
 export const fetchUserSegmentStatuses = (id) => {
     return axios.get(`./api/segment/statuses/${id}`);
 }
+
+export const fetchGenerateArticle = (segmentId) => {
+    return axios.post(`./api/segment/generate/${segmentId}`);
+}

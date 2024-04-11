@@ -2,6 +2,7 @@ import {FETCH_SEGMENTS} from './types';
 import {FETCH_SEGMENTS_SUCCESS} from './types';
 import {FETCH_USER_SEGMENT_STATUSES} from './types';
 import {FETCH_USER_SEGMENT_STATUSES_SUCCESS} from './types';
+import {FETCH_GENERATE_ARTICLE} from './types';
 
 export const fetchSegments = (id) => ({
     type: FETCH_SEGMENTS,
@@ -21,4 +22,9 @@ export const fetchUserSegmentStatuses = (id) => ({
 export const fetchUserSegmentStatusesSuccess = (user_segment_statuses) => ({
     type: FETCH_USER_SEGMENT_STATUSES_SUCCESS,
     payload: user_segment_statuses,
+});
+
+export const fetchGenerateArticle = (segmentId) => ({
+    type: FETCH_GENERATE_ARTICLE,
+    payload: segmentId,
 });

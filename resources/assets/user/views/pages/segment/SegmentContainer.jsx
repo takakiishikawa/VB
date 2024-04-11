@@ -12,8 +12,6 @@ class SegmentContainer extends Component {
 
     render(){
         const {majorSegmentId, segmentId} = this.props.match.params;
-        console.log(majorSegmentId, segmentId, 'test');
-        console.log(this.props.match, 'test2');
 
         return (
             <Segment

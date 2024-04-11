@@ -27,9 +27,18 @@ class Segment extends Component {
                 <div className="main-container">
                     <UserMenu />
                     <div className="segment">
-                        {status == 1 && <GenerateArticle />}
-                        {status == 2 && <RaadingStatus />}
-                        {(status == 3 || status == 4) && <WordChallenge />}
+                        {status == 1 && 
+                            <GenerateArticle
+                                segmentId={segmentId}
+                            />}
+                        {status == 2 && 
+                            <RaadingStatus
+
+                            />}
+                        {(status == 3 || status == 4) && 
+                            <WordChallenge
+                                
+                            />}
                     </div>
                 </div>
             </div>
