@@ -8,7 +8,7 @@ class GenerateArticle extends Component {
 
     generate = () => {
         console.log(0);
-        fetchGenerateArticle(this.props.segmentId);
+        this.props.fetchGenerateArticle(this.props.segmentId);
     }
 
     render() {

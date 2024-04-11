@@ -11,12 +11,12 @@ use App\Models\Word;
 use App\Models\UserWord;
 use App\Models\UserArticle;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class SegmentController extends Controller
 {
     public function index($id) {
         $majorSegment = MajorSegment::find($id);
-        \Log::info('majorSegment', ['majorSegment' => $majorSegment]);
         $major_segment_id = $majorSegment->id;
         $segments = Segment::where('major_segment_id', $major_segment_id)->get('id');
         
@@ -24,7 +24,6 @@ class SegmentController extends Controller
     }
     
     public function userMajorSegmentStatus($major_segment_id) {
-        \Log::info('1', ['major_segment_id' => $major_segment_id]);
         $user = Auth::user();
         $segmentList = Segment::where('major_segment_id', $major_segment_id)->get('id');
         //segmentListのidと一致するuser_segment_statusesのsegment_idとstatusを取得
@@ -41,13 +40,12 @@ class SegmentController extends Controller
             }
         }
 
-        \Log::info('user_segment_statuses', ['user_segment_statuses' => $user_segment_statuses]);
         return response()->json(['user_segment_statuses' => $user_segment_statuses]);
     }
 
     public function generateArticle($segmentId) {
         try {
-            $response = $this.generateArticleApi($segmentId);
+            $response = $this->generateArticleApi($segmentId);
             
             if ($response['error']){
                 return response()->json(['error' => $response['message']], 400);
@@ -63,9 +61,9 @@ class SegmentController extends Controller
         $userId = Auth::id();
         \Log::info('userId', ['userId' => $userId]);
 
-        $segmentId = Segment::find($segment_id)->$id;
+        $segmentId = Segment::find($segmentId)->id;
         \Log::info('segmentId', ['segmentId' => $segmentId]);
-        $selectWordCount = 50;
+        $selectWordCount = 100;
         $articleCount = 0;
 
         //記事生成開始
@@ -78,8 +76,9 @@ class SegmentController extends Controller
             $wordList = Word::whereNotIn('id', $userWordIdList)
                 ->orderByDesc('frequency')
                 ->limit($selectWordCount)
-                ->pluck('name');
-            $promptWordList = implode(', ', $wordList->pluck('name')->toArray());
+                ->pluck('name')
+                ->toArray();
+            $promptWordList = implode(', ', $wordList);
 
             //prompt生成
             $prompt = "Create a simple English article with the following details:\n" .
@@ -99,7 +98,7 @@ class SegmentController extends Controller
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . env('OPENAI_API_KEY')
             ])->withOptions(['timeout' => 300])->post($url, [
-                'model' => 'gpt-3.5',
+                'model' => 'gpt-4',
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt]
                 ],
@@ -114,6 +113,8 @@ class SegmentController extends Controller
             $beforeDecodeContent = preg_replace('/[\x00-\x1F\x7F]/u', '', $jsonResponse['choices'][0]['message']['content']);
             $content = json_decode($beforeDecodeContent, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
+                \Log::info('JSONデコードエラー');
+                return ['error' => true, 'message' => 'Failed to decode JSON content.'];
             }
             $titleData = $content['title'];
             $articleData = $content['article'];
@@ -122,14 +123,19 @@ class SegmentController extends Controller
 
             //記事生成に使用した英単語取得
             $articleWordAll = preg_split('/[\s,\.]+/', $articleData, -1, PREG_SPLIT_NO_EMPTY);
-            $articleWordList = array_intersect($articleWordAll, $promptWordList);
+            $articleWordList = array_intersect($articleWordAll, $wordList);
+            \Log::info('articleWordAll', ['articleWordAll' => $articleWordAll]);
+            \Log::info('wordList', ['wordList' => $wordList]);
+            \Log::info('articleWordList', ['articleWordList' => $articleWordList]);
 
             //error handling
             if (count($articleWordList) < 10) {
+                \Log::info('10以下のエラー');
                 return ['error' => true, 'message' => 'Failed to generate an article with the required number of words.'];
             }
             
             if (!$articleData || !$titleData) {
+                \Log::info('記事生成エラー');
                 return ['error' => true, 'message' => 'Failed to generate an article.'];
             }
 
@@ -144,7 +150,7 @@ class SegmentController extends Controller
             ]);
 
             $selectedWordList = array_slice($articleWordList, 0, 10);
-            foreach ($articleWordList as $word) {
+            foreach ($selectedWordList as $word) {
                 $wordId = Word::where('name', $word)->value('id');
                 UserWord::create([
                     'user_id' => $userId,
@@ -153,6 +159,7 @@ class SegmentController extends Controller
                     'segment_id' => $segmentId
                 ]);
             }
+            \Log::info('記事生成成功');
             $articleCount++;
         }
 
