@@ -9,12 +9,15 @@ class ReadingStatus extends Component {
         };
     }
     render() {
-        const {readingStatus} = this.props;
-        console.log(readingStatus, 'readingStatus');
+        const {readingStatus, segmentCycle} = this.props;
+        console.log(this.props, 'component');
         
         return (
             <div>
                 <h1>Reading Status</h1>
+                <div>
+                    {segmentCycle.cycle} / 6
+                </div>
                 {readingStatus.map((item, index) => {
                     return (
                         <div key={index}>

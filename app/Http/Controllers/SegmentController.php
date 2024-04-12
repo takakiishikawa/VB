@@ -185,4 +185,16 @@ class SegmentController extends Controller
 
         return response()->json(['userArticleList' => $userArticleList]);
     }
+
+    public function userSegmentCycle($segmentId) {
+        $userId = Auth::user()->id;
+        $userSegmentCycle = UserSegmentStatus::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->select('cycle')
+            ->first();
+
+        \Log::info('userSegmentCycle', ['userSegmentCycle' => $userSegmentCycle]);
+
+        return response()->json(['userSegmentCycle' => $userSegmentCycle]);
+    }
 }

@@ -5,3 +5,5 @@ export {getUserSegmentStatuses} from './selector';
 export {fetchGenerateArticle} from './action';
 export {fetchReadingStatus} from './action';
 export {getReadingStatus} from './selector';
+export {fetchSegmentCycle} from './action';
+export {getSegmentCycle} from './selector';

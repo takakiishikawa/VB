@@ -13,14 +13,16 @@ import {fetchGenerateArticle} from './api';
 import {FETCH_READING_STATUS} from './types';
 import {fetchReadingStatusSuccess} from './action';
 import {fetchReadingStatus} from './api';
-
+import {FETCH_SEGMENT_CYCLE} from './types';
+import {fetchSegmentCycleSuccess} from './action';
+import {fetchSegmentCycle} from './api';
 
 export default function* segmentsSaga() {
     yield takeLatest(FETCH_SEGMENTS, fetchSegmentsSaga);
     yield takeLatest(FETCH_USER_SEGMENT_STATUSES, fetchUserSegmentStatusesSaga);
     yield takeLatest(FETCH_GENERATE_ARTICLE, fetchGenerateArticleSaga);
     yield takeLatest(FETCH_READING_STATUS, fetchReadingStatusSaga);
-
+    yield takeLatest(FETCH_SEGMENT_CYCLE, fetchSegmentCycleSaga);
 }
 
 function* fetchSegmentsSaga(action) {
@@ -60,6 +62,19 @@ function* fetchReadingStatusSaga(action) {
         const {segmentId} = action.payload;
         const response = yield call(fetchReadingStatus, segmentId);
         yield put(fetchReadingStatusSuccess(response.data));
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+function* fetchSegmentCycleSaga(action) {
+    try {
+        const segmentId = action.payload;
+        console.log(segmentId, 'test');
+        const response = yield call(fetchSegmentCycle, segmentId);
+        console.log(response, 'response');
+        yield put(fetchSegmentCycleSuccess(response.data));
     }
     catch (error) {
         console.log(error);

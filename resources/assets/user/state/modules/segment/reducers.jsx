@@ -1,7 +1,8 @@
 const initialState = {
     segments: [],
     user_segment_statuses: [],
-    userArticleList: []
+    userArticleList: [],
+    userSegmentCycle: []
 }
 
 const segmentReducer = (state = initialState, action) => {
@@ -28,6 +29,12 @@ const segmentReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userArticleList: action.payload.userArticleList,
+            }
+        case 'FETCH_SEGMENT_CYCLE_SUCCESS':
+            console.log(action.payload.userSegmentCycle, 'test');
+            return {
+                ...state,
+                userSegmentCycle: action.payload.userSegmentCycle,
             }
         default:
             return state;
