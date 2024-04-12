@@ -165,4 +165,24 @@ class SegmentController extends Controller
 
         return;
     }
+
+    public function readingStatus($segmentId) {
+        $userId = Auth::user()->id;
+        $userArticleArray = UserArticle::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->with(['articleTheme' => function($query) {
+                $query->select('id', 'name');
+            }])
+            ->get(['title', 'article_theme_id', 'read_status']);
+
+        $userArticleList = $userArticleArray->map(function ($userArticle) {
+            return [
+                'title' => $userArticle->title,
+                'article_theme' => $userArticle->articleTheme->name,
+                'read_status' => $userArticle->read_status
+            ];
+        });
+
+        return response()->json(['userArticleList' => $userArticleList]);
+    }
 }

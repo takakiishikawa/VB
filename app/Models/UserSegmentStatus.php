@@ -17,7 +17,8 @@ class UserSegmentStatus extends Model
     protected $fillable = [
         'user_id',
         'segment_id',
-        'status'
+        'status',
+        'cycle'
     ];
 
     public function user(){

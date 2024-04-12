@@ -14,7 +14,7 @@ class UserArticle extends Model
         'article_theme_id',
         'segment_id',
         'article',
-        'read_count',
+        'read_status',
         'title'
     ];
 

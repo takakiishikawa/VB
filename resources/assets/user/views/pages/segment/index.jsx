@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import UserMenu from '../../components/user-menu';
 import SegmentSidebarContainer from '../../components/sidebar/segment-sidebar/SegmentSidebarContainer';
 import GenerateArticle from './generate-article';
-import RaadingStatus from './reading-status';
+import ReadingStatusContainer from './reading-status/ReadingStatusContainer';
 import WordChallenge from './word-challenge';
 
 import './Segment.scss';
@@ -32,8 +32,9 @@ class Segment extends Component {
                                 segmentId={segmentId}
                             />}
                         {status == 2 && 
-                            <RaadingStatus
-
+                            <ReadingStatusContainer
+                                segmentId={segmentId}
+                                majorSegmentId={majorSegmentId}
                             />}
                         {(status == 3 || status == 4) && 
                             <WordChallenge

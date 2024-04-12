@@ -11,3 +11,7 @@ export const fetchUserSegmentStatuses = (id) => {
 export const fetchGenerateArticle = (segmentId) => {
     return axios.post(`./api/segment/generate/${segmentId}`);
 }
+
+export const fetchReadingStatus = (segmentId) => {
+    return axios.get(`./api/segment/reading-status/${segmentId}`);
+}
