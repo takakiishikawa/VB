@@ -167,6 +167,7 @@ class SegmentController extends Controller
     }
 
     public function readingStatus($segmentId) {
+        \Log::info('segmentId', ['segmentId' => $segmentId]);
         $userId = Auth::user()->id;
         $userArticleArray = UserArticle::where('user_id', $userId)
             ->where('segment_id', $segmentId)
@@ -175,6 +176,7 @@ class SegmentController extends Controller
             }])
             ->get(['title', 'article_theme_id', 'read_status']);
 
+        \Log::info('userArticleArray', ['userArticleArray' => $userArticleArray]);
         $userArticleList = $userArticleArray->map(function ($userArticle) {
             return [
                 'title' => $userArticle->title,

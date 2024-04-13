@@ -10,7 +10,6 @@ class ReadingStatus extends Component {
     }
     render() {
         const {readingStatus, segmentCycle} = this.props;
-        console.log(this.props, 'component');
         
         return (
             <div>

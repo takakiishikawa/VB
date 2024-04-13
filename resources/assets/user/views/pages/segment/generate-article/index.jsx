@@ -7,7 +7,6 @@ import './GenerateArticle.scss';
 class GenerateArticle extends Component {
 
     generate = () => {
-        console.log(0);
         this.props.fetchGenerateArticle(this.props.segmentId);
     }
 

@@ -5,11 +5,19 @@ import ReadingStatus from './';
 
 class ReadingStatusContainer extends Component {
     componentDidMount() {
+        console.log('componentDidMount');
         const {segmentId} = this.props;
         this.props.fetchReadingStatus(segmentId);
         this.props.fetchSegmentCycle(segmentId);
     }
+    componentDidUpdate(prevProps) {
+        if (prevProps.segmentId !== this.props.segmentId) {
+            this.props.fetchReadingStatus(this.props.segmentId);
+            this.props.fetchSegmentCycle(this.props.segmentId);
+        }
+    }
     render() {
+        console.log('ReadingStatusContainer');
         return (
             <ReadingStatus {...this.props} />
         )

@@ -31,7 +31,6 @@ const segmentReducer = (state = initialState, action) => {
                 userArticleList: action.payload.userArticleList,
             }
         case 'FETCH_SEGMENT_CYCLE_SUCCESS':
-            console.log(action.payload.userSegmentCycle, 'test');
             return {
                 ...state,
                 userSegmentCycle: action.payload.userSegmentCycle,

@@ -17,6 +17,7 @@ class Segment extends Component {
     render() {
         const {majorSegmentId, segmentId, userSegmentStatuses} = this.props;
         const status = userSegmentStatuses[segmentId];
+        console.log(12);
 
         return (
             <div className="sidebar-container">

@@ -71,9 +71,7 @@ function* fetchReadingStatusSaga(action) {
 function* fetchSegmentCycleSaga(action) {
     try {
         const segmentId = action.payload;
-        console.log(segmentId, 'test');
         const response = yield call(fetchSegmentCycle, segmentId);
-        console.log(response, 'response');
         yield put(fetchSegmentCycleSuccess(response.data));
     }
     catch (error) {
