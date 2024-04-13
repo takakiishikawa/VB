@@ -1,0 +1,163 @@
+@import "../../../styles/color.scss";
+
+
+.container {
+    margin: 0 6.1vw;
+
+}
+
+.cycle-bar {
+    margin-top: 13px;
+    margin-bottom: 10px;
+    margin-right: 10vw;
+    margin-left: 10vw;
+    padding: 0.7vw 6.1vw;
+    display: flex;
+    align-items: center;
+
+    &>div {
+        display: flex;
+        align-items: center;
+        flex :1;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 0;
+        width: 1.7vw;
+        gap: 6px;
+        font-size: 12px;
+
+        &-circle {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            color: $color-white;
+            display: flex;
+            justify-content: center;        
+            align-items: center;
+
+            &.completed {
+                background-color: $color-completed;
+            }
+            &.unlocked {
+                background-color: $color-current;
+            }
+            &.locked {
+                background-color: $color-hide;
+            }
+        }
+
+        &-name {
+
+        }
+    }
+    &__line {
+        margin: 0 8px;
+        flex-grow: 1;
+        height: 1px;
+        background-color: $color-hide;
+    }
+}
+
+.reading-table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+
+    th, td {
+        border-bottom: 1px solid $color-primary;
+        text-align: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-right: 7.8vw;
+        font-weight: 500;
+
+        &:last-child {
+            //border-bottom: none;
+            padding-right: 0;
+        }
+        
+        &.vb {
+            width: 25%;
+        }
+
+        &.title {
+            text-align: left;
+            width: 45%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50%;
+        }
+        
+        &.tag {
+            width: 15%;
+        }
+
+        &.status {
+            width: 15%;
+        }
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+}
+
+
+
+
+
+
+
+
+/*
+@import "../../../styles/color.scss";
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+
+    th, td {
+        border-bottom: 1px solid $color-hide;
+        text-align: center;
+        padding: 8px;
+
+        &:not(:last-child) {
+            border-right: 1px solid $color-hide;
+        }
+    }
+
+    th {
+        background-color: $color-light;
+    }
+
+    .tag {
+        border-radius: 12px;
+        background-color: $color-light;
+        padding: 5px 10px;
+    }
+
+    button {
+        padding: 5px 10px;
+        border-radius: 8px;
+        background-color: $color-primary;
+        color: $color-white;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-secondary;
+        }
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none; // Remove bottom border for the last row
+    }
+}
+*/
