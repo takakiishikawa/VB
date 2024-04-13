@@ -50,10 +50,6 @@
                 background-color: $color-hide;
             }
         }
-
-        &-name {
-
-        }
     }
     &__line {
         margin: 0 8px;
@@ -66,7 +62,6 @@
 .reading-table {
     border-collapse: collapse;
     width: 100%;
-    max-width: 100%;
 
     th, td {
         border-bottom: 1px solid $color-primary;
@@ -75,6 +70,7 @@
         padding-bottom: 8px;
         padding-right: 7.8vw;
         font-weight: 500;
+        height: 37.5px;
 
         &:last-child {
             //border-bottom: none;
@@ -96,10 +92,38 @@
         
         &.tag {
             width: 15%;
+
+            .tag-name {
+                font-size: 12px;
+                border-radius: 8px;
+                border: 1px solid $color-primary;
+                font-weight: 540;
+                padding: 6px 8px;
+                display: inline-block;
+            }
         }
 
         &.status {
             width: 15%;
+
+            .statusButton {
+                font-size: 12px;
+                padding: 8px;
+                color: $color-white;
+                border-radius: 8px;
+                border: none;
+                cursor: pointer;
+
+                &.start {
+                    background-color: $color-current;
+                }
+                &.resume {
+                    background-color: $color-resume;
+                }
+                &.read {
+                    background-color: $color-completed;
+                }
+            }
         }
     }
 
@@ -107,57 +131,3 @@
         border-bottom: none;
     }
 }
-
-
-
-
-
-
-
-
-/*
-@import "../../../styles/color.scss";
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px auto;
-
-    th, td {
-        border-bottom: 1px solid $color-hide;
-        text-align: center;
-        padding: 8px;
-
-        &:not(:last-child) {
-            border-right: 1px solid $color-hide;
-        }
-    }
-
-    th {
-        background-color: $color-light;
-    }
-
-    .tag {
-        border-radius: 12px;
-        background-color: $color-light;
-        padding: 5px 10px;
-    }
-
-    button {
-        padding: 5px 10px;
-        border-radius: 8px;
-        background-color: $color-primary;
-        color: $color-white;
-        border: none;
-        cursor: pointer;
-
-        &:hover {
-            background-color: $color-secondary;
-        }
-    }
-
-    tbody tr:last-child td {
-        border-bottom: none; // Remove bottom border for the last row
-    }
-}
-*/
