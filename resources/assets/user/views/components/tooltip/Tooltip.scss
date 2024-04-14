@@ -7,7 +7,7 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 8px;
-    background-color: $color-font;
+    background-color: $color-text;
     color: $color-white;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     white-space: nowrap;
@@ -25,7 +25,7 @@
         transform: translateX(-50%);
         border-left: 8px solid transparent; // 左側の透明なボーダー
         border-right: 8px solid transparent; // 右側の透明なボーダー
-        border-top: 8px solid $color-font; // 上向きの三角形（ツールチップの背景色と同じ）
+        border-top: 8px solid $color-text; // 上向きの三角形（ツールチップの背景色と同じ）
     }
 
 

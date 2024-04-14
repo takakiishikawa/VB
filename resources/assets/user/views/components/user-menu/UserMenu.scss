@@ -37,7 +37,7 @@
 
         &-humburger {
             font-size: 17px !important;
-            color: $color-font;
+            color: $color-text;
             margin: 3px;
         }
 
@@ -66,7 +66,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             text-decoration: none;
-            color: $color-font;
+            color: $color-text;
 
 
             &:hover {

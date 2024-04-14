@@ -1,0 +1,48 @@
+@import "../../styles/color.scss";
+
+
+.header {
+    margin-top: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+
+    &__back {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: -5px;
+        left: 47px;
+        
+        &__back-icon {
+            font-size: 27px;
+            color: $color-text;
+        }   
+    }
+    
+    &__progress-bar {
+        display: flex;
+        width: 57vw;
+        height: 17px;
+
+
+        &__completed {
+            width: 40%;
+            background-color: $color-current;
+            border-radius: 8px 0 0 8px;
+            height: 100%;
+
+        }
+        &__uncompleted {
+            width: 60%;
+            background-color: $color-sub-current;
+            border-radius: 0 8px 8px 0;
+
+            height: 100%;
+        }
+    }
+}
+

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './ReadingStatus.scss';
+import {Link} from 'react-router-dom';
 //Button materialUI
 import Button from '@mui/material/Button';
 
@@ -25,6 +26,10 @@ class ReadingStatus extends Component {
         const countEnd = majorSegmentId*1000 + (segmentId-1)*100 + (index+1) *10;
         const countStart =countEnd -9;
         return `${countStart} -${countEnd}`;
+    }
+
+    goArticle = (articleId) => {
+        
     }
 
     render() {
@@ -74,12 +79,21 @@ class ReadingStatus extends Component {
                                         <span className="theme-name">{item.article_theme}</span>
                                     </td>
                                     <td className="status">
+                                        {status !== 'read' ?
+                                            <Link
+                                                to={`/segment/${majorSegmentId}/${segmentId}/article/${index+1}`}
+                                                onClick={this.goArticle(index+1)}
+                                                className={`statusButton ${status}`}
+                                            >
+                                                {status}
+                                            </Link>
+                                        : 
                                         <button
-                                            onClick={this.startReading}
+                                            onClick={this.goArticle(index+1)}
                                             className={`statusButton ${status}`}
                                         >
                                             {status}
-                                        </button>
+                                        </button>}
                                     </td>
                                 </tr>
                             )

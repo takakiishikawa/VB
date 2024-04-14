@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {Link, withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

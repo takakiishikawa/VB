@@ -113,6 +113,7 @@
                 border-radius: 8px;
                 border: none;
                 cursor: pointer;
+                text-decoration: none;
 
                 &.start {
                     background-color: $color-current;
@@ -122,6 +123,7 @@
                 }
                 &.read {
                     background-color: $color-completed;
+                    cursor: not-allowed;
                 }
             }
         }

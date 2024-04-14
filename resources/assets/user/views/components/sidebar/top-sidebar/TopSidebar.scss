@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: $color-font;
+    color: $color-text;
   }
 
   &__nav {
@@ -37,7 +37,7 @@
       border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
-      color: $color-font;
+      color: $color-text;
       transition: background-color 0.3s ease;
 
       &:hover,

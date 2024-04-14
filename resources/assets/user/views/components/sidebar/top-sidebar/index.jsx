@@ -28,7 +28,7 @@ class TopSidebar extends Component {
 
                         <Link to="/theme" className={`sidebar__nav__item ${pathName === "/theme" ? "active" : ""}`}>
                             <span className="sidebar__nav__item-icon"><FormatListBulletedIcon /></span>
-                            <span className="sidebar__nav__item-text">theme</span>
+                            <span className="sidebar__nav__item-text">Theme</span>
                         </Link>
                         <Link to="/analytics" className={`sidebar__nav__item ${pathName === "/analytics" ? "active" : ""} `}>
                             <span className="sidebar__nav__item-icon"><QueryStatsIcon /></span>
