@@ -26,9 +26,9 @@ class TopSidebar extends Component {
                             <span className="sidebar__nav__item-text">Home</span>
                         </Link>
 
-                        <Link to="/tag" className={`sidebar__nav__item ${pathName === "/tag" ? "active" : ""}`}>
+                        <Link to="/theme" className={`sidebar__nav__item ${pathName === "/theme" ? "active" : ""}`}>
                             <span className="sidebar__nav__item-icon"><FormatListBulletedIcon /></span>
-                            <span className="sidebar__nav__item-text">Tag</span>
+                            <span className="sidebar__nav__item-text">theme</span>
                         </Link>
                         <Link to="/analytics" className={`sidebar__nav__item ${pathName === "/analytics" ? "active" : ""} `}>
                             <span className="sidebar__nav__item-icon"><QueryStatsIcon /></span>

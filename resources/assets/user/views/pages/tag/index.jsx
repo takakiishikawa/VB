@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import UserMenu from '../../components/user-menu';
 import TopSidebar from '../../components/sidebar/top-sidebar';
 
-import './Tag.scss';
+import './Theme.scss';
 
-class Tag extends Component {
+class Theme extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,4 +45,4 @@ class Tag extends Component {
     }
 }
 
-export default Tag;
+export default Theme;

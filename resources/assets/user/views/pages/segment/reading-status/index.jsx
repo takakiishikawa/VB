@@ -55,7 +55,7 @@ class ReadingStatus extends Component {
                         <tr>
                             <th className="vb">VB</th>
                             <th className="title">Title</th>
-                            <th className="tag">Tag</th>
+                            <th className="theme">Theme</th>
                             <th className="status">Status</th>
                         </tr>
                     </thead>
@@ -70,8 +70,8 @@ class ReadingStatus extends Component {
                                     <td className="title">
                                         {item.title}
                                     </td>
-                                    <td className="tag">
-                                        <span className="tag-name">{item.article_theme}</span>
+                                    <td className="theme">
+                                        <span className="theme-name">{item.article_theme}</span>
                                     </td>
                                     <td className="status">
                                         <button

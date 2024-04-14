@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {Switch, Route, HashRouter} from 'react-router-dom';
 import MajorSegmentContainer from '../pages/major-segment/MajorSegmentContainer';
 import SegmentContainer from '../pages/segment/SegmentContainer';
-import Tag from '../pages/tag';
+import Theme from '../pages/Theme';
 import Analytics from '../pages/analytics';
 import Article from '../pages/article';
 import Word from '../pages/word';
@@ -19,7 +19,7 @@ class AppRoutes extends Component {
             <Switch>
                 <Route exact path="/" component={MajorSegmentContainer} />
                 <Route exact path="/segment/:majorSegmentId/:segmentId" component={SegmentContainer} />
-                <Route exact path="/tag" component={Tag} />
+                <Route exact path="/Theme" component={Theme} />
                 <Route exact path="/analytics" component={Analytics} />
                 <Route exact path="/article" component={Article} />
                 <Route exact path="/word" component={Word} />
