@@ -4,7 +4,7 @@ import MajorSegmentContainer from '../pages/major-segment/MajorSegmentContainer'
 import SegmentContainer from '../pages/segment/SegmentContainer';
 import Theme from '../pages/theme';
 import Analytics from '../pages/analytics';
-import Article from '../pages/article';
+import ArticleContainer from '../pages/article/ArticleContainer';
 import Word from '../pages/word';
 import Profile from '../components/profile';
 import Concept from '../components/concept';
@@ -19,7 +19,7 @@ class AppRoutes extends Component {
             <Switch>
                 <Route exact path="/" component={MajorSegmentContainer} />
                 <Route exact path="/segment/:majorSegmentId/:segmentId" component={SegmentContainer} />
-                <Route exact path="/segment/:majorSegmentId/:segmentId/article/:articleId" component={Article} />
+                <Route exact path="/segment/:majorSegmentId/:segmentId/article/:articleId" component={ArticleContainer} />
                 <Route exact path="/word" component={Word} />
                 <Route exact path="/Theme" component={Theme} />
                 <Route exact path="/analytics" component={Analytics} />

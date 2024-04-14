@@ -20,4 +20,8 @@ class Word extends Model
     public function userWord(){
         return $this->hasMany(UserWord::class, 'word_id');
     }
+
+    public function wordToParse(){
+        return $this->hasMany(WordToParse::class, 'word_id');
+    }
 }

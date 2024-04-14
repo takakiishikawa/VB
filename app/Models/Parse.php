@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Parse extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name'
+    ];
+
+    public function wordToParse() {
+        return $this->hasMany(WordToParse::class, 'parse_ic');
+    }
 }

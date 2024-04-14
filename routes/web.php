@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MajorSegmentController;
 use App\Http\Controllers\SegmentController;
+use App\Http\Controllers\ArticleController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,6 +29,9 @@ Route::prefix('/api')->group(function () {
         Route::post('/generate/{id}', [SegmentController::class, 'generateArticle']);
         Route::get('/reading-status/{id}', [SegmentController::class, 'readingStatus']);
         Route::get('/cycle/{id}', [SegmentController::class, 'userSegmentCycle']);
+    });
+    Route::prefix('/article')->group(function () {
+        Route::get('/{id}/{id}',[ArticleController::class,'index']);
     });
 });
 
