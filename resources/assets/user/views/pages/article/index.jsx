@@ -1,19 +1,32 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import './Article.scss';
 
 class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            aritcle: []
+            articleCount: 0,
         };
     }
 
+    nextArticle = () => {
+        this.setState({
+            articleCount: this.state.articleCount + 1,
+        });
+    }
+
     render() {
-        const articleList = this.props.articleList;
-        console.log(articleList, 'articleList');
+        const {articleCount} = this.state;
+        const {articleList} = this.props;
+
+        const articleInfo = articleList[articleCount];
+        if (!articleInfo) {
+            return;
+        }
+        console.log(articleInfo, 'articleInfo')
         
         return (
             <div>
@@ -29,10 +42,40 @@ class Article extends Component {
                         </div>
                     </div>
                 </div>
-                <h1>Article Title</h1>
+                <div className="content">
+                    <div>
+                        <div className="content__theme">
+                            {articleInfo.article_theme}
+                        </div>
+                    </div>
+                    <div className="content__title">
+                        {articleInfo.title}
+                    </div>
+                    <div className="content__article">
+                        {articleInfo.article}
+                    </div>
+                </div>
+                <div className="next">
+                    <ArrowForwardIcon
+                        onClick={this.nextArticle}
+                        style={{
+                            fontSize: 30,
+                            color: "#FFFFFF",
+                            backgroundColor: "#3F51B5",
+                            borderRadius: 8,
+                            padding: 6,
+                            cursor: "pointer",
+                        }}
+                    />
+                </div>
             </div>
         );
     }
 }
 
 export default Article;
+
+/*
+title, article, article_theme, wordList
+    wordList: word, jp, meaning, parseList
+*/

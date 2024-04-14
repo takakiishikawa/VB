@@ -8,7 +8,6 @@
     justify-content: center;
     position: relative;
     
-
     &__back {
         text-decoration: none;
         display: flex;
@@ -46,3 +45,42 @@
     }
 }
 
+.content {
+    margin-top: 112px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin-right: 15vw;
+    margin-left: 15vw;
+
+    &__theme {
+        display: inline-block;
+        border-radius: 8px;
+        background-color: $color-white;
+        padding: 6px 8px;
+        font-weight: 540;
+        font-size: 12px;
+        border: 1px solid $color-primary;
+        margin-bottom: 18px;
+
+    }
+    &__title {
+        font-weight: 540;
+        font-size: 40px;
+        margin-bottom: 54px;
+    }
+    &__article {
+        line-height: 300%;
+        letter-spacing: 0.5px;
+        font-size: 20px;
+        margin-bottom: 80px;
+    }
+
+}
+
+.next {
+    display: flex;
+    justify-content: center;
+
+}
