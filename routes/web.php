@@ -31,7 +31,7 @@ Route::prefix('/api')->group(function () {
         Route::get('/cycle/{id}', [SegmentController::class, 'userSegmentCycle']);
     });
     Route::prefix('/article')->group(function () {
-        Route::get('/{id}/{id}',[ArticleController::class,'index']);
+        Route::get('/{segmentId}/{articleId}',[ArticleController::class,'index']);
     });
 });
 

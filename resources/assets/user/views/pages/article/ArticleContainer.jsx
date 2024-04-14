@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchArticleList} from '../../../state/modules/article';
-import Article from './Article';
+import {fetchArticleList, getArticleList} from '../../../state/modules/article';
+import Article from './';
 
 class ArticleContainer extends Component {
     componentDidMount() {
@@ -16,12 +16,12 @@ class ArticleContainer extends Component {
     }
 }
 
-const mapDispatchToProps = {
-    fetchArticleList
-};
-
 const mapStateToProps = (state) => ({
-    articleList: state.article.articleList,
+    articleList: getArticleList(state)
 });
+
+const mapDispatchToProps = {
+    fetchArticleList,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleContainer);

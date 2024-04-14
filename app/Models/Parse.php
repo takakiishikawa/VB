@@ -14,6 +14,6 @@ class Parse extends Model
     ];
 
     public function wordToParse() {
-        return $this->hasMany(WordToParse::class, 'parse_ic');
+        return $this->hasMany(WordToParse::class, 'parse_id');
     }
 }

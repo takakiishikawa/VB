@@ -1,0 +1,1 @@
+export const getArticleList = state => state.article.articleList;

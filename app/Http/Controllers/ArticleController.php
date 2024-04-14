@@ -32,11 +32,12 @@ class ArticleController extends Controller
                     $query->select('id', 'name', 'jp', 'meaning');
                 },
                 'word.wordToParse.parse' => function ($query) {
-                    $query->select('id', 'name', 'parse_id');
+                    $query->select('id', 'name');
                 }
             ])
             ->get();
         
+        \Log::info('userWordArray', ['userWordArray' => $userWordArray]);
         //統合
         $articleList = $userArticleArray->map(function ($userArticle) use ($userWordArray) {
             return [
@@ -46,15 +47,20 @@ class ArticleController extends Controller
                 'wordList' => $userWordArray->filter(function ($userWord) use ($userArticle) {
                     return $userWord->user_article_id === $userArticle->id;
                 })->map(function ($userWord) {
+                    $parseList = $userWord->word->wordToParse->map(function ($wordToParse) {
+                        return $wordToParse->parse->name;
+                    });
                     return [
                         'word' => $userWord->word->name,
                         'jp' => $userWord->word->jp,
                         'meaning' => $userWord->word->meaning,
-                        'parse' => $userWord->word->wordToParse->parse->name
+                        'parse' => $parseList,
                     ];
                 })->toArray()
             ];
         })->toArray();
+
+        \Log::info('articleList', ['articleList' => $articleList]);
 
         return response()->json(['articleList' => $articleList]);
     }

@@ -12,6 +12,9 @@ class Article extends Component {
     }
 
     render() {
+        const articleList = this.props.articleList;
+        console.log(articleList, 'articleList');
+        
         return (
             <div>
                 <div className="header">
