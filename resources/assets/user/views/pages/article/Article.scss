@@ -29,14 +29,12 @@
 
 
         &__completed {
-            width: 40%;
             background-color: $color-current;
             border-radius: 8px 0 0 8px;
             height: 100%;
 
         }
         &__uncompleted {
-            width: 60%;
             background-color: $color-sub-current;
             border-radius: 0 8px 8px 0;
 

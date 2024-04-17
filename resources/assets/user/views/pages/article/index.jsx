@@ -8,7 +8,7 @@ class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articleCount: 0,
+            articleCount: 1
         };
     }
 
@@ -31,14 +31,13 @@ class Article extends Component {
         return (
             <div>
                 <div className="header">
-                    {console.log(1)}
                     <Link to="/" className="header__back">
                         <ArrowBackIcon style={{fontSize:27, color: "#222222"}} />
                     </Link>
                     <div className="header__progress-bar">
-                        <div className="header__progress-bar__completed">
+                        <div className="header__progress-bar__completed" style={{width: `${articleCount*10}%`}}>
                         </div>
-                        <div className="header__progress-bar__uncompleted">
+                        <div className="header__progress-bar__uncompleted" style={{width: `${100-articleCount*10}%`}}>
                         </div>
                     </div>
                 </div>
