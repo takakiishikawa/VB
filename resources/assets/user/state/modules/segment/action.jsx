@@ -8,7 +8,7 @@ import {FETCH_READING_STATUS_SUCCESS} from './types';
 import {FETCH_SEGMENT_CYCLE} from './types';
 import {FETCH_SEGMENT_CYCLE_SUCCESS} from './types';
 import {UPDATE_READING_STATUS} from './types';
-import {UPDATE_READING_STATUS_SUCCESS} from './types';
+import {UPDATE_MIDDLE_READING_STATUS} from './types';
 
 export const fetchSegments = (id) => ({
     type: FETCH_SEGMENTS,
@@ -58,4 +58,9 @@ export const fetchSegmentCycleSuccess = (segmentCycle) => ({
 export const updateReadingStatus = (segmentId) => ({
     type: UPDATE_READING_STATUS,
     payload: {segmentId}
+});
+
+export const updateMiddleReadingStatus = (segmentId, articleCount) => ({
+    type: UPDATE_MIDDLE_READING_STATUS,
+    payload: {segmentId, articleCount}
 });

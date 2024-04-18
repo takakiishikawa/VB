@@ -23,3 +23,7 @@ export const fetchSegmentCycle = (segmentId) => {
 export const updateReadingStatus = (segmentId) => {
     return axios.get(`./api/segment/update-reading-status/${segmentId}`);
 }
+
+export const updateMiddleReadingStatus = (segmentId, articleCount) => {
+    return axios.get(`./api/segment/update-middle-reading-status/${segmentId}/${articleCount}`);
+}

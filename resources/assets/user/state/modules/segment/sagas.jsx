@@ -18,6 +18,8 @@ import {fetchSegmentCycleSuccess} from './action';
 import {fetchSegmentCycle} from './api';
 import {UPDATE_READING_STATUS} from './types';
 import {updateReadingStatus} from './api';
+import { UPDATE_MIDDLE_READING_STATUS } from './types';
+import { updateMiddleReadingStatus } from './api';
 
 export default function* segmentsSaga() {
     yield takeLatest(FETCH_SEGMENTS, fetchSegmentsSaga);
@@ -26,6 +28,7 @@ export default function* segmentsSaga() {
     yield takeLatest(FETCH_READING_STATUS, fetchReadingStatusSaga);
     yield takeLatest(FETCH_SEGMENT_CYCLE, fetchSegmentCycleSaga);
     yield takeLatest(UPDATE_READING_STATUS, updateReadingStatusSaga);
+    yield takeLatest(UPDATE_MIDDLE_READING_STATUS, updateMiddleReadingStatusSaga);
 }
 
 function* fetchSegmentsSaga(action) {
@@ -88,6 +91,17 @@ function* updateReadingStatusSaga(action) {
         const response = yield call(updateReadingStatus, segmentId);
         yield put(fetchReadingStatusSuccess(response.data));
         yield put(fetchSegmentCycleSuccess(response.data));
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+function* updateMiddleReadingStatusSaga(action) {
+    try {
+        const {segmentId, articleCount} = action.payload;
+        const response = yield call(updateMiddleReadingStatus, segmentId, articleCount);
+        yield put(fetchReadingStatusSuccess(response.data));
     }
     catch (error) {
         console.log(error);

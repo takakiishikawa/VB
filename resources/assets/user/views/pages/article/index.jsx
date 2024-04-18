@@ -3,7 +3,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {updateReadingStatus} from '../../../state/modules/segment';
+import {updateReadingStatus, updateMiddleReadingStatus} from '../../../state/modules/segment';
 import './Article.scss';
 import Tooltip from '../../components/tooltip';
 
@@ -134,7 +134,11 @@ class Article extends Component {
         return (
             <div>
                 <div className="header">
-                    <Link to={`/segment/${majorSegmentId}/${segmentId}`} className="header__back">
+                    <Link
+                        to={`/segment/${majorSegmentId}/${segmentId}`}
+                        className="header__back"
+                        onClick={() => this.props.updateMiddleReadingStatus(segmentId, articleCount)}
+                    >
                         <ArrowBackIcon style={{fontSize:27, color: "#222222"}} />
                     </Link>
                     <div className="header__progress-bar">
@@ -186,6 +190,7 @@ class Article extends Component {
 
 const mapDispatchToProps = {
     updateReadingStatus,
+    updateMiddleReadingStatus
 }
 
 export default withRouter(connect(null, mapDispatchToProps)(Article));

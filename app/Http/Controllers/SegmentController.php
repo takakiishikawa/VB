@@ -12,6 +12,7 @@ use App\Models\UserWord;
 use App\Models\UserArticle;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 class SegmentController extends Controller
 {
@@ -227,5 +228,26 @@ class SegmentController extends Controller
             'userArticleList' => $userArticleList,
             'userSegmentCycle' => $userSegmentCycle
         ]);
+    }
+
+    public function updateMiddleReadingStatus($segmentId, $articleCount) {
+        $userId = Auth::user()->id;
+
+        DB::transaction(function () use ($userId, $segmentId, $articleCount) {
+            $userArticle = UserArticle::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->where('read_status', 0)
+            ->limit($articleCount)
+            ->get();
+            
+        foreach ($userArticle as $article) {
+            $article->read_status = 1;
+            $article->save();
+        }});
+        
+        $userArticleList = $this->readingStatus($segmentId);
+        $userArticleList = $userArticleList->original['userArticleList'];
+
+        return response()->json(['userArticleList' => $userArticleList]);
     }
 }
