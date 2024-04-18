@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './Article.scss';
 import Tooltip from '../../components/tooltip';
 
@@ -14,10 +14,35 @@ class Article extends Component {
         };
     }
 
+    componentDidMount = () => {
+        document.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    componentWillUnmount = () => {
+        document.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    handleKeyDown = (event) => {
+        if (event.keyCode === 39) {
+            this.nextArticle();
+        } else if (event.keyCode === 37) {
+            this.backArticle();
+        }
+    }
+
+
     nextArticle = () => {
         this.setState({
             articleCount: this.state.articleCount + 1,
         });
+    }
+
+    backArticle = () => {
+        if (this.state.articleCount > 1) {
+            this.setState({
+                articleCount: this.state.articleCount - 1,
+            });
+        }
     }
     
     showTooltip = (index) => {
@@ -111,6 +136,17 @@ class Article extends Component {
                     </div>
                 </div>
                 <div className="next">
+                    <ArrowBackIcon
+                        onClick={this.nextArticle}
+                        style={{
+                            fontSize: 30,
+                            color: "#FFFFFF",
+                            backgroundColor: "#3F51B5",
+                            borderRadius: 8,
+                            padding: 6,
+                            cursor: "pointer",
+                        }}
+                    />
                     <ArrowForwardIcon
                         onClick={this.nextArticle}
                         style={{

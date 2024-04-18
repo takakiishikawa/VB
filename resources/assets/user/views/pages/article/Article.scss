@@ -78,7 +78,7 @@
             background-color: $color-sub2-current;
             padding: 10px;
             border-radius: 8px;
-            
+
 
             &-word {
                 position: relative;
@@ -94,8 +94,6 @@
                 background-color: $color-current;
             }
         }
-
-
     }
 
 }
@@ -103,4 +101,5 @@
 .next {
     display: flex;
     justify-content: center;
+    gap: 30px;
 }
