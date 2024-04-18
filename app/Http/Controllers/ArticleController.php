@@ -19,6 +19,7 @@ class ArticleController extends Controller
         //UserArticle関連取得
         $userArticleArray = UserArticle::where('user_id', $userId)
             ->where('segment_id', $segmentId)
+            ->where('read_status', 0)
             ->with(['articleTheme' => function ($query) {
                 $query->select('id', 'name');
             }])
@@ -37,7 +38,6 @@ class ArticleController extends Controller
             ])
             ->get();
         
-        \Log::info('userWordArray', ['userWordArray' => $userWordArray]);
         //統合
         $articleList = $userArticleArray->map(function ($userArticle) use ($userWordArray) {
             return [

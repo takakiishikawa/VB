@@ -3,6 +3,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {updateReadingStatus} from '../../../state/modules/segment';
 import './Article.scss';
 import Tooltip from '../../components/tooltip';
 
@@ -20,7 +21,8 @@ class Article extends Component {
     }
 
     componentDidUpdate = () => {
-        if (this.state.articleCount === 10) {
+        if (this.state.articleCount === this.props.articleList.length) {
+            this.props.updateReadingStatus(this.props.segmentId);
             this.props.history.push(`/segment/${this.props.majorSegmentId}/${this.props.segmentId}`);
         }
     }
@@ -76,7 +78,7 @@ class Article extends Component {
             const wordDetail = wordArray[0];
                 if (isWordInList) {
                     return (
-                        <span>
+                        <span key={index}>
                             <span
                                 className="content__article__highlight"
                                 key={index}
@@ -105,10 +107,25 @@ class Article extends Component {
         })
     }
 
+    calcCompletedProgress = (articleCount) => {
+        const defaultProgress = 10 - this.props.articleList.length;
+        console.log(defaultProgress, 'defaultProgress')
+        console.log(articleCount * 10 + defaultProgress * 10 + '%', 'articleCount * 10 + defaultProgress * 10 + %')
+        return articleCount * 10 + defaultProgress * 10 + '%';
+    }
+
+    calcUncompletedProgress = (articleCount) => {
+        const defaultProgress = 10 - this.props.articleList.length;
+        console.log(100 - (articleCount * 10 + defaultProgress * 10) + '%', '100 - (articleCount * 10 - defaultProgress * 10) + %')
+        return 100 - (articleCount * 10 + defaultProgress * 10) + '%';
+    }
+
     render() {
         const {articleCount} = this.state;
         const {articleList, segmentId, majorSegmentId} = this.props;
         const articleInfo = articleList[articleCount];
+
+        console.log(articleList, 'articleList');
 
         if (!articleInfo) {
             return;
@@ -121,10 +138,8 @@ class Article extends Component {
                         <ArrowBackIcon style={{fontSize:27, color: "#222222"}} />
                     </Link>
                     <div className="header__progress-bar">
-                        <div className="header__progress-bar__completed" style={{width: `${articleCount*10}%`}}>
-                        </div>
-                        <div className="header__progress-bar__uncompleted" style={{width: `${100-articleCount*10}%`}}>
-                        </div>
+                        <div className="header__progress-bar__completed" style={{width: this.calcCompletedProgress(articleCount)}}/>
+                        <div className="header__progress-bar__uncompleted" style={{width: this.calcUncompletedProgress(articleCount)}}/>
                     </div>
                 </div>
                 <div className="content">
@@ -169,4 +184,8 @@ class Article extends Component {
     }
 }
 
-export default withRouter(connect(null, null)(Article));
+const mapDispatchToProps = {
+    updateReadingStatus,
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(Article));

@@ -167,7 +167,6 @@ class SegmentController extends Controller
     }
 
     public function readingStatus($segmentId) {
-        \Log::info('segmentId', ['segmentId' => $segmentId]);
         $userId = Auth::user()->id;
         $userArticleArray = UserArticle::where('user_id', $userId)
             ->where('segment_id', $segmentId)
@@ -176,7 +175,6 @@ class SegmentController extends Controller
             }])
             ->get(['title', 'article_theme_id', 'read_status']);
 
-        \Log::info('userArticleArray', ['userArticleArray' => $userArticleArray]);
         $userArticleList = $userArticleArray->map(function ($userArticle) {
             return [
                 'title' => $userArticle->title,
@@ -195,8 +193,39 @@ class SegmentController extends Controller
             ->select('cycle')
             ->first();
 
-        \Log::info('userSegmentCycle', ['userSegmentCycle' => $userSegmentCycle]);
-
         return response()->json(['userSegmentCycle' => $userSegmentCycle]);
+    }
+
+    public function updateReadingStatus($segmentId) {
+        //update read_status
+        $userId = Auth::user()->id;
+        $userArticle = UserArticle::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->where('read_status', 1)
+            ->get();
+
+        foreach ($userArticle as $article) {
+            $article->read_status = 0;
+            $article->save();
+        }
+
+        //update cycle
+        $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->first();
+        
+        $userSegmentStatus->cycle = $userSegmentStatus->cycle+1;
+        $userSegmentStatus->save();
+
+        $userArticleList = $this->readingStatus($segmentId);
+        $userSegmentCycle = $this->userSegmentCycle($segmentId);
+
+        $userArticleList = $userArticleList->original['userArticleList'];
+        $userSegmentCycle = $userSegmentCycle->original['userSegmentCycle'];
+
+        return response()->json([
+            'userArticleList' => $userArticleList,
+            'userSegmentCycle' => $userSegmentCycle
+        ]);
     }
 }

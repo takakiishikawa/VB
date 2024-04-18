@@ -29,6 +29,7 @@ Route::prefix('/api')->group(function () {
         Route::post('/generate/{id}', [SegmentController::class, 'generateArticle']);
         Route::get('/reading-status/{id}', [SegmentController::class, 'readingStatus']);
         Route::get('/cycle/{id}', [SegmentController::class, 'userSegmentCycle']);
+        Route::get('/update-reading-status/{segmentId}', [SegmentController::class, 'updateReadingStatus']);
     });
     Route::prefix('/article')->group(function () {
         Route::get('/{segmentId}/{articleId}',[ArticleController::class,'index']);
@@ -39,5 +40,6 @@ Route::prefix('/api')->group(function () {
 Route::get('/{reactRoutes?}', function () {
     return view('top');
 })->where('reactRoutes', '.*')->middleware(['auth', 'verified'])->name('top');
+
 
 

@@ -7,3 +7,4 @@ export {fetchReadingStatus} from './action';
 export {getReadingStatus} from './selector';
 export {fetchSegmentCycle} from './action';
 export {getSegmentCycle} from './selector';
+export {updateReadingStatus} from './action';
