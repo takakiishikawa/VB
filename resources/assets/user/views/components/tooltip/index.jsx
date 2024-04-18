@@ -4,8 +4,6 @@ import './Tooltip.scss';
 class Tooltip extends Component {
     render(){
         const {levelSentence, majorSegmentId, className, wordList} = this.props;
-        console.log(wordList, 'wordList')
-        console.log(className, 'className')
 
         return (
             <div className={`tooltip ${className}`}>

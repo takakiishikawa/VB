@@ -10,8 +10,13 @@ class ArticleContainer extends Component {
     }
 
     render() {
+        const {segmentId, majorSegmentId} = this.props.match.params;
         return (
-            <Article articleList={this.props.articleList} />
+            <Article
+                articleList={this.props.articleList}
+                segmentId={segmentId}
+                majorSegmentId={majorSegmentId}
+            />
         )
     }
 }

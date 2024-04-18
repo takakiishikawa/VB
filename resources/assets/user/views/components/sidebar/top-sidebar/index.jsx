@@ -12,7 +12,7 @@ import './TopSidebar.scss';
 class TopSidebar extends Component {
     render() {
         const pathName = this.props.location.pathname;
-        const {majorSegment} = this.props;
+        console.log(this.props.history,'test');
 
         return(
             <div className="sidebar">

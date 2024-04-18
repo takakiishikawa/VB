@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './Article.scss';
@@ -9,13 +10,19 @@ class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articleCount: 1,
+            articleCount: 0,
             showTooltipId: null
         };
     }
 
     componentDidMount = () => {
         document.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    componentDidUpdate = () => {
+        if (this.state.articleCount === 10) {
+            this.props.history.push(`/segment/${this.props.majorSegmentId}/${this.props.segmentId}`);
+        }
     }
 
     componentWillUnmount = () => {
@@ -46,14 +53,12 @@ class Article extends Component {
     }
     
     showTooltip = (index) => {
-        console.log('showTooltip')
         this.setState({
             showTooltipId: index
         });
     }
 
     hideTooltip = () => {
-        console.log('hideTooltip')
         this.setState({
             showTooltipId: null
         });
@@ -102,17 +107,17 @@ class Article extends Component {
 
     render() {
         const {articleCount} = this.state;
-        const {articleList} = this.props;
-
+        const {articleList, segmentId, majorSegmentId} = this.props;
         const articleInfo = articleList[articleCount];
+
         if (!articleInfo) {
             return;
         }
-        
+
         return (
             <div>
                 <div className="header">
-                    <Link to="/" className="header__back">
+                    <Link to={`/segment/${majorSegmentId}/${segmentId}`} className="header__back">
                         <ArrowBackIcon style={{fontSize:27, color: "#222222"}} />
                     </Link>
                     <div className="header__progress-bar">
@@ -164,5 +169,4 @@ class Article extends Component {
     }
 }
 
-export default Article;
-
+export default withRouter(connect(null, null)(Article));
