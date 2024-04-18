@@ -9,12 +9,23 @@
     border-radius: 8px;
     background-color: $color-text;
     color: $color-white;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
     white-space: nowrap;
     z-index: 100;
 
     &.help-icon-all {
         top: -224%;
+    }
+
+    &.word {
+        top: -550%;
+        background-color: $color-white;
+        color: $color-text;
+        min-width: 150px;
+
+        &::after {
+            border-top: 8px solid $color-white;
+        }
     }
 
     &::after {
@@ -23,13 +34,15 @@
         bottom: -8px;
         left: 50%;
         transform: translateX(-50%);
-        border-left: 8px solid transparent; // 左側の透明なボーダー
-        border-right: 8px solid transparent; // 右側の透明なボーダー
-        border-top: 8px solid $color-text; // 上向きの三角形（ツールチップの背景色と同じ）
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid $color-text;
+        //filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+
     }
 
-
-    &__container {
+    //help-icon style
+    &__help-icon {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -38,6 +51,42 @@
         &-text {
             color: $color-white;
             font-size: 10px;
+        }
+    }
+
+    //word style
+    &__word {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+        padding: 10px;
+        line-height: 20px;
+
+        &__parse  {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: left;
+            font-weight: 540;
+            font-size: 12px;
+            margin-bottom: 10px;
+            
+            &-item {
+                color: $color-white;
+                background-color: $color-current;
+                padding: 6px 8px;
+                border-radius: 8px;
+            }
+        }
+
+        &__jp {
+            font-weight: 540;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        &__meaning {
+            font-size: 12px;
         }
     }
 }

@@ -3,12 +3,14 @@ import {Link} from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import './Article.scss';
+import Tooltip from '../../components/tooltip';
 
 class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articleCount: 1
+            articleCount: 1,
+            showTooltipId: null
         };
     }
 
@@ -16,6 +18,61 @@ class Article extends Component {
         this.setState({
             articleCount: this.state.articleCount + 1,
         });
+    }
+    
+    showTooltip = (index) => {
+        console.log('showTooltip')
+        this.setState({
+            showTooltipId: index
+        });
+    }
+
+    hideTooltip = () => {
+        console.log('hideTooltip')
+        this.setState({
+            showTooltipId: null
+        });
+    }
+
+    highlightedArticle = (articleInfo) => {
+
+        const words = articleInfo.article.split(/(\s+|[.,!?;])/);
+        return words.map((item, index) => {
+            const wordListArray = Object.values(articleInfo.wordList);
+            const cleanItem = item.toLowerCase().replace(/[.,!?;]/g, '');  // 比較用のトークンをクリーンアップ
+
+            const isWordInList = wordListArray.some(item2 => item2.word == cleanItem);
+            const wordArray = wordListArray.filter(item => item.word == cleanItem);
+            const wordDetail = wordArray[0];
+                if (isWordInList) {
+                    return (
+                        <span>
+                            <span
+                                className="content__article__highlight"
+                                key={index}
+                                onMouseEnter={() => this.showTooltip(index)}
+                                onMouseLeave={() => this.hideTooltip()}
+                            >
+                                <span className="content__article__highlight-word" key={index}>
+                                    {item}
+                                    {this.state.showTooltipId === index &&
+                                        <Tooltip
+                                            className="word"
+                                            wordList={wordDetail}
+                                        />
+                                    }
+                                </span>
+                            </span>
+                        </span>
+                    )
+                } else {
+                    return (
+                        <span key={index}>
+                            {item}
+                        </span>
+                    )
+                }
+        })
     }
 
     render() {
@@ -26,7 +83,6 @@ class Article extends Component {
         if (!articleInfo) {
             return;
         }
-        console.log(articleInfo, 'articleInfo')
         
         return (
             <div>
@@ -51,7 +107,7 @@ class Article extends Component {
                         {articleInfo.title}
                     </div>
                     <div className="content__article">
-                        {articleInfo.article}
+                        {this.highlightedArticle(articleInfo)}
                     </div>
                 </div>
                 <div className="next">
@@ -74,7 +130,3 @@ class Article extends Component {
 
 export default Article;
 
-/*
-title, article, article_theme, wordList
-    wordList: word, jp, meaning, parseList
-*/

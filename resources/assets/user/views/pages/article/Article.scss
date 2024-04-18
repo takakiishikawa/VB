@@ -73,6 +73,29 @@
         letter-spacing: 0.5px;
         font-size: 20px;
         margin-bottom: 80px;
+
+        &__highlight {
+            background-color: $color-sub2-current;
+            padding: 10px;
+            border-radius: 8px;
+            
+
+            &-word {
+                position: relative;
+            }
+    
+            &-word::after {
+                content: '';
+                position: absolute; 
+                width: 100%;
+                bottom: 1px;
+                left: 0;
+                height: 3px;
+                background-color: $color-current;
+            }
+        }
+
+
     }
 
 }
@@ -80,5 +103,4 @@
 .next {
     display: flex;
     justify-content: center;
-
 }

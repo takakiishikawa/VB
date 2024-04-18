@@ -10,9 +10,7 @@ export default function* articleSaga() {
 function* fetchArticleListSaga(action) {
     try {
         const {segmentId, articleId} = action.payload;
-        console.log(segmentId, articleId, 'fetchArticleListSaga segmentId, articleId')
         const response = yield call(fetchArticleList, segmentId, articleId);
-        console.log(response.data, 'fetchArticleListSaga response.data')
         yield put(fetchArticleListSuccess(response.data));
     } catch (error) {
         console.log(error);
