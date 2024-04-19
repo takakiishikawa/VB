@@ -1,61 +1,8 @@
 @import "../../../styles/color.scss";
 
 .container {
-    margin: 0 6.1vw;
-
-}
-
-.cycle-bar {
-    margin-top: 13px;
-    margin-bottom: 10px;
-    margin-right: 10vw;
-    margin-left: 10vw;
-    padding: 0.7vw 6.1vw;
-    display: flex;
-    align-items: center;
-
-    &>div {
-        display: flex;
-        align-items: center;
-        flex :1;
-    }
-
-    &__item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 0;
-        width: 1.7vw;
-        gap: 6px;
-        font-size: 12px;
-
-        &-circle {
-            width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 50%;
-            color: $color-white;
-            display: flex;
-            justify-content: center;        
-            align-items: center;
-
-            &.completed {
-                background-color: $color-completed;
-            }
-            &.unlocked {
-                background-color: $color-current;
-            }
-            &.locked {
-                background-color: $color-hide;
-            }
-        }
-    }
-    &__line {
-        margin: 0 8px;
-        flex-grow: 1;
-        height: 1px;
-        background-color: $color-hide;
-    }
+    margin-right: 17vw;
+    margin-left: 17vw;
 }
 
 .reading-table {
@@ -72,7 +19,6 @@
         height: 37.5px;
 
         &:last-child {
-            //border-bottom: none;
             padding-right: 0;
         }
         
@@ -115,7 +61,11 @@
                 text-decoration: none;
 
                 &.start {
-                    background-color: $color-current;
+                    background-color: $color-sub3-current;
+
+                    &:hover {
+                        background-color: $color-current;
+                    }
                 }
                 &.resume {
                     background-color: $color-resume;

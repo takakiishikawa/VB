@@ -21,54 +21,56 @@ class ReadingStatus extends Component {
         const resumeFlag = readingStatus.filter(item => item.read_status === 1).length > 0;
         
         return (
-            <div className="container">
+            <div>
                 <CyclebarContainer  segmentId={segmentId} />
-                <table className="reading-table">
-                    <thead>
-                        <tr>
-                            <th className="vb">VB</th>
-                            <th className="title">Title</th>
-                            <th className="theme">Theme</th>
-                            <th className="status">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {readingStatus.map((item, index) => {
-                            const status = item.read_status ===0 && resumeFlag ? 'resume' : !resumeFlag ? 'start' : 'read';
-                            return (
-                                <tr key={index}>
-                                    <td className="vb">
-                                        {this.vbCount(majorSegmentId, segmentId, index)}
-                                    </td>
-                                    <td className="title">
-                                        {item.title}
-                                    </td>
-                                    <td className="theme">
-                                        <span className="theme-name">{item.article_theme}</span>
-                                    </td>
-                                    <td className="status">
-                                        {status !== 'read' ?
-                                            <Link
-                                                to={`/segment/${majorSegmentId}/${segmentId}/article/${index+1}`}
+                <div className="container">
+                    <table className="reading-table">
+                        <thead>
+                            <tr>
+                                <th className="vb">VB</th>
+                                <th className="title">Title</th>
+                                <th className="theme">Theme</th>
+                                <th className="status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {readingStatus.map((item, index) => {
+                                const status = item.read_status ===0 && resumeFlag ? 'resume' : !resumeFlag ? 'start' : 'read';
+                                return (
+                                    <tr key={index}>
+                                        <td className="vb">
+                                            {this.vbCount(majorSegmentId, segmentId, index)}
+                                        </td>
+                                        <td className="title">
+                                            {item.title}
+                                        </td>
+                                        <td className="theme">
+                                            <span className="theme-name">{item.article_theme}</span>
+                                        </td>
+                                        <td className="status">
+                                            {status !== 'read' ?
+                                                <Link
+                                                    to={`/segment/${majorSegmentId}/${segmentId}/article/${index+1}`}
+                                                    onClick={this.goArticle(index+1)}
+                                                    className={`statusButton ${status}`}
+                                                >
+                                                    {status}
+                                                </Link>
+                                            : 
+                                            <button
                                                 onClick={this.goArticle(index+1)}
                                                 className={`statusButton ${status}`}
                                             >
                                                 {status}
-                                            </Link>
-                                        : 
-                                        <button
-                                            onClick={this.goArticle(index+1)}
-                                            className={`statusButton ${status}`}
-                                        >
-                                            {status}
-                                        </button>}
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                    
-                </table>
+                                            </button>}
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                        
+                    </table>
+                </div>
             </div>
         )
     }
