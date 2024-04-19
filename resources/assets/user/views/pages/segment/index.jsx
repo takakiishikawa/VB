@@ -38,7 +38,7 @@ class Segment extends Component {
                             />}
                         {(status == 3 || status == 4) && 
                             <WordChallenge
-                                
+                                segmentId={segmentId}
                             />}
                     </div>
                 </div>

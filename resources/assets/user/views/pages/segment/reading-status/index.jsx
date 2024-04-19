@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
 import './ReadingStatus.scss';
 import {Link} from 'react-router-dom';
-//Button materialUI
-import Button from '@mui/material/Button';
+import CyclebarContainer from '../../../components/cyclebar/CyclebarContainer';
 
 class ReadingStatus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
         };
-    }
-
-    cycleStatusClass = (cycle, index) => {
-        if (cycle > index+1) {
-            return 'completed';
-        } else if (cycle === index+1) {
-            return 'unlocked';
-        } else {
-            return 'locked';
-        }
     }
 
     vbCount = (majorSegmentId, segmentId, index) => {
@@ -28,33 +16,13 @@ class ReadingStatus extends Component {
         return `${countStart} -${countEnd}`;
     }
 
-    goArticle = (articleId) => {
-        
-    }
-
     render() {
-        const {readingStatus, segmentCycle, majorSegmentId, segmentId} = this.props;
-        const cycle = segmentCycle.cycle;
-        const cycleList = ['R1', 'R2', 'R3', 'W1', 'W2', 'W3'];
+        const {readingStatus, majorSegmentId, segmentId} = this.props;
         const resumeFlag = readingStatus.filter(item => item.read_status === 1).length > 0;
         
         return (
             <div className="container">
-                <div className="cycle-bar">
-                    {cycleList.map((item, index) => {
-                        return (
-                            <div key={index} >
-                                <div className="cycle-bar__item">
-                                    <div className={`cycle-bar__item-circle ${this.cycleStatusClass(cycle, index)}`}>{index+1}</div>
-                                    <div className='cycle-bar__item-name'>{item}</div>
-                                </div>
-                                {cycleList.length > index+1 &&
-                                    <div className="cycle-bar__line"></div> 
-                                }
-                            </div>
-                        )
-                    })}
-                </div>
+                <CyclebarContainer  segmentId={segmentId} />
                 <table className="reading-table">
                     <thead>
                         <tr>

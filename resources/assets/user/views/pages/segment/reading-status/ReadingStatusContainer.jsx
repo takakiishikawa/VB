@@ -5,16 +5,14 @@ import ReadingStatus from './';
 
 class ReadingStatusContainer extends Component {
     componentDidMount() {
-        const {segmentId} = this.props;
-        this.props.fetchReadingStatus(segmentId);
-        this.props.fetchSegmentCycle(segmentId);
+        this.props.fetchReadingStatus(this.props.segmentId);
     }
     componentDidUpdate(prevProps) {
         if (prevProps.segmentId !== this.props.segmentId) {
             this.props.fetchReadingStatus(this.props.segmentId);
-            this.props.fetchSegmentCycle(this.props.segmentId);
         }
     }
+
     render() {
         return (
             <ReadingStatus {...this.props} />
@@ -25,7 +23,6 @@ class ReadingStatusContainer extends Component {
 const mapStateToProps = (state) => ({
     readingStatus: getReadingStatus(state),
     segmentCycle: getSegmentCycle(state)
-
 })
 
 

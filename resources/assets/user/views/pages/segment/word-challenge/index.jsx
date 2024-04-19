@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
+import CyclebarContainer from '../../../components/cyclebar/CyclebarContainer';
+
 
 class WordChallenge extends Component {
     render() {
+        const {segmentId} = this.props;
+
         return (
-            <div>
-                <h1>Word Challenge</h1>
+            <div className="container">
+                <CyclebarContainer segmentId={segmentId} />
             </div>
         )
     }
