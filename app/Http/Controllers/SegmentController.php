@@ -164,6 +164,14 @@ class SegmentController extends Controller
             $articleCount++;
         }
 
+        //status更新
+        $userSegmentStatus = $userSegmentStatus::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->first();
+
+        $userSegmentStatus->status = $userSegmentStatus->status+1;
+        $userSegmentStatus->save();
+        
         return;
     }
 
@@ -216,6 +224,7 @@ class SegmentController extends Controller
             ->first();
         
         $userSegmentStatus->cycle = $userSegmentStatus->cycle+1;
+        $userSegmentStatus->status = $userSegmentStatus->status+1;
         $userSegmentStatus->save();
 
         $userArticleList = $this->readingStatus($segmentId);
