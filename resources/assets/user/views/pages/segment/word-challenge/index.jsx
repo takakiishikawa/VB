@@ -12,9 +12,11 @@ class WordChallenge extends Component {
             <div>
                 <CyclebarContainer segmentId={segmentId} />
                 <div className="word">
-                    <button className="word__start">
-                        Start
-                    </button>
+                    <div className="word__start">
+                        <button className="word__start__button">
+                            Start
+                        </button>
+                    </div>
                     <table className="word__result-table">
                         <thead>
                             <tr>
