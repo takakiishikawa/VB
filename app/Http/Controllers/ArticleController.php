@@ -25,8 +25,16 @@ class ArticleController extends Controller
             }])
             ->get(['id', 'title', 'article', 'article_theme_id']);
 
+        //選択された記事を先頭 + 他ランダム表示
+        $specificArticle = $userArticleArray->firstWhere('id', $articleId);
+        \Log::info('specificArticle', ['specificArticle' => $specificArticle]);
+        $otherArticle = $userArticleArray->where('id', '!=', $articleId)->shuffle();
+        \Log::info('otherArticle', ['otherArticle' => $otherArticle]);
+        $mergedArticle = collect([$specificArticle])->merge($otherArticle);
+        \Log::info('mergedArticle', ['mergedArticle' => $mergedArticle]);
+
         //UserWord関連取得
-        $userArticleIdArray = $userArticleArray->pluck('id');
+        $userArticleIdArray = $mergedArticle->pluck('id');
         $userWordArray = UserWord::whereIn('user_article_id', $userArticleIdArray)
             ->with([
                 'word' => function ($query) {
@@ -39,7 +47,7 @@ class ArticleController extends Controller
             ->get();
         
         //統合
-        $articleList = $userArticleArray->map(function ($userArticle) use ($userWordArray) {
+        $articleList = $mergedArticle->map(function ($userArticle) use ($userWordArray) {
             return [
                 'title' => $userArticle->title,
                 'article' => $userArticle->article,

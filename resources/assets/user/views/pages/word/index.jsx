@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Progressbar from '../../components/progressbar';
+import ArticleContainer from '../article/ArticleContainer';
 import './Word.scss';
 
 class Word extends Component {
@@ -29,40 +31,39 @@ class Word extends Component {
         const {wordList} = this.props;
         const {wordCount} = this.state;
         const currentWord = wordList[wordCount];
+        const userArticleId = currentWord.userArticleId;
         //37: left, 38: up, 39: right, 40: down
         if (event.keyCode === 37) {
             this.setState({
                 answerWord: currentWord.jpList[0].name,
             }, () => {
-                this.confirmAnswer();
+                this.confirmAnswer(userArticleId);
             });
         } else if (event.keyCode === 38) {
             this.setState({
                 answerWord: currentWord.jpList[1].name,
             }, () => {
-                this.confirmAnswer();
+                this.confirmAnswer(userArticleId);
             });
         } else if(event.keyCode === 39) {
             this.setState({
                 answerWord: currentWord.jpList[2].name,
             }, () => {
-                this.confirmAnswer();
+                this.confirmAnswer(userArticleId);
             });
         } else if (event.keyCode === 40) {
-            this.confirmAnswer();
+            this.confirmAnswer(userArticleId);
         }
     }
 
-    confirmAnswer = () => {
+    confirmAnswer = (userArticleId) => {
         const {wordList} = this.props;
         const {wordCount, answerWord} = this.state;
         const correctWord = wordList[wordCount].word;
-        console.log(answerWord, 'answerWord');
-        console.log(correctWord, 'correctWord');
         if (answerWord == correctWord) {
             this.nextWord();
         } else {
-            this.goArticle();
+            this.goArticle(userArticleId);
         }
     }
 
@@ -74,8 +75,10 @@ class Word extends Component {
         });
     }
 
-    goArticle() {
-        
+    goArticle(userArticleId) {
+        this.props.history.push({
+            pathname: `/segment/${this.props.majorSegmentId}/${this.props.segmentId}/article/${userArticleId}`,
+        });
     }
 
 
@@ -158,4 +161,4 @@ class Word extends Component {
     }
 }
 
-export default Word;
+export default withRouter(connect(null, null)(Word));

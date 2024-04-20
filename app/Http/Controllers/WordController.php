@@ -65,7 +65,7 @@ class WordController extends Controller
                 'word' => $word->name,
                 'parseList' => $parseList,
                 'jpList' => $jpList,
-                'user_article_id' => $userWord->user_article_id
+                'userArticleId' => $userWord->user_article_id
             ];
         });
 
