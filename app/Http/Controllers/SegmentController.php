@@ -10,6 +10,7 @@ use App\Models\ArticleTheme;
 use App\Models\Word;
 use App\Models\UserWord;
 use App\Models\UserArticle;
+use App\Models\UserSegmentTest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
@@ -258,5 +259,15 @@ class SegmentController extends Controller
         $userArticleList = $userArticleList->original['userArticleList'];
 
         return response()->json(['userArticleList' => $userArticleList]);
+    }
+
+    public function wordResult($segmentId) {
+        $userId = Auth::user()->id;
+        $wordResult = UserSegmentTest::where('segment_id', $segmentId)
+            ->where('user_id', $userId)
+            ->select('test_score')
+            ->get();
+
+        return response()->json(['wordResult' => $wordResult]);
     }
 }

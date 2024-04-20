@@ -9,6 +9,8 @@ import {FETCH_SEGMENT_CYCLE} from './types';
 import {FETCH_SEGMENT_CYCLE_SUCCESS} from './types';
 import {UPDATE_READING_STATUS} from './types';
 import {UPDATE_MIDDLE_READING_STATUS} from './types';
+import {FETCH_WORD_RESULT} from './types';
+import {FETCH_WORD_RESULT_SUCCESS} from './types';
 
 export const fetchSegments = (id) => ({
     type: FETCH_SEGMENTS,
@@ -63,4 +65,14 @@ export const updateReadingStatus = (segmentId) => ({
 export const updateMiddleReadingStatus = (segmentId, articleCount) => ({
     type: UPDATE_MIDDLE_READING_STATUS,
     payload: {segmentId, articleCount}
+});
+
+export const fetchWordResult = (segmentId) => ({
+    type: FETCH_WORD_RESULT,
+    payload: segmentId,
+});
+
+export const fetchWordResultSuccess = (wordResult) => ({
+    type: FETCH_WORD_RESULT_SUCCESS,
+    payload: wordResult,
 });

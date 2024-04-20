@@ -27,3 +27,7 @@ export const updateReadingStatus = (segmentId) => {
 export const updateMiddleReadingStatus = (segmentId, articleCount) => {
     return axios.get(`./api/segment/update-middle-reading-status/${segmentId}/${articleCount}`);
 }
+
+export const fetchWordResult = (segmentId) => {
+    return axios.get(`./api/segment/word-result/${segmentId}`);
+}

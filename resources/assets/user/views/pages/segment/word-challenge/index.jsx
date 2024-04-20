@@ -5,8 +5,13 @@ import './WordChallenge.scss';
 
 class WordChallenge extends Component {
     render() {
-        const {segmentId} = this.props;
-        const testResult = [65, 80, 95];
+        const {segmentId, wordResult} = this.props;
+        console.log(wordResult, 'wordResult' )
+        const wordResultArray = wordResult && wordResult.map(item => item.test_score);
+        console.log(wordResultArray, 'wordResultArray');
+
+
+
 
         return (
             <div>
@@ -25,7 +30,7 @@ class WordChallenge extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {testResult.map((item, index) => {
+                            {wordResultArray && wordResultArray.map((item, index) => {
                                 return (
                                     <tr key={index}>
                                         <th className="word__result-table__cycle">{index+1}</th>

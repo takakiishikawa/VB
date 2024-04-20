@@ -3,7 +3,7 @@ import UserMenu from '../../components/user-menu';
 import SegmentSidebarContainer from '../../components/sidebar/segment-sidebar/SegmentSidebarContainer';
 import GenerateArticle from './generate-article';
 import ReadingStatusContainer from './reading-status/ReadingStatusContainer';
-import WordChallenge from './word-challenge';
+import WordChallengeContainer from './word-challenge/WordChallengeContainer';
 
 import './Segment.scss';
 
@@ -37,7 +37,7 @@ class Segment extends Component {
                                 majorSegmentId={majorSegmentId}
                             />}
                         {(status == 3 || status == 4) && 
-                            <WordChallenge
+                            <WordChallengeContainer
                                 segmentId={segmentId}
                             />}
                     </div>

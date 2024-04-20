@@ -2,7 +2,8 @@ const initialState = {
     segments: [],
     user_segment_statuses: [],
     userArticleList: [],
-    userSegmentCycle: []
+    userSegmentCycle: [],
+    wordResult: []
 }
 
 const segmentReducer = (state = initialState, action) => {
@@ -34,6 +35,12 @@ const segmentReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userSegmentCycle: action.payload.userSegmentCycle,
+            }
+        case 'FETCH_WORD_RESULT_SUCCESS':
+            console.log(action.payload.wordResult, 'reducer');
+            return {
+                ...state,
+                wordResult: action.payload.wordResult,
             }
         default:
             return state;

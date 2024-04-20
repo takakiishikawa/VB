@@ -9,3 +9,5 @@ export {fetchSegmentCycle} from './action';
 export {getSegmentCycle} from './selector';
 export {updateReadingStatus} from './action';
 export {updateMiddleReadingStatus} from './action';
+export {fetchWordResult} from './action';
+export {getWordResult} from './selector';

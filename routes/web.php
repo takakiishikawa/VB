@@ -31,6 +31,7 @@ Route::prefix('/api')->group(function () {
         Route::get('/cycle/{id}', [SegmentController::class, 'userSegmentCycle']);
         Route::get('/update-reading-status/{segmentId}', [SegmentController::class, 'updateReadingStatus']);
         Route::get('/update-middle-reading-status/{segmentId}/{articleCount}', [SegmentController::class, 'updateMiddleReadingStatus']);
+        Route::get('/word-result/{segmentId}', [SegmentController::class, 'wordResult']);
     });
     Route::prefix('/article')->group(function () {
         Route::get('/{segmentId}/{articleId}',[ArticleController::class,'index']);
