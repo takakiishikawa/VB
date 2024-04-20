@@ -23,18 +23,19 @@ class Progressbar extends Component {
 
     render() {
         const {articleCount, articleList, wordCount} = this.props;
+
         return (
             <>
-                {articleCount ? 
+                {typeof articleCount !== 'undefined' ? 
                     <div className="progress-bar">
                         <div className="progress-bar__completed" style={{width: this.calcCompletedProgress(articleCount, articleList)}}/>
-                        <div className="progress-bar__uncompleted" style={{width: this.calcUncompletedProgress(articleCount, articleList)}}/>
+                        <div className={`progress-bar__uncompleted ${articleCount == 0 && "radius"} `} style={{width: this.calcUncompletedProgress(articleCount, articleList)}}/>
                     </div>
                 : null}
-                {wordCount ? 
+                {typeof wordCount !== 'undefined' ?
                     <div className="progress-bar">
                         <div className="progress-bar__completed" style={{width: this.calcWordCompletedProgress(wordCount)}}/>
-                        <div className="progress-bar__uncompleted" style={{width: this.calcWordUncompletedProgress(wordCount)}}/>
+                        <div className={`progress-bar__uncompleted ${wordCount == 0 && "radius"} `} style={{width: this.calcWordUncompletedProgress(wordCount)}}/>
                     </div>
                 : null}
             </>

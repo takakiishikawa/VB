@@ -40,21 +40,26 @@ class WordController extends Controller
                     $query->where('name', $parse->name);
                 })
                 ->where('id', '!=', $word->id)
-                ->select('id', 'jp')
+                ->select('id', 'jp', 'name')
                 ->take(2)
                 ->get();
     
                 $parseList = $word->wordToParse->pluck('parse.name');
             } else {
                 $similarWordList = Word::where('id', '!=', $word->id)
-                    ->select('id', 'jp')
+                    ->select('id', 'jp', 'name')
                     ->take(2)
                     ->get();
                 
                 $parseList = collect([null]);
             }
 
-            $jpList = $similarWordList->pluck('jp')->push($word->jp)->shuffle();
+            $jpList = $similarWordList->map(function ($similarWord) {
+                return [
+                    'jp' => $similarWord->jp,
+                    'name' => $similarWord->name
+                ];
+            })->push(['jp' => $word->jp, 'name' => $word->name])->shuffle();
 
             return [
                 'word' => $word->name,

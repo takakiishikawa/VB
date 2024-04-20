@@ -22,3 +22,85 @@
         }   
     }
 }
+
+.word-challenge {
+    .question {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 130px;
+
+        &__parse {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            &-item {
+                border-radius: 16px;
+                background-color: $color-current;
+                color: $color-white;
+                padding: 10px 18px;
+                font-weight: 540;
+                font-size: 16px;
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        &__name {
+            margin-top: 10px;
+            font-size: 80px;
+            font-weight: 540;
+        }
+    }
+
+    .answer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+        gap: 15px;
+
+        &__row {
+            &.flex {
+                display: flex;
+                gap: 30px;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        &__item {
+            border-radius: 8px;
+            background-color: $color-white;
+            color: $color-text;
+            border: 1px solid $color-primary;
+            width: 15vw;
+            height: 65px;
+
+            &.horizontal {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+            &.vertical {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            &-text {
+                font-size: 25px;
+            }
+        }
+    }
+
+}
