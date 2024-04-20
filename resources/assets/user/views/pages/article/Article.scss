@@ -21,26 +21,6 @@
             color: $color-text;
         }   
     }
-    
-    &__progress-bar {
-        display: flex;
-        width: 57vw;
-        height: 17px;
-
-
-        &__completed {
-            background-color: $color-current;
-            border-radius: 8px 0 0 8px;
-            height: 100%;
-
-        }
-        &__uncompleted {
-            background-color: $color-sub-current;
-            border-radius: 0 8px 8px 0;
-
-            height: 100%;
-        }
-    }
 }
 
 .content {

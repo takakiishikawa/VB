@@ -5,16 +5,18 @@ import Word from './';
 
 class WordContainer extends Component {
     componentDidMount() {
-        console.log(1, 'wordContainer')
         const {segmentId} = this.props.match.params;
-        console.log(this.props.match.params, 'wordContainer')
-        console.log(segmentId, 'wordContainer');
         this.props.fetchWordList(segmentId);
     }  
 
     render() {
+        const {segmentId, majorSegmentId} = this.props.match.params;
         return (
-            <Word {...this.props} />
+            <Word
+                wordList={this.props.wordList}
+                segmentId={segmentId}
+                majorSegmentId={majorSegmentId}    
+            />
         )
     }
 }

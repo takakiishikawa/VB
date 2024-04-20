@@ -1,0 +1,24 @@
+@import "../../styles/color.scss";
+
+
+.header {
+    margin-top: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    &__back {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: -5px;
+        left: 47px;
+        
+        &__back-icon {
+            font-size: 27px;
+            color: $color-text;
+        }   
+    }
+}

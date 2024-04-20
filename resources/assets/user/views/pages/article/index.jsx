@@ -6,6 +6,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {updateReadingStatus, updateMiddleReadingStatus} from '../../../state/modules/segment';
 import './Article.scss';
 import Tooltip from '../../components/tooltip';
+import Progressbar from '../../components/progressbar';
 
 class Article extends Component {
     constructor(props) {
@@ -107,16 +108,6 @@ class Article extends Component {
         })
     }
 
-    calcCompletedProgress = (articleCount) => {
-        const defaultProgress = 10 - this.props.articleList.length;
-        return articleCount * 10 + defaultProgress * 10 + '%';
-    }
-
-    calcUncompletedProgress = (articleCount) => {
-        const defaultProgress = 10 - this.props.articleList.length;
-        return 100 - (articleCount * 10 + defaultProgress * 10) + '%';
-    }
-
     render() {
         const {articleCount} = this.state;
         const {articleList, segmentId, majorSegmentId} = this.props;
@@ -136,10 +127,10 @@ class Article extends Component {
                     >
                         <ArrowBackIcon style={{fontSize:27, color: "#222222"}} />
                     </Link>
-                    <div className="header__progress-bar">
-                        <div className="header__progress-bar__completed" style={{width: this.calcCompletedProgress(articleCount)}}/>
-                        <div className="header__progress-bar__uncompleted" style={{width: this.calcUncompletedProgress(articleCount)}}/>
-                    </div>
+                    <Progressbar
+                        articleCount={articleCount}
+                        articleList={articleList}
+                    />
                 </div>
                 <div className="content">
                     <div>
