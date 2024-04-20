@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MajorSegmentController;
 use App\Http\Controllers\SegmentController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\WordController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,6 +36,9 @@ Route::prefix('/api')->group(function () {
     });
     Route::prefix('/article')->group(function () {
         Route::get('/{segmentId}/{articleId}',[ArticleController::class,'index']);
+    });
+    Route::prefix('/word')->group(function () {
+        Route::get('/{segmentId}', [WordController::class, 'index']);
     });
 });
 

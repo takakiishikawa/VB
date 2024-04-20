@@ -24,8 +24,8 @@ import { FETCH_WORD_RESULT } from './types';
 import { fetchWordResult } from './api';
 import { fetchWordResultSuccess } from './action';
 
-export default function* segmentsSaga() {
-    yield takeLatest(FETCH_SEGMENTS, fetchSegmentsSaga);
+export default function* segmentSaga() {
+    yield takeLatest(FETCH_SEGMENTS, fetchsegmentSaga);
     yield takeLatest(FETCH_USER_SEGMENT_STATUSES, fetchUserSegmentStatusesSaga);
     yield takeLatest(FETCH_GENERATE_ARTICLE, fetchGenerateArticleSaga);
     yield takeLatest(FETCH_READING_STATUS, fetchReadingStatusSaga);
@@ -35,7 +35,7 @@ export default function* segmentsSaga() {
     yield takeLatest(FETCH_WORD_RESULT, fetchWordResultSaga);
 }
 
-function* fetchSegmentsSaga(action) {
+function* fetchsegmentSaga(action) {
     try {
         const id = action.payload;
         const response = yield call(fetchSegments, id);

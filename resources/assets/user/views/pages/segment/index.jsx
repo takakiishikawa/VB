@@ -39,6 +39,7 @@ class Segment extends Component {
                         {(status == 3 || status == 4) && 
                             <WordChallengeContainer
                                 segmentId={segmentId}
+                                majorSegmentId={majorSegmentId}
                             />}
                     </div>
                 </div>

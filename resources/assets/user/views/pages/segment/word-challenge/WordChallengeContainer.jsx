@@ -7,11 +7,9 @@ import {fetchWordResult, getWordResult} from '../../../../state/modules/segment'
 class WordChallengeContainer extends Component {
     componentDidMount() {
         this.props.fetchWordResult(this.props.segmentId);
-        console.log(1);
     }
 
     render() {
-        console.log(2);
         return (
             <WordChallenge {...this.props} />
         )

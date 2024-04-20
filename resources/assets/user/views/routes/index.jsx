@@ -5,7 +5,7 @@ import SegmentContainer from '../pages/segment/SegmentContainer';
 import Theme from '../pages/theme';
 import Analytics from '../pages/analytics';
 import ArticleContainer from '../pages/article/ArticleContainer';
-import Word from '../pages/word';
+import WordContainer from '../pages/word/WordContainer';
 import Profile from '../components/profile';
 import Concept from '../components/concept';
 import PageNotFound from '../components/page-not-found';
@@ -20,7 +20,7 @@ class AppRoutes extends Component {
                 <Route exact path="/" component={MajorSegmentContainer} />
                 <Route exact path="/segment/:majorSegmentId/:segmentId" component={SegmentContainer} />
                 <Route exact path="/segment/:majorSegmentId/:segmentId/article/:articleId" component={ArticleContainer} />
-                <Route exact path="/word" component={Word} />
+                <Route exact path="/segment/:majorSegmentId/:segmentId/word" component={WordContainer} />
                 <Route exact path="/Theme" component={Theme} />
                 <Route exact path="/analytics" component={Analytics} />
                 <Route exact path="/profile" component={Profile} />

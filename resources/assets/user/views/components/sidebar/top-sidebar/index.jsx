@@ -12,7 +12,6 @@ import './TopSidebar.scss';
 class TopSidebar extends Component {
     render() {
         const pathName = this.props.location.pathname;
-        console.log(this.props.history,'test');
 
         return(
             <div className="sidebar">

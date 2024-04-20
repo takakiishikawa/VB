@@ -1,0 +1,1 @@
+export const getWordList = (state) => state.word.wordList;

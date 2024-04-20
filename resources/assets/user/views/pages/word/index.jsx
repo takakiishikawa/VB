@@ -11,6 +11,9 @@ class Word extends Component {
     }
 
     render() {
+        const {wordList} = this.props;
+        console.log(wordList, 'wordList');
+        
         return (
             <div>
 

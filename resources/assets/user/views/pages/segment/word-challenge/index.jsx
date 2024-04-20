@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import CyclebarContainer from '../../../components/cyclebar/CyclebarContainer';
 import './WordChallenge.scss';
+import {Link} from 'react-router-dom';
 
 
 class WordChallenge extends Component {
     render() {
-        const {segmentId, wordResult} = this.props;
+        const {segmentId, majorSegmentId, wordResult} = this.props;
         const wordResultArray = wordResult && wordResult.map(item => item.test_score);
 
         return (
@@ -13,9 +14,12 @@ class WordChallenge extends Component {
                 <CyclebarContainer segmentId={segmentId} />
                 <div className="word">
                     <div className="word__start">
-                        <button className="word__start__button">
+                        <Link
+                            to={`/segment/${majorSegmentId}/${segmentId}/word`}
+                            className="word__start__button"
+                        >
                             Start
-                        </button>
+                        </Link>
                     </div>
                     <table className="word__result-table">
                         <thead>

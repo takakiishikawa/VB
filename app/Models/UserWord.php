@@ -32,7 +32,7 @@ class UserWord extends Model
         return $this->belongsTo(Segment::class, 'segment_id');
     }
 
-    public function userWordTests(){
+    public function userWordTest(){
         return $this->hasMany(UserWordTest::class, 'user_word_id');
     }
 }

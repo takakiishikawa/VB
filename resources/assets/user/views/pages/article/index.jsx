@@ -109,14 +109,11 @@ class Article extends Component {
 
     calcCompletedProgress = (articleCount) => {
         const defaultProgress = 10 - this.props.articleList.length;
-        console.log(defaultProgress, 'defaultProgress')
-        console.log(articleCount * 10 + defaultProgress * 10 + '%', 'articleCount * 10 + defaultProgress * 10 + %')
         return articleCount * 10 + defaultProgress * 10 + '%';
     }
 
     calcUncompletedProgress = (articleCount) => {
         const defaultProgress = 10 - this.props.articleList.length;
-        console.log(100 - (articleCount * 10 + defaultProgress * 10) + '%', '100 - (articleCount * 10 - defaultProgress * 10) + %')
         return 100 - (articleCount * 10 + defaultProgress * 10) + '%';
     }
 
@@ -124,8 +121,6 @@ class Article extends Component {
         const {articleCount} = this.state;
         const {articleList, segmentId, majorSegmentId} = this.props;
         const articleInfo = articleList[articleCount];
-
-        console.log(articleList, 'articleList');
 
         if (!articleInfo) {
             return;

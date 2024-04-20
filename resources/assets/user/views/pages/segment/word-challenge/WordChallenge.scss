@@ -28,6 +28,7 @@
             padding: 10.5px 40px;
             cursor: pointer;
             transition: background-color 0.3s;
+            text-decoration: none;
 
             &:hover {
                 background-color: $color-current;
@@ -52,14 +53,6 @@
             padding-bottom: 8px;
             font-weight: 500;
             height: 37.5px;
-        }
-
-        &__cycle {
-
-        }
-
-        &__result {
-
         }
     }
 }
