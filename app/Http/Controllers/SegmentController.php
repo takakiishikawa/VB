@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\DB;
 class SegmentController extends Controller
 {
     public function index($id) {
+        \Log::info('id', ['id' => $id]);
         $majorSegment = MajorSegment::find($id);
+        \Log::info('majorSegment', ['majorSegment' => $majorSegment]);
         $major_segment_id = $majorSegment->id;
         $segments = Segment::where('major_segment_id', $major_segment_id)->get('id');
         
@@ -225,7 +227,10 @@ class SegmentController extends Controller
             ->first();
         
         $userSegmentStatus->cycle = $userSegmentStatus->cycle+1;
-        $userSegmentStatus->status = $userSegmentStatus->status+1;
+        if ($userSegmentStatus->cycle == 4) {
+            $userSegmentStatus->status = $userSegmentStatus->status+1;
+        }
+        
         $userSegmentStatus->save();
 
         $userArticleList = $this->readingStatus($segmentId);

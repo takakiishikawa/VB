@@ -51,14 +51,12 @@ class ReadingStatus extends Component {
                                             {status !== 'read' ?
                                                 <Link
                                                     to={`/segment/${majorSegmentId}/${segmentId}/article/${index+1}`}
-                                                    onClick={this.goArticle(index+1)}
                                                     className={`statusButton ${status}`}
                                                 >
                                                     {status}
                                                 </Link>
                                             : 
                                             <button
-                                                onClick={this.goArticle(index+1)}
                                                 className={`statusButton ${status}`}
                                             >
                                                 {status}
