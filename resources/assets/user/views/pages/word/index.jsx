@@ -76,8 +76,15 @@ class Word extends Component {
     }
 
     goArticle(userArticleId) {
+        const {wordCount} = this.state;
+        this.setState({
+            wordCount: wordCount + 1,
+            answerWord: null
+        });
+        
         this.props.history.push({
             pathname: `/segment/${this.props.majorSegmentId}/${this.props.segmentId}/article/${userArticleId}`,
+            state: {type: 'word'}
         });
     }
 

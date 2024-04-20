@@ -108,10 +108,16 @@ class Article extends Component {
         })
     }
 
+    nextWord = () => {
+        this.props.history.push(`/segment/${this.props.majorSegmentId}/${this.props.segmentId}/word`);
+    }
+
     render() {
         const {articleCount} = this.state;
         const {articleList, segmentId, majorSegmentId} = this.props;
         const articleInfo = articleList[articleCount];
+        console.log(this.props.history, 'this.props.history');
+        const {type} = this.props.history.location.state;
 
         if (!articleInfo) {
             return;
@@ -145,29 +151,47 @@ class Article extends Component {
                         {this.highlightedArticle(articleInfo)}
                     </div>
                 </div>
+
                 <div className="next">
-                    <ArrowBackIcon
-                        onClick={this.nextArticle}
-                        style={{
-                            fontSize: 30,
-                            color: "#FFFFFF",
-                            backgroundColor: "#3F51B5",
-                            borderRadius: 8,
-                            padding: 6,
-                            cursor: "pointer",
-                        }}
-                    />
-                    <ArrowForwardIcon
-                        onClick={this.nextArticle}
-                        style={{
-                            fontSize: 30,
-                            color: "#FFFFFF",
-                            backgroundColor: "#3F51B5",
-                            borderRadius: 8,
-                            padding: 6,
-                            cursor: "pointer",
-                        }}
-                    />
+                    {type == 'word' ?
+                        <ArrowForwardIcon
+                            onClick={this.nextWord}
+                            style={{
+                                fontSize: 30,
+                                color: "#FFFFFF",
+                                backgroundColor: "#3F51B5",
+                                borderRadius: 8,
+                                padding: 6,
+                                cursor: "pointer",
+                            }}
+                        />
+                    : (
+                        <>
+                            <ArrowBackIcon
+                                onClick={this.nextArticle}
+                                style={{
+                                    fontSize: 30,
+                                    color: "#FFFFFF",
+                                    backgroundColor: "#3F51B5",
+                                    borderRadius: 8,
+                                    padding: 6,
+                                    cursor: "pointer",
+                                }}
+                            />
+                            <ArrowForwardIcon
+                                onClick={this.nextArticle}
+                                style={{
+                                    fontSize: 30,
+                                    color: "#FFFFFF",
+                                    backgroundColor: "#3F51B5",
+                                    borderRadius: 8,
+                                    padding: 6,
+                                    cursor: "pointer",
+                                }}
+                            />
+                        </>
+                    )
+                    }
                 </div>
             </div>
         );

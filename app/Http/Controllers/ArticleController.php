@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\UserArticle;
 use App\Models\Segment;
 use App\Models\UserWord;
@@ -15,6 +15,9 @@ class ArticleController extends Controller
 {
     public function index($segmentId, $articleId) {
         $userId = Auth::user()->id;
+
+        \Log::info('segmentId', ['segmentId' => $segmentId]);
+        \Log::info('articleId', ['articleId' => $articleId]);
         
         //UserArticle関連取得
         $userArticleArray = UserArticle::where('user_id', $userId)
@@ -31,6 +34,7 @@ class ArticleController extends Controller
         $otherArticle = $userArticleArray->where('id', '!=', $articleId)->shuffle();
         \Log::info('otherArticle', ['otherArticle' => $otherArticle]);
         $mergedArticle = collect([$specificArticle])->merge($otherArticle);
+
         \Log::info('mergedArticle', ['mergedArticle' => $mergedArticle]);
 
         //UserWord関連取得
@@ -48,6 +52,7 @@ class ArticleController extends Controller
         
         //統合
         $articleList = $mergedArticle->map(function ($userArticle) use ($userWordArray) {
+            \Log::info('userArticle', ['userArticle' => $userArticle]);
             return [
                 'title' => $userArticle->title,
                 'article' => $userArticle->article,
