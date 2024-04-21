@@ -13,9 +13,7 @@ class Word extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            wordCount: 0,
-            answerWord: null,
-            answerList: []
+            answerWord: null
         };
     }
 
@@ -28,8 +26,7 @@ class Word extends Component {
     }
 
     handleKeyDown = (event) => {
-        const {wordList} = this.props;
-        const {wordCount} = this.state;
+        const {wordList, wordCount} = this.props;
         const currentWord = wordList[wordCount];
         const userArticleId = currentWord.userArticleId;
         //37: left, 38: up, 39: right, 40: down
@@ -57,44 +54,54 @@ class Word extends Component {
     }
 
     confirmAnswer = (userArticleId) => {
-        const {wordList} = this.props;
-        const {wordCount, answerWord} = this.state;
+        const {wordList, wordCount} = this.props;
+        const {answerWord} = this.state;
         const correctWord = wordList[wordCount].word;
         if (answerWord == correctWord) {
+            this.props.addAnswerList({
+                word: correctWord,
+                testPass: true
+            }, () => {
+                console.log(this.props.answerList, 'answerList')
+            });
             this.nextWord();
         } else {
+            console.log(correctWord, 'correctWord')
+            this.props.addAnswerList({
+                word: correctWord,
+                testPass: false
+            }, () => {
+                console.log(this.props.answerList, 'answerList')
+            });
             this.goArticle(userArticleId);
         }
     }
 
     nextWord() {
-        const {wordCount} = this.state;
+        this.props.incrementWordCount();
         this.setState({
-            wordCount: wordCount + 1,
             answerWord: null
         });
     }
 
     goArticle(userArticleId) {
-        const {wordCount} = this.state;
+        this.props.incrementWordCount();
         this.setState({
-            wordCount: wordCount + 1,
             answerWord: null
-        });
-        
-        this.props.history.push({
-            pathname: `/segment/${this.props.majorSegmentId}/${this.props.segmentId}/article/${userArticleId}`,
-            state: {type: 'word'}
+        }, () => {
+            this.props.history.push({
+                pathname: `/segment/${this.props.majorSegmentId}/${this.props.segmentId}/article/${userArticleId}`,
+                state: {type: 'word'}
+            });
         });
     }
 
 
     render() {
-        const {wordList, segmentId, majorSegmentId} = this.props;
-        const {wordCount} = this.state;
+        const {wordList, segmentId, majorSegmentId, wordCount} = this.props;
         const currentWord = wordList[wordCount];
-        console.log(currentWord, 'currentWord');
-        console.log(wordList, 'wordList');
+        console.log(this.props.answerList, 'answerList');
+        console.log(wordCount, 'wordCount');
 
         if (!currentWord) {
             return;
@@ -106,7 +113,6 @@ class Word extends Component {
                     <Link
                         to={`/segment/${majorSegmentId}/${segmentId}`}
                         className="header__back"
-                        onClick={() => this.props.updateMiddleReadingStatus(segmentId, articleCount)}
                     >
                         <ArrowBackIcon style={{fontSize:27, color: "#222222"}} />
                     </Link>

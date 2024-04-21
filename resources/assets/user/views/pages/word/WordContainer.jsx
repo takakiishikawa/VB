@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchWordList, getWordList} from '../../../state/modules/word';
+import {fetchWordList, getWordList, incrementWordCount, getWordCount, addAnswerList, getAnswerList} from '../../../state/modules/word';
 import Word from './';
 
 class WordContainer extends Component {
@@ -15,7 +15,12 @@ class WordContainer extends Component {
             <Word
                 wordList={this.props.wordList}
                 segmentId={segmentId}
-                majorSegmentId={majorSegmentId}    
+                majorSegmentId={majorSegmentId}
+                wordCount={this.props.wordCount}
+                incrementWordCount={this.props.incrementWordCount}
+                addAnswerList={this.props.addAnswerList}
+                //後でfetchAnswerListに変更する
+                answerList={this.props.answerList}
             />
         )
     }
@@ -23,10 +28,14 @@ class WordContainer extends Component {
 
 const mapStateToProps = (state) => ({
     wordList: getWordList(state),
+    wordCount: getWordCount(state),
+    answerList: getAnswerList(state)
 });
 
 const mapDispatchToProps = {
     fetchWordList,
+    incrementWordCount,
+    addAnswerList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WordContainer);
