@@ -67,9 +67,10 @@ class SegmentController extends Controller
         \Log::info('segmentId', ['segmentId' => $segmentId]);
         $selectWordCount = 100;
         $articleCount = 0;
+        $tryCount = 0;
 
         //記事生成開始
-        while ($articleCount < 1) {
+        while ($articleCount < 10 && $tryCount < 15) {
             //prompt準備
             $articleTheme = ArticleTheme::inRandomOrder()->first();
             \Log::info('articleTheme', ['articleTheme' => $articleTheme]);
@@ -116,7 +117,8 @@ class SegmentController extends Controller
             $content = json_decode($beforeDecodeContent, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
                 \Log::info('JSONデコードエラー');
-                return ['error' => true, 'message' => 'Failed to decode JSON content.'];
+                $tryCount++;
+                return response()->json(['error' => true, 'message' => 'Failed to decode JSON content.']);
             }
             $titleData = $content['title'];
             $articleData = $content['article'];
@@ -133,12 +135,14 @@ class SegmentController extends Controller
             //error handling
             if (count($articleWordList) < 10) {
                 \Log::info('10以下のエラー');
-                return ['error' => true, 'message' => 'Failed to generate an article with the required number of words.'];
+                $tryCount++;
+                continue;
             }
             
             if (!$articleData || !$titleData) {
                 \Log::info('記事生成エラー');
-                return ['error' => true, 'message' => 'Failed to generate an article.'];
+                $tryCount++;
+                continue;            
             }
 
             //DB保存
@@ -163,6 +167,7 @@ class SegmentController extends Controller
             }
             \Log::info('記事生成成功');
             $articleCount++;
+            $tryCount++;
         }
 
         //status更新
@@ -172,6 +177,14 @@ class SegmentController extends Controller
 
         $userSegmentStatus->status = $userSegmentStatus->status+1;
         $userSegmentStatus->save();
+
+        if ($articleCount >= 10) {
+            \Log::info("Successfully created 10 articles.");
+        } else {
+            \Log::info("Exceeded maximum tries without creating 10 articles. Tries: $tryCount");
+        }
+
+        \Log::info("try回数: $tryCount");
         
         return;
     }
