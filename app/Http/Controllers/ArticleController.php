@@ -15,6 +15,9 @@ class ArticleController extends Controller
 {
     public function index($segmentId, $articleId) {
         $userId = Auth::user()->id;
+        \Log::info($userId, ['userId' => $userId]);
+        \Log::info($segmentId, ['segmentId' => $segmentId]);
+        \Log::info($articleId, ['articleId' => $articleId]);
 
         //UserArticle関連取得
         $userArticleArray = UserArticle::where('user_id', $userId)
@@ -25,9 +28,17 @@ class ArticleController extends Controller
             }])
             ->get(['id', 'title', 'article', 'article_theme_id']);
 
+        //$articleIdをxとする。UserArticleにおいて、user_id,segment_idが一致するレコードの中から、照準にx番目のidを取得する
+        $userArticleId = UserArticle::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->orderBy('id')
+            ->skip($articleId -1)
+            ->first()
+            ->id;
+
         //選択された記事を先頭 + 他ランダム表示
-        $specificArticle = $userArticleArray->firstWhere('id', $articleId);
-        $otherArticle = $userArticleArray->where('id', '!=', $articleId)->shuffle();
+        $specificArticle = $userArticleArray->firstWhere('id', $userArticleId);
+        $otherArticle = $userArticleArray->where('id', '!=', $userArticleId)->shuffle();
         $mergedArticle = collect([$specificArticle])->merge($otherArticle);
 
         //UserWord関連取得
@@ -45,6 +56,7 @@ class ArticleController extends Controller
         
         //統合
         $articleList = $mergedArticle->map(function ($userArticle) use ($userWordArray) {
+            \Log::info($userArticle, ['userArticle' => $userArticle]);
             return [
                 'title' => $userArticle->title,
                 'article' => $userArticle->article,

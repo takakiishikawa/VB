@@ -116,7 +116,7 @@ class Article extends Component {
         const {articleCount} = this.state;
         const {articleList, segmentId, majorSegmentId} = this.props;
         const articleInfo = articleList[articleCount];
-        const {type} = this.props.history.location.state;
+        const {type} = this.props.history.location.state || {};
 
         if (!articleInfo) {
             return;
