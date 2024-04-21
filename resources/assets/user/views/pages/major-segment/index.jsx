@@ -69,7 +69,7 @@ class MajorSegment extends Component {
                                 <Tooltip />
                                 <div className="major-segment__wrapper__text">Active</div>
                                 <Link 
-                                    to={`/major-segment/${activeMajorSegmentId}`} 
+                                    to={`/segment/${activeMajorSegmentId}/1`} 
                                     className="major-segment__wrapper__item active"
                                     onClick={() => this.props.fetchSidebarState(activeMajorSegmentId)}
                                 >
