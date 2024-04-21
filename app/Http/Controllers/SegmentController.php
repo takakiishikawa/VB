@@ -118,7 +118,7 @@ class SegmentController extends Controller
             if (json_last_error() !== JSON_ERROR_NONE) {
                 \Log::info('JSONデコードエラー');
                 $tryCount++;
-                return response()->json(['error' => true, 'message' => 'Failed to decode JSON content.']);
+                continue;
             }
             $titleData = $content['title'];
             $articleData = $content['article'];
@@ -166,12 +166,13 @@ class SegmentController extends Controller
                 ]);
             }
             \Log::info('記事生成成功');
+            \Log::info("現在のtry回数: $tryCount, 現在の記事数: $articleCount");
             $articleCount++;
             $tryCount++;
         }
 
         //status更新
-        $userSegmentStatus = $userSegmentStatus::where('user_id', $userId)
+        $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
             ->where('segment_id', $segmentId)
             ->first();
 

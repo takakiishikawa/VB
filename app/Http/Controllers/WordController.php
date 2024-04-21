@@ -116,10 +116,7 @@ class WordController extends Controller
             ->first();
 
         //cycle completed
-        if ($userSegmentStatus->cycle < 6) {
-            $userSegmentStatus->cycle += 1;
-            $userSegmentStatus->save();
-        } else if ($userSegmentStatus->cycle == 6) {
+        if ($userSegmentStatus->cycle == 6) {
             //current recordのstatus更新
             $userSegmentStatus->status = 4;
             $userSegmentStatus->save();
@@ -159,9 +156,10 @@ class WordController extends Controller
                     ]);
                 };
             };
-        }
-
-
+        } else if ($userSegmentStatus->cycle < 6) {
+            $userSegmentStatus->cycle += 1;
+            $userSegmentStatus->save();
+        } 
 
         return;
     }
