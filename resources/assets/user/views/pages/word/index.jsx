@@ -125,7 +125,7 @@ class Word extends Component {
                         <div className="question__parse">
                             {currentWord.parseList.map((item, index) => {
                                 return (
-                                    <span className="question__parse-item" key={index}>
+                                    <span className={`${item && "question__parse-item"}`} key={index}>
                                         {item}
                                     </span>
                                 )
