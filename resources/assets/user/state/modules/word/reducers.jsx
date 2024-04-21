@@ -24,6 +24,16 @@ const wordReducer = ((state = initialState, action) => {
                 ...state,
                 answerList: [...state.answerList, action.payload]
             }
+        case 'RESET_WORD_COUNT':
+            return {
+                ...state,
+                wordCount: 0
+            }
+        case 'RESET_ANSWER_LIST':
+            return {
+                ...state,
+                answerList: []
+            }
         default:
             return state;
     }

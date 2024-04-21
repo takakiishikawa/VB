@@ -6,5 +6,5 @@ export const fetchWordList = (segmentId) => {
 
 export const fetchAnswerList = (segmentId, answerList) => {
     console.log(answerList, 'api');
-    return axios.post(`/api/word/answer/${segmentId}`, {answerList: answerList});
+    return axios.post(`/api/word/answer/${segmentId}`, {answerList});
 }

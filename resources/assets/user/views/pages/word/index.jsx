@@ -23,6 +23,8 @@ class Word extends Component {
         //要変更100
         if (this.props.wordCount === 3) {
             this.props.fetchAnswerList(segmentId);
+            this.props.resetAnswerList();
+            this.props.resetWordCount();
         }
     }
 
@@ -31,6 +33,8 @@ class Word extends Component {
         //要変更100
         if (this.props.wordCount === 3) {
             this.props.fetchAnswerList(segmentId);
+            this.props.resetAnswerList();
+            this.props.resetWordCount();
         }
     }
 

@@ -14,7 +14,8 @@ use App\Models\UserSegmentTest;
 use App\Models\UserSegmentStatus;
 use App\Models\Segment;
 use App\Models\UserMajorSegmentStatus;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class WordController extends Controller
 {
@@ -84,10 +85,17 @@ class WordController extends Controller
 
         //user_word_tests更新
         foreach ($answerList as $answer) {
-            $wordId = Word::where('name', $answer['word'])->first()->id;
+            //answer['name']と一致するword tableのword idと連携するuser_word_idを取得
+            $userWordId = UserWord::where('user_id', $userId)
+                ->whereHas('word', function ($query) use ($answer) {
+                    $query->where('name', $answer['word']);
+                })
+                ->first()
+                ->id;
+
             UserWordTest::create([
                 'user_id' => $userId,
-                'word_id' => $wordId,
+                'user_word_id' => $userWordId,
                 'test_pass' => $answer['testPass']
             ]);
         } 
@@ -106,19 +114,26 @@ class WordController extends Controller
         $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
             ->where('segment_id', $segmentId)
             ->first();
-        $userSegmentStatus->cycle += 1;
-        $userSegmentStatus->save();
 
         //cycle completed
-        if ($userSegmentStatus->cycle == 6) {
+        if ($userSegmentStatus->cycle < 6) {
+            $userSegmentStatus->cycle += 1;
+            $userSegmentStatus->save();
+        } else if ($userSegmentStatus->cycle == 6) {
             //current recordのstatus更新
             $userSegmentStatus->status = 4;
             $userSegmentStatus->save();
 
             //同segmentのカウントが9以下の時、next segment追加
-            $segmentCount = UserSegmentStatus::where('user_id', $userId)
-                ->where('segment_id', $segmentId)
+            $majorSegmentId = Segment::find($segmentId)->major_segment_id;
+            //$majorSemgnetIdと一致するSegment tableのrecordの中から、user_segment_statusのsegment_idが一致するもの数をカウントする
+            $segmentCount = Segment::where('major_segment_id', $majorSegmentId)
+                ->whereHas('UserSegmentStatus', function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                })
                 ->count();
+            \Log::info($segmentCount, ['segmentCount' => $segmentCount]);
+            
             if ($segmentCount < 10) {
                 UserSegmentStatus::create([
                     'user_id' => $userId,
@@ -129,11 +144,10 @@ class WordController extends Controller
             };
 
             //同segmentのカウントが10の時、major_segment_statuses更新&追加
-            $majorSegmentId = Segment::find($segmentId)->major_segment_id;
             $majorSegmentStatus = UserMajorSegmentStatus::where('user_id', $userId)
                 ->where('major_segment_id', $majorSegmentId)
                 ->first();
-            if ($segmentCount == 10 && $userSegmentStatus->status == 4) {
+            if ($segmentCount == 10) {
                 $majorSegmentStatus->status = 2;
                 $majorSegmentStatus->save();
 
@@ -146,6 +160,8 @@ class WordController extends Controller
                 };
             };
         }
+
+
 
         return;
     }
