@@ -1,4 +1,4 @@
-import {FETCH_WORD_LIST, FETCH_WORD_LIST_SUCCESS, INCREMENT_WORD_COUNT, ADD_ANSWER_LIST} from "./types";
+import {FETCH_WORD_LIST, FETCH_WORD_LIST_SUCCESS, INCREMENT_WORD_COUNT, ADD_ANSWER_LIST, FETCH_ANSWER_LIST} from "./types";
 
 export const fetchWordList = (segmentId) => ({
     type: FETCH_WORD_LIST,
@@ -17,4 +17,9 @@ export const incrementWordCount = () => ({
 export const addAnswerList = (answerList) => ({
     type: ADD_ANSWER_LIST,
     payload: answerList,
+});
+
+export const fetchAnswerList = (segmentId) => ({
+    type: FETCH_ANSWER_LIST,
+    payload: segmentId,
 });

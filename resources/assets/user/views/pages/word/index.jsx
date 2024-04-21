@@ -18,7 +18,20 @@ class Word extends Component {
     }
 
     componentDidMount() {
+        const {segmentId} = this.props;
         document.addEventListener('keydown', this.handleKeyDown);
+        //要変更100
+        if (this.props.wordCount === 3) {
+            this.props.fetchAnswerList(segmentId);
+        }
+    }
+
+    componentDidUpdate() {
+        const {segmentId} = this.props;
+        //要変更100
+        if (this.props.wordCount === 3) {
+            this.props.fetchAnswerList(segmentId);
+        }
     }
 
     componentWillUnmount() {
@@ -61,8 +74,6 @@ class Word extends Component {
             this.props.addAnswerList({
                 word: correctWord,
                 testPass: true
-            }, () => {
-                console.log(this.props.answerList, 'answerList')
             });
             this.nextWord();
         } else {
@@ -70,8 +81,6 @@ class Word extends Component {
             this.props.addAnswerList({
                 word: correctWord,
                 testPass: false
-            }, () => {
-                console.log(this.props.answerList, 'answerList')
             });
             this.goArticle(userArticleId);
         }
@@ -96,12 +105,9 @@ class Word extends Component {
         });
     }
 
-
     render() {
         const {wordList, segmentId, majorSegmentId, wordCount} = this.props;
         const currentWord = wordList[wordCount];
-        console.log(this.props.answerList, 'answerList');
-        console.log(wordCount, 'wordCount');
 
         if (!currentWord) {
             return;

@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\DB;
 class SegmentController extends Controller
 {
     public function index($id) {
-        \Log::info('id', ['id' => $id]);
         $majorSegment = MajorSegment::find($id);
-        \Log::info('majorSegment', ['majorSegment' => $majorSegment]);
         $major_segment_id = $majorSegment->id;
         $segments = Segment::where('major_segment_id', $major_segment_id)->get('id');
         

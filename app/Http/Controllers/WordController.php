@@ -9,6 +9,11 @@ use App\Models\UserArticle;
 use App\Models\Word;
 use App\Models\Parse;
 use App\Models\WordToParse;
+use App\Models\UserWordTest;
+use App\Models\UserSegmentTest;
+use App\Models\UserSegmentStatus;
+use App\Models\Segment;
+use App\Models\UserMajorSegmentStatus;
 
 
 class WordController extends Controller
@@ -33,7 +38,6 @@ class WordController extends Controller
         $wordList = $userWordList->map(function ($userWord) {
             $word = $userWord->word;
             $parse = $word->wordToParse->first()->parse ?? null;
-            \Log::info($parse, ['parse' => $parse]);
 
             if ($parse) {
                 $similarWordList = Word::whereHas('wordToParse.parse', function ($query) use ($parse) {
@@ -69,7 +73,80 @@ class WordController extends Controller
             ];
         });
 
-        \Log::info($wordList, ['wordList' => $wordList]);
         return response()->json(['wordList' => $wordList]);
+    }
+
+    public function saveAnswer($segmentId, Request $request) {
+        $answerList = $request->input('answerList');
+        \Log::info($answerList, ['answerList' => $answerList]);
+        \Log::info($segmentId, ['segmentId' => $segmentId]);
+        $userId = Auth::user()->id;
+
+        //user_word_tests更新
+        foreach ($answerList as $answer) {
+            $wordId = Word::where('name', $answer['word'])->first()->id;
+            UserWordTest::create([
+                'user_id' => $userId,
+                'word_id' => $wordId,
+                'test_pass' => $answer['testPass']
+            ]);
+        } 
+
+        //use_segment_test更新 testPassがtrueの数をカウント
+        $testScore = count(array_filter($answerList, function ($answer) {
+            return $answer['testPass'] == true;
+        }));
+        UserSegmentTest::create([
+            'user_id' => $userId,
+            'segment_id' => $segmentId,
+            'test_score' => $testScore
+        ]);
+
+        //user_segment_status更新
+        $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->first();
+        $userSegmentStatus->cycle += 1;
+        $userSegmentStatus->save();
+
+        //cycle completed
+        if ($userSegmentStatus->cycle == 6) {
+            //current recordのstatus更新
+            $userSegmentStatus->status = 4;
+            $userSegmentStatus->save();
+
+            //同segmentのカウントが9以下の時、next segment追加
+            $segmentCount = UserSegmentStatus::where('user_id', $userId)
+                ->where('segment_id', $segmentId)
+                ->count();
+            if ($segmentCount < 10) {
+                UserSegmentStatus::create([
+                    'user_id' => $userId,
+                    'segment_id' => $segmentId + 1,
+                    'status' => 1,
+                    'cycle' => 1
+                ]);
+            };
+
+            //同segmentのカウントが10の時、major_segment_statuses更新&追加
+            $majorSegmentId = Segment::find($segmentId)->major_segment_id;
+            $majorSegmentStatus = UserMajorSegmentStatus::where('user_id', $userId)
+                ->where('major_segment_id', $majorSegmentId)
+                ->first();
+            if ($segmentCount == 10 && $userSegmentStatus->status == 4) {
+                $majorSegmentStatus->status = 2;
+                $majorSegmentStatus->save();
+
+                if ($majorSegmentStatus->major_segment_id < 12) {
+                    UserMajorSegmentStatus::create([
+                        'user_id' => $userId,
+                        'major_segment_id' => $majorSegmentId + 1,
+                        'status' => 1
+                    ]);
+                };
+            };
+        }
+
+        return;
     }
 }

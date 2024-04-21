@@ -1,10 +1,14 @@
 import {FETCH_WORD_LIST} from "./types";
 import {fetchWordListSuccess} from "./actions";
 import {fetchWordList} from './api';
-import {takeLatest, call, put} from 'redux-saga/effects';
+import {takeLatest, call, put, select} from 'redux-saga/effects';
+import {getAnswerList} from './selectors';
+import {FETCH_ANSWER_LIST} from "./types";
+import {fetchAnswerList} from "./api";
 
 export default function* wordSaga() {
     yield takeLatest(FETCH_WORD_LIST, fetchWordListSaga);
+    yield takeLatest(FETCH_ANSWER_LIST, fetchAnswerListSaga);
 }
 
 function* fetchWordListSaga(action) {
@@ -18,3 +22,14 @@ function* fetchWordListSaga(action) {
     }
 }
 
+function* fetchAnswerListSaga(action) {
+    try {
+        const segmentId = action.payload;
+        const answerList = yield select(getAnswerList);
+        console.log(answerList, 'saga');
+        yield call(fetchAnswerList, segmentId, answerList);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}

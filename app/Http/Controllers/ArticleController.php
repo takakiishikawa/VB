@@ -16,9 +16,6 @@ class ArticleController extends Controller
     public function index($segmentId, $articleId) {
         $userId = Auth::user()->id;
 
-        \Log::info('segmentId', ['segmentId' => $segmentId]);
-        \Log::info('articleId', ['articleId' => $articleId]);
-        
         //UserArticle関連取得
         $userArticleArray = UserArticle::where('user_id', $userId)
             ->where('segment_id', $segmentId)
@@ -30,12 +27,8 @@ class ArticleController extends Controller
 
         //選択された記事を先頭 + 他ランダム表示
         $specificArticle = $userArticleArray->firstWhere('id', $articleId);
-        \Log::info('specificArticle', ['specificArticle' => $specificArticle]);
         $otherArticle = $userArticleArray->where('id', '!=', $articleId)->shuffle();
-        \Log::info('otherArticle', ['otherArticle' => $otherArticle]);
         $mergedArticle = collect([$specificArticle])->merge($otherArticle);
-
-        \Log::info('mergedArticle', ['mergedArticle' => $mergedArticle]);
 
         //UserWord関連取得
         $userArticleIdArray = $mergedArticle->pluck('id');
@@ -52,7 +45,6 @@ class ArticleController extends Controller
         
         //統合
         $articleList = $mergedArticle->map(function ($userArticle) use ($userWordArray) {
-            \Log::info('userArticle', ['userArticle' => $userArticle]);
             return [
                 'title' => $userArticle->title,
                 'article' => $userArticle->article,
@@ -72,8 +64,6 @@ class ArticleController extends Controller
                 })->toArray()
             ];
         })->toArray();
-
-        \Log::info('articleList', ['articleList' => $articleList]);
 
         return response()->json(['articleList' => $articleList]);
     }

@@ -39,6 +39,7 @@ Route::prefix('/api')->group(function () {
     });
     Route::prefix('/word')->group(function () {
         Route::get('/{segmentId}', [WordController::class, 'index']);
+        Route::post('/answer/{segmentId}', [WordController::class, 'saveAnswer']);
     });
 });
 
