@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserMajorSegmentStatus;
+use App\Models\UserSegmentStatus;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,6 +47,13 @@ class RegisteredUserController extends Controller
             'user_id' => $user->id,
             'major_segment_id' => 1,
             'status' => UserMajorSegmentStatus::STATUS_UNLOCKED,
+        ]);
+
+        UserSegmentStatus::create([
+            'user_id' => $user->id,
+            'segment_id' => 1,
+            'status' => UserSegmentStatus::STATUS_GENERATE,
+            'cycle' => 1,
         ]);
 
         event(new Registered($user));
