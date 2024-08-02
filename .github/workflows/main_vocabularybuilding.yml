@@ -63,23 +63,23 @@ jobs:
   
       - name: Set up environment variables
         run: |
-          echo "APP_NAME=${{ secrets.APP_NAME }}" >> $GITHUB_ENV
-          echo "APP_ENV=${{ secrets.APP_ENV }}" >> $GITHUB_ENV
-          echo "APP_KEY=${{ secrets.APP_KEY }}" >> $GITHUB_ENV
-          echo "APP_DEBUG=${{ secrets.APP_DEBUG }}" >> $GITHUB_ENV
-          echo "APP_URL=${{ secrets.APP_URL }}" >> $GITHUB_ENV
-          echo "LOG_CHANNEL=${{ secrets.LOG_CHANNEL }}" >> $GITHUB_ENV
-          echo "LOG_LEVEL=${{ secrets.LOG_LEVEL }}" >> $GITHUB_ENV
-          echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> $GITHUB_ENV
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> $GITHUB_ENV
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "SESSION_DRIVER=${{ secrets.SESSION_DRIVER }}" >> $GITHUB_ENV
-          echo "SESSION_LIFETIME=${{ secrets.SESSION_LIFETIME }}" >> $GITHUB_ENV
-          echo "CACHE_STORE=${{ secrets.CACHE_STORE }}" >> $GITHUB_ENV
-          echo "CACHE_PREFIX=${{ secrets.CACHE_PREFIX }}" >> $GITHUB_ENV
+          echo "APP_NAME=${{ secrets.APP_NAME }}" >> .env
+          echo "APP_ENV=${{ secrets.APP_ENV }}" >> .env
+          echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
+          echo "APP_DEBUG=${{ secrets.APP_DEBUG }}" >> .env
+          echo "APP_URL=${{ secrets.APP_URL }}" >> .env
+          echo "LOG_CHANNEL=${{ secrets.LOG_CHANNEL }}" >> .env
+          echo "LOG_LEVEL=${{ secrets.LOG_LEVEL }}" >> .env
+          echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "SESSION_DRIVER=${{ secrets.SESSION_DRIVER }}" >> .env
+          echo "SESSION_LIFETIME=${{ secrets.SESSION_LIFETIME }}" >> .env
+          echo "CACHE_STORE=${{ secrets.CACHE_STORE }}" >> .env
+          echo "CACHE_PREFIX=${{ secrets.CACHE_PREFIX }}" >> .env
 
   deploy:
     runs-on: ubuntu-latest
