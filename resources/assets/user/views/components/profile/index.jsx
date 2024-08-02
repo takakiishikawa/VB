@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import UserMenu from '../../components/user-menu';
 import TopSidebar from '../../components/sidebar/top-sidebar';
-import './Profile.scss';
-
+//import './Profile.scss';
 
 class Profile extends Component {
 
