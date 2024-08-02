@@ -19,17 +19,10 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.2'
 
-      - name: Check if composer.json exists
-        id: check_files
-        uses: andstor/file-existence-action@v1
-        with:
-          files: 'composer.json'
-
-      - name: Run composer install if composer.json exists
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest --no-dev
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -45,21 +38,41 @@ jobs:
         run: |
           npm run build
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-  
+      - name: Create deployment package
+        run: |
+          rm -rf node_modules
+          zip -r release.zip . -x "*.git*" "node_modules/*" "tests/*" "storage/framework/cache/*" "storage/framework/sessions/*" "storage/framework/views/*"
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: php-app
           path: release.zip
 
-      - name: Run migrations
-        run: php artisan migrate --force
-  
-      - name: Seed database
-        run: php artisan db:seed --force
-  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
+
+    steps:
+          
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: php-app
+
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
+      
+      - name: Check deployment package size
+        run: |
+          du -sh .
+          find . -type f | wc -l
+
       - name: Set up environment variables
         run: |
           echo "APP_NAME=${{ secrets.APP_NAME }}" >> .env
@@ -79,25 +92,8 @@ jobs:
           echo "SESSION_LIFETIME=${{ secrets.SESSION_LIFETIME }}" >> .env
           echo "CACHE_STORE=${{ secrets.CACHE_STORE }}" >> .env
           echo "CACHE_PREFIX=${{ secrets.CACHE_PREFIX }}" >> .env
+          cat .env
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: php-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -112,4 +108,14 @@ jobs:
           app-name: 'VocabularyBuilding'
           slot-name: 'Production'
           package: .
-          
+      - name: Run migrations and seed database
+        env:
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          php artisan migrate --force
+          php artisan db:seed --force
