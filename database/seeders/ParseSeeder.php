@@ -14,6 +14,7 @@ class ParseSeeder extends Seeder
      */
     public function run(): void
     {
+        if (DB::table('parses')->count() === 0) {
         {
             $partsOfSpeech = [
                 'Adjective',
@@ -33,6 +34,7 @@ class ParseSeeder extends Seeder
                     'name' => $pos,
                 ]);
             }
+        }
         }
     }
 }

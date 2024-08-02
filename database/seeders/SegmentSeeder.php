@@ -13,6 +13,7 @@ class SegmentSeeder extends Seeder
      */
     public function run(): void
     {
+        if (DB::table('segments')->count() === 0) {
         //MajorSegmentをFKとする
         //columun= id, major_segment_idの2点
         //1つのmejor_segment_idに対して10のrecord生成
@@ -23,5 +24,6 @@ class SegmentSeeder extends Seeder
             }
         }
         \DB::table('segments')->insert($data);
+        }
     }
 }

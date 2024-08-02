@@ -13,6 +13,7 @@ class MajorSegmentSeeder extends Seeder
      */
     public function run(): void
     {
+        if (DB::table('major_segments')->count() === 0) {
         //columnはidのみ
         //12record作成し、登録する
         $data = [
@@ -30,5 +31,6 @@ class MajorSegmentSeeder extends Seeder
             ['id' => 12],
         ];
         \DB::table('major_segments')->insert($data);
+        }
     }
 }
