@@ -38,12 +38,10 @@ jobs:
 
       - name: Install Node.js dependencies
         run: |
-          cd frontend
           npm install
 
       - name: Build React app
         run: |
-          cd frontend
           npm run build
 
       - name: Zip artifact for deployment
