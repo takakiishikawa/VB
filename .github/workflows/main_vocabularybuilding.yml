@@ -99,6 +99,11 @@ jobs:
           echo "LOG_LEVEL=debug" >> .env
           # 他の必要な環境変数も追加
 
+      - name: Set storage permissions
+        run: |
+          chmod -R 775 storage
+          chmod -R 775 bootstrap/cache
+
       - name: Set up environment variables
         run: |
           echo "APP_NAME=${{ secrets.APP_NAME }}" >> .env
@@ -107,7 +112,7 @@ jobs:
           echo "APP_DEBUG=false" >> .env
           echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> $GITHUB_ENV
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-          echo "DB_PORT=${{3306}}" >> .env
+          echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
@@ -260,3 +265,10 @@ jobs:
           php artisan config:clear
           php artisan migrate --force
           php artisan db:seed --force
+
+      - name: Verify .env file on Azure
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'YourAppName'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          startup-command: 'cat /home/site/wwwroot/.env'
