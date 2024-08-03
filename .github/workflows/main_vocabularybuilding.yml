@@ -93,6 +93,7 @@ jobs:
 
       - name: Set up environment variables
         run: |
+          echo "MYSQL_ATTR_SSL_CA=${{ secrets.MYSQL_ATTR_SSL_CA }}" >> .env
           echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
           echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
@@ -117,6 +118,14 @@ jobs:
           app-name: 'VocabularyBuilding'
           slot-name: 'Production'
           package: .
+
+      - name: Debug database connection
+        run: |
+          php -r "var_dump(getenv());"
+          php artisan config:clear
+          php artisan config:cache
+          php artisan tinker --execute="DB::connection()->getPdo();"
+
       - name: Run migrations and seed database
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
