@@ -38,7 +38,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install Node.js dependencies
         run: |
@@ -67,7 +67,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      contents: read
+      id-token: write
 
     steps:
           
@@ -88,6 +89,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+
       - name: Check PHP version on deployment
         run: php -v
 
@@ -126,6 +128,18 @@ jobs:
           echo "DB_PORT: ${{ env.DB_PORT }}"
           echo "DB_DATABASE: ${{ env.DB_DATABASE }}"
           echo "DB_USERNAME: ${{ env.DB_USERNAME }}"
+
+      - name: List all environment variables
+        run: env | sort
+
+      - name: Check Secrets availability
+        run: |
+          echo "DB_CONNECTION is set: ${{ secrets.DB_CONNECTION != '' }}"
+          echo "DB_HOST is set: ${{ secrets.DB_HOST != '' }}"
+          echo "DB_PORT is set: ${{ secrets.DB_PORT != '' }}"
+          echo "DB_DATABASE is set: ${{ secrets.DB_DATABASE != '' }}"
+          echo "DB_USERNAME is set: ${{ secrets.DB_USERNAME != '' }}"
+          echo "DB_PASSWORD is set: ${{ secrets.DB_PASSWORD != '' }}"
           
       - name: Debug database connection
         env:
