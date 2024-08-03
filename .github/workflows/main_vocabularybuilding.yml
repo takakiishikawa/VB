@@ -212,7 +212,7 @@ jobs:
         env:
           DB_CONNECTION: mysql
           DB_HOST: vocabularybuilding-server.mysql.database.azure.com
-          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_PORT: 3306
           DB_DATABASE: vocabularybuilding-database
           DB_USERNAME: uvlutslbxt
           DB_PASSWORD: MRGkcZL5
