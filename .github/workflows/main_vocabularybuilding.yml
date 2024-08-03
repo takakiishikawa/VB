@@ -84,6 +84,13 @@ jobs:
           du -sh .
           find . -type f | wc -l
 
+      - name: Setup PHP for deployment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Check PHP version on deployment
+        run: php -v
+
       - name: Set up environment variables
         run: |
           echo "APP_NAME=${{ secrets.APP_NAME }}" >> .env
