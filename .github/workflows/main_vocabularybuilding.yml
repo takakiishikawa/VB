@@ -93,6 +93,12 @@ jobs:
       - name: Check PHP version on deployment
         run: php -v
 
+      - name: Create .env file
+        run: |
+          echo "LOG_CHANNEL=stack" >> .env
+          echo "LOG_LEVEL=debug" >> .env
+          # 他の必要な環境変数も追加
+
       - name: Set up environment variables
         run: |
           echo "APP_NAME=${{ secrets.APP_NAME }}" >> .env
