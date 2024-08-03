@@ -93,23 +93,14 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "APP_NAME=${{ secrets.APP_NAME }}" >> .env
-          echo "APP_ENV=${{ secrets.APP_ENV }}" >> .env
           echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
-          echo "APP_DEBUG=${{ secrets.APP_DEBUG }}" >> .env
-          echo "APP_URL=${{ secrets.APP_URL }}" >> .env
-          echo "LOG_CHANNEL=${{ secrets.LOG_CHANNEL }}" >> .env
-          echo "LOG_LEVEL=${{ secrets.LOG_LEVEL }}" >> .env
           echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "SESSION_DRIVER=${{ secrets.SESSION_DRIVER }}" >> .env
-          echo "SESSION_LIFETIME=${{ secrets.SESSION_LIFETIME }}" >> .env
-          echo "CACHE_STORE=${{ secrets.CACHE_STORE }}" >> .env
-          echo "CACHE_PREFIX=${{ secrets.CACHE_PREFIX }}" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
           cat .env
 
       - name: Login to Azure
