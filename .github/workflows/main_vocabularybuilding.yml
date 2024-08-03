@@ -92,17 +92,19 @@ jobs:
         run: php -v
 
       - name: Set up environment variables
+        env:
+          MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
+          APP_KEY: ${{ secrets.APP_KEY }}
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          echo "MYSQL_ATTR_SSL_CA=${{ secrets.MYSQL_ATTR_SSL_CA }}" >> .env
-          echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
-          echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> .env
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
-          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
-
+          echo "Environment variables set"
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -118,6 +120,13 @@ jobs:
           slot-name: 'Production'
           package: .
 
+      - name: Debug environment variables
+        run: |
+          echo "DB_HOST: ${{ env.DB_HOST }}"
+          echo "DB_PORT: ${{ env.DB_PORT }}"
+          echo "DB_DATABASE: ${{ env.DB_DATABASE }}"
+          echo "DB_USERNAME: ${{ env.DB_USERNAME }}"
+          
       - name: Debug database connection
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
