@@ -177,6 +177,36 @@ jobs:
           }
           "
 
+      - name: Test database connection
+        env:
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
+        run: |
+          php -r "
+            \$host = getenv('DB_HOST');
+            \$port = getenv('DB_PORT');
+            \$db   = getenv('DB_DATABASE');
+            \$user = getenv('DB_USERNAME');
+            \$pass = getenv('DB_PASSWORD');
+            \$ssl_ca = getenv('MYSQL_ATTR_SSL_CA');
+            
+            try {
+              \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db\";
+              \$options = [
+                PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+              ];
+              \$pdo = new PDO(\$dsn, \$user, \$pass, \$options);
+              echo 'Connected successfully';
+            } catch (PDOException \$e) {
+              echo 'Connection failed: ' . \$e->getMessage();
+            }
+          "
       - name: Run migrations and seed database
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
@@ -185,6 +215,9 @@ jobs:
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
+
         run: |
+          php artisan config:clear
           php artisan migrate --force
           php artisan db:seed --force
