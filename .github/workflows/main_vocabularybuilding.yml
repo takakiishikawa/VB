@@ -207,6 +207,38 @@ jobs:
               echo 'Connection failed: ' . \$e->getMessage();
             }
           "
+
+      - name: Test database connection2
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: vocabularybuilding-server.mysql.database.azure.com
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: vocabularybuilding-database
+          DB_USERNAME: uvlutslbxt
+          DB_PASSWORD: MRGkcZL5
+          MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
+        run: |
+          php -r "
+            \$host = getenv('DB_HOST');
+            \$port = getenv('DB_PORT');
+            \$db   = getenv('DB_DATABASE');
+            \$user = getenv('DB_USERNAME');
+            \$pass = getenv('DB_PASSWORD');
+            \$ssl_ca = getenv('MYSQL_ATTR_SSL_CA');
+            
+            try {
+              \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db\";
+              \$options = [
+                PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+              ];
+              \$pdo = new PDO(\$dsn, \$user, \$pass, \$options);
+              echo 'Connected successfully';
+            } catch (PDOException \$e) {
+              echo 'Connection failed: ' . \$e->getMessage();
+            }
+          "
+
       - name: Run migrations and seed database
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
