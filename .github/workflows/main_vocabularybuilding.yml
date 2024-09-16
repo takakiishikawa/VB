@@ -166,6 +166,59 @@ jobs:
               echo 'Connection failed: ' . \$e->getMessage();
             }
           "
+      - name: Check SSL CA file
+        run: |
+          echo "Content of /etc/ssl/certs directory:"
+          ls -l /etc/ssl/certs
+          echo "Content of current directory:"
+          ls -l
+          echo "Content of MYSQL_ATTR_SSL_CA:"
+          echo ${{ secrets.MYSQL_ATTR_SSL_CA }}
+
+      - name: Print environment variables
+        run: |
+          echo "DB_CONNECTION: ${{ env.DB_CONNECTION }}"
+          echo "DB_HOST: ${{ env.DB_HOST }}"
+          echo "DB_PORT: ${{ env.DB_PORT }}"
+          echo "DB_DATABASE: ${{ env.DB_DATABASE }}"
+          echo "DB_USERNAME: ${{ env.DB_USERNAME }}"
+          echo "MYSQL_ATTR_SSL_CA: ${{ env.MYSQL_ATTR_SSL_CA }}"
+
+      - name: Debug SSL connection
+        run: |
+          php -r "
+          \$host = '${{ env.DB_HOST }}';
+          \$port = '${{ env.DB_PORT }}';
+          \$db   = '${{ env.DB_DATABASE }}';
+          \$user = '${{ env.DB_USERNAME }}';
+          \$pass = '${{ env.DB_PASSWORD }}';
+          \$ssl_ca = '${{ env.MYSQL_ATTR_SSL_CA }}';
+          
+          echo \"Attempting to connect to database...\n\";
+          echo \"Host: \$host\n\";
+          echo \"Port: \$port\n\";
+          echo \"Database: \$db\n\";
+          echo \"Username: \$user\n\";
+          echo \"SSL CA Path: \$ssl_ca\n\";
+          
+          \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db\";
+          \$options = [
+            PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
+            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+          ];
+          
+          try {
+            \$pdo = new PDO(\$dsn, \$user, \$pass, \$options);
+            echo \"Connected successfully\n\";
+            
+            \$sslStatus = \$pdo->query(\"SHOW STATUS LIKE 'Ssl_cipher'\")->fetch();
+            echo \"SSL Status: \" . print_r(\$sslStatus, true) . \"\n\";
+            
+          } catch (PDOException \$e) {
+            echo \"Connection failed: \" . \$e->getMessage() . \"\n\";
+          }
+          "
 
       - name: Debug Database Connection
         run: |
