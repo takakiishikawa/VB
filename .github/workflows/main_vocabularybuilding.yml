@@ -168,31 +168,40 @@ jobs:
           "
       - name: Check SSL CA file
         run: |
-          echo "Content of /etc/ssl/certs directory:"
-          ls -l /etc/ssl/certs
+          echo "Content of /home/site/wwwroot/ssl directory:"
+          ls -l /home/site/wwwroot/ssl
           echo "Content of current directory:"
           ls -l
           echo "Content of MYSQL_ATTR_SSL_CA:"
           echo ${{ secrets.MYSQL_ATTR_SSL_CA }}
+          echo "Checking if SSL CA file exists:"
+          if [ -f "${{ secrets.MYSQL_ATTR_SSL_CA }}" ]; then
+            echo "SSL CA file exists"
+            ls -l ${{ secrets.MYSQL_ATTR_SSL_CA }}
+          else
+            echo "SSL CA file does not exist"
+          fi
 
       - name: Print environment variables
         run: |
-          echo "DB_CONNECTION: ${{ env.DB_CONNECTION }}"
-          echo "DB_HOST: ${{ env.DB_HOST }}"
-          echo "DB_PORT: ${{ env.DB_PORT }}"
-          echo "DB_DATABASE: ${{ env.DB_DATABASE }}"
-          echo "DB_USERNAME: ${{ env.DB_USERNAME }}"
-          echo "MYSQL_ATTR_SSL_CA: ${{ env.MYSQL_ATTR_SSL_CA }}"
+          echo "DB_CONNECTION: ${{ secrets.DB_CONNECTION }}"
+          echo "DB_HOST: ${{ secrets.DB_HOST }}"
+          echo "DB_PORT: ${{ secrets.DB_PORT }}"
+          echo "DB_DATABASE: ${{ secrets.DB_DATABASE }}"
+          echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
+          echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
+          ls -l /home/site/wwwroot/ssl/DigiCertGlobalRootCA.crt.pem
+          echo "SSL CA exists: " . (file_exists($ssl_ca) ? 'Yes' : 'No') . "\n";
 
       - name: Debug SSL connection
         run: |
           php -r "
-          \$host = '${{ env.DB_HOST }}';
-          \$port = '${{ env.DB_PORT }}';
-          \$db   = '${{ env.DB_DATABASE }}';
-          \$user = '${{ env.DB_USERNAME }}';
-          \$pass = '${{ env.DB_PASSWORD }}';
-          \$ssl_ca = '${{ env.MYSQL_ATTR_SSL_CA }}';
+          \$host = '${{ secrets.DB_HOST }}';
+          \$port = '${{ secrets.DB_PORT }}';
+          \$db   = '${{ secrets.DB_DATABASE }}';
+          \$user = '${{ secrets.DB_USERNAME }}';
+          \$pass = '${{ secrets.DB_PASSWORD }}';
+          \$ssl_ca = '${{ secrets.MYSQL_ATTR_SSL_CA }}';
           
           echo \"Attempting to connect to database...\n\";
           echo \"Host: \$host\n\";
