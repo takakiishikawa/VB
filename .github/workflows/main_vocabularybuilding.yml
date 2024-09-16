@@ -167,21 +167,6 @@ jobs:
               echo 'Connection failed: ' . \$e->getMessage();
             }
           "
-      - name: Check SSL CA file
-        run: |
-          echo "Content of /home/site/wwwroot/ssl directory:"
-          ls -l /home/site/wwwroot/ssl
-          echo "Content of current directory:"
-          ls -l
-          echo "Content of MYSQL_ATTR_SSL_CA:"
-          echo ${{ secrets.MYSQL_ATTR_SSL_CA }}
-          echo "Checking if SSL CA file exists:"
-          if [ -f "${{ secrets.MYSQL_ATTR_SSL_CA }}" ]; then
-            echo "SSL CA file exists"
-            ls -l ${{ secrets.MYSQL_ATTR_SSL_CA }}
-          else
-            echo "SSL CA file does not exist"
-          fi
 
       - name: Print environment variables
         run: |
@@ -191,7 +176,6 @@ jobs:
           echo "DB_DATABASE: ${{ secrets.DB_DATABASE }}"
           echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
           echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
-          ls -l /home/site/wwwroot/ssl/DigiCertGlobalRootCA.crt.pem
           echo "SSL CA exists: " . (file_exists($ssl_ca) ? 'Yes' : 'No') . "\n";
 
       - name: Debug SSL connection
@@ -230,7 +214,7 @@ jobs:
           }
           "
 
-          
+
       - name: Debug Database Connection
         run: |
           echo "DB_HOST: ${{ secrets.DB_HOST }}"
