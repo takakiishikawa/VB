@@ -22,5 +22,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
         }
+
+        $this->call([
+            MajorSegmentSeeder::class,
+            ParseSeeder::class,
+            SegmentSeeder::class,
+        ]);
     }
 }
