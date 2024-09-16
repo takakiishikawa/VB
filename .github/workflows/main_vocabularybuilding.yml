@@ -210,7 +210,6 @@ jobs:
           }
           "
 
-
       - name: Debug Database Connection
         run: |
           echo "DB_HOST: ${{ secrets.DB_HOST }}"
@@ -219,8 +218,24 @@ jobs:
           echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
           echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
           echo "SSL CA file exists: $(test -f ${{ secrets.MYSQL_ATTR_SSL_CA }} && echo Yes || echo No)"
-          
+
       - name: Run migrations and seed database
+        env:
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
+
+        run: |
+          php artisan cache:clear
+          php artisan config:clear
+          php artisan migrate --force
+          php artisan db:seed --force
+
+      - name: Run migrations and seed database2
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
           DB_HOST: ${{ secrets.DB_HOST }}
