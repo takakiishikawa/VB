@@ -219,31 +219,7 @@ jobs:
           echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
           echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
           echo "SSL CA file exists: $(test -f ${{ secrets.MYSQL_ATTR_SSL_CA }} && echo Yes || echo No)"
-
-      - name: Test MySQL connection
-        run: |
-          php artisan cache:clear
-          php -r "
-          \$host='${{ secrets.DB_HOST }}';
-          \$db='${{ secrets.DB_DATABASE }}';
-          \$user='${{ secrets.DB_USERNAME }}';
-          \$pass='${{ secrets.DB_PASSWORD }}';
-          \$ssl_ca='${{ secrets.MYSQL_ATTR_SSL_CA }}';
-
           
-          try {
-            \$dbh = new PDO(
-              'mysql:host='.\$host.';dbname='.\$db.';charset=utf8mb4',
-              \$user, \$pass,
-              array(
-                PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
-              )
-            );
-            echo 'Connected successfully';
-          } catch(PDOException \$e) {
-            echo 'Connection failed: ' . \$e->getMessage();
-          }"
-
       - name: Run migrations and seed database
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
@@ -253,13 +229,33 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
-
         run: |
+          # 成功したPDO接続方法を使用
+          php -r "
+            \$host = getenv('DB_HOST');
+            \$port = getenv('DB_PORT');
+            \$db   = getenv('DB_DATABASE');
+            \$user = getenv('DB_USERNAME');
+            \$pass = getenv('DB_PASSWORD');
+            \$ssl_ca = getenv('MYSQL_ATTR_SSL_CA');
+            
+            \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db;charset=utf8mb4\";
+            \$options = [
+              PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
+            ];
+            \$pdo = new PDO(\$dsn, \$user, \$pass, \$options);
+            echo 'PDO connection successful\n';
+          "
+          
+          # Laravel設定ファイルを成功したケースに合わせて修正
+          sed -i "s/'mysql' => \[/'mysql' => [\n\t\t'options' => [PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA')],/" config/database.php
+          
+          # Laravelのマイグレーションを実行
           php artisan cache:clear
           php artisan config:clear
           php artisan migrate --force
           php artisan db:seed --force
-
+        
       - name: Verify .env file on Azure
         uses: azure/webapps-deploy@v3
         with:
