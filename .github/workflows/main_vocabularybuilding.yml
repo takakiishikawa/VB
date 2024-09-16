@@ -182,6 +182,37 @@ jobs:
           php artisan migrate --force
           php artisan db:seed --force
 
+      - name: Debug Database Connection
+        run: |
+          echo "DB_HOST: ${{ secrets.DB_HOST }}"
+          echo "DB_PORT: ${{ secrets.DB_PORT }}"
+          echo "DB_DATABASE: ${{ secrets.DB_DATABASE }}"
+          echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
+          echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
+          echo "SSL CA file exists: $(test -f ${{ secrets.MYSQL_ATTR_SSL_CA }} && echo Yes || echo No)"
+
+      - name: Test MySQL connection
+        run: |
+          php -r "
+          \$host='${{ secrets.DB_HOST }}';
+          \$db='${{ secrets.DB_DATABASE }}';
+          \$user='${{ secrets.DB_USERNAME }}';
+          \$pass='${{ secrets.DB_PASSWORD }}';
+          \$ssl_ca='${{ secrets.MYSQL_ATTR_SSL_CA }}';
+          try {
+            \$dbh = new PDO(
+              'mysql:host='.\$host.';dbname='.\$db.';charset=utf8mb4',
+              \$user, \$pass,
+              array(
+                PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
+              )
+            );
+            echo 'Connected successfully';
+          } catch(PDOException \$e) {
+            echo 'Connection failed: ' . \$e->getMessage();
+          }"
+
       - name: Verify .env file on Azure
         uses: azure/webapps-deploy@v3
         with:
