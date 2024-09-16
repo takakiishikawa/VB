@@ -238,7 +238,6 @@ jobs:
               \$user, \$pass,
               array(
                 PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
               )
             );
             echo 'Connected successfully';
