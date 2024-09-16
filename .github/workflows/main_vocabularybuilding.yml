@@ -154,7 +154,7 @@ jobs:
             \$pass = getenv('DB_PASSWORD');
             \$ssl_ca = getenv('MYSQL_ATTR_SSL_CA');
             
-            
+
             try {
               \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db\";
               \$options = [
@@ -230,6 +230,7 @@ jobs:
           }
           "
 
+          
       - name: Debug Database Connection
         run: |
           echo "DB_HOST: ${{ secrets.DB_HOST }}"
