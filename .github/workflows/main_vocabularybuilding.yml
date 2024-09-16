@@ -229,7 +229,6 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
 
-          
         run: |
           php artisan cache:clear
           php artisan config:clear
