@@ -266,7 +266,7 @@ jobs:
           # Laravel設定ファイルを成功したケースに合わせて修正
           sed -i "s/'mysql' => \[/'mysql' => [\n\t\t'options' => [PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA')],/" config/database.php
           
-          # Laravelのマイグレーション実行
+          # Laravelマイグレーション実行
           php artisan cache:clear
           php artisan config:clear
           php artisan migrate --force
