@@ -178,6 +178,7 @@ jobs:
 
       - name: Test MySQL connection
         run: |
+          php artisan cache:clear
           php -r "
           \$host='${{ secrets.DB_HOST }}';
           \$db='${{ secrets.DB_DATABASE }}';
@@ -209,6 +210,7 @@ jobs:
           MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
 
         run: |
+          php artisan cache:clear
           php artisan config:clear
           php artisan migrate --force
           php artisan db:seed --force
