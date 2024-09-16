@@ -166,59 +166,6 @@ jobs:
             }
           "
 
-      - name: Print environment variables
-        run: |
-          echo "DB_CONNECTION: ${{ secrets.DB_CONNECTION }}"
-          echo "DB_HOST: ${{ secrets.DB_HOST }}"
-          echo "DB_PORT: ${{ secrets.DB_PORT }}"
-          echo "DB_DATABASE: ${{ secrets.DB_DATABASE }}"
-          echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
-          echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
-
-      - name: Debug SSL connection
-        run: |
-          php -r "
-          \$host = '${{ secrets.DB_HOST }}';
-          \$port = '${{ secrets.DB_PORT }}';
-          \$db   = '${{ secrets.DB_DATABASE }}';
-          \$user = '${{ secrets.DB_USERNAME }}';
-          \$pass = '${{ secrets.DB_PASSWORD }}';
-          \$ssl_ca = '${{ secrets.MYSQL_ATTR_SSL_CA }}';
-          
-          echo \"Attempting to connect to database...\n\";
-          echo \"Host: \$host\n\";
-          echo \"Port: \$port\n\";
-          echo \"Database: \$db\n\";
-          echo \"Username: \$user\n\";
-          echo \"SSL CA Path: \$ssl_ca\n\";
-          
-          \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db\";
-          \$options = [
-            PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-          ];
-          
-          try {
-            \$pdo = new PDO(\$dsn, \$user, \$pass, \$options);
-            echo \"Connected successfully\n\";
-            
-            \$sslStatus = \$pdo->query(\"SHOW STATUS LIKE 'Ssl_cipher'\")->fetch();
-            echo \"SSL Status: \" . print_r(\$sslStatus, true) . \"\n\";
-            
-          } catch (PDOException \$e) {
-            echo \"Connection failed: \" . \$e->getMessage() . \"\n\";
-          }
-          "
-
-      - name: Debug Database Connection
-        run: |
-          echo "DB_HOST: ${{ secrets.DB_HOST }}"
-          echo "DB_PORT: ${{ secrets.DB_PORT }}"
-          echo "DB_DATABASE: ${{ secrets.DB_DATABASE }}"
-          echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
-          echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
-          echo "SSL CA file exists: $(test -f ${{ secrets.MYSQL_ATTR_SSL_CA }} && echo Yes || echo No)"
-
       - name: Run migrations and seed database
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
@@ -235,45 +182,7 @@ jobs:
           php artisan migrate --force
           php artisan db:seed --force
 
-
-      - name: Run migrations and seed database2
-        env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
-        run: |
-          # 成功したPDO接続方法を使用
-          php -r "
-            \$host = getenv('DB_HOST');
-            \$port = getenv('DB_PORT');
-            \$db   = getenv('DB_DATABASE');
-            \$user = getenv('DB_USERNAME');
-            \$pass = getenv('DB_PASSWORD');
-            \$ssl_ca = getenv('MYSQL_ATTR_SSL_CA');
-            
-            \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db;charset=utf8mb4\";
-            \$options = [
-              PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
-            ];
-            \$pdo = new PDO(\$dsn, \$user, \$pass, \$options);
-            echo 'PDO connection successful\n';
-          "
-
-          # Laravel設定ファイルを成功したケースに合わせて修正
-          sed -i "s/'mysql' => \[/'mysql' => [\n\t\t'options' => [PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA')],/" config/database.php
-          
-          # Laravelマイグレーション実行
-          php artisan cache:clear
-          php artisan config:clear
-          php artisan migrate --force
-          php artisan db:seed --force
-        
       - name: Verify .env file on Azure
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'VocabularyBuilding'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
