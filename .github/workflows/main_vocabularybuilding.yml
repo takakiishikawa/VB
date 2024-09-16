@@ -167,21 +167,6 @@ jobs:
             }
           "
 
-      - name: Run migrations and seed database
-        env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
-
-        run: |
-          php artisan config:clear
-          php artisan migrate --force
-          php artisan db:seed --force
-
       - name: Debug Database Connection
         run: |
           echo "DB_HOST: ${{ secrets.DB_HOST }}"
@@ -212,6 +197,21 @@ jobs:
           } catch(PDOException \$e) {
             echo 'Connection failed: ' . \$e->getMessage();
           }"
+
+      - name: Run migrations and seed database
+        env:
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}
+
+        run: |
+          php artisan config:clear
+          php artisan migrate --force
+          php artisan db:seed --force
 
       - name: Verify .env file on Azure
         uses: azure/webapps-deploy@v3
