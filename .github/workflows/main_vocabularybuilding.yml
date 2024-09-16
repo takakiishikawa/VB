@@ -176,7 +176,6 @@ jobs:
           echo "DB_DATABASE: ${{ secrets.DB_DATABASE }}"
           echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
           echo "MYSQL_ATTR_SSL_CA: ${{ secrets.MYSQL_ATTR_SSL_CA }}"
-          echo "SSL CA exists: " . (file_exists($ssl_ca) ? 'Yes' : 'No') . "\n";
 
       - name: Debug SSL connection
         run: |
