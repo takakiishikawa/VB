@@ -154,6 +154,7 @@ jobs:
             \$pass = getenv('DB_PASSWORD');
             \$ssl_ca = getenv('MYSQL_ATTR_SSL_CA');
             
+            
             try {
               \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db\";
               \$options = [
