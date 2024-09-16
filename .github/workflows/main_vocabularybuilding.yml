@@ -133,60 +133,8 @@ jobs:
           slot-name: 'Production'
           package: .
 
-      - name: Debug environment variables
-        run: |
-          echo "DB_HOST: ${{ env.DB_HOST }}"
-          echo "DB_PORT: ${{ env.DB_PORT }}"
-          echo "DB_DATABASE: ${{ env.DB_DATABASE }}"
-          echo "DB_USERNAME: ${{ env.DB_USERNAME }}"
-
       - name: List all environment variables
         run: env | sort
-
-      - name: Check Secrets availability
-        run: |
-          echo "DB_CONNECTION is set: ${{ secrets.DB_CONNECTION != '' }}"
-          echo "DB_HOST is set: ${{ secrets.DB_HOST != '' }}"
-          echo "DB_PORT is set: ${{ secrets.DB_PORT != '' }}"
-          echo "DB_DATABASE is set: ${{ secrets.DB_DATABASE != '' }}"
-          echo "DB_USERNAME is set: ${{ secrets.DB_USERNAME != '' }}"
-          echo "DB_PASSWORD is set: ${{ secrets.DB_PASSWORD != '' }}"
-          
-      - name: Debug database connection
-        env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: |
-          php -r "var_dump(getenv());"
-          php artisan config:clear
-          php artisan config:cache
-          php artisan tinker --execute="DB::connection()->getPdo();"
-
-      - name: Debug database connection
-        run: |
-          php -r "
-          \$host = getenv('DB_HOST');
-          \$port = getenv('DB_PORT');
-          \$database = getenv('DB_DATABASE');
-          \$username = getenv('DB_USERNAME');
-          \$password = getenv('DB_PASSWORD');
-          echo \"Attempting to connect to database...\n\";
-          echo \"Host: \$host\n\";
-          echo \"Port: \$port\n\";
-          echo \"Database: \$database\n\";
-          echo \"Username: \$username\n\";
-          \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$database\";
-          try {
-              \$pdo = new PDO(\$dsn, \$username, \$password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-              echo \"Connection successful!\n\";
-          } catch (PDOException \$e) {
-              echo \"Connection failed: \" . \$e->getMessage() . \"\n\";
-          }
-          "
 
       - name: Test database connection
         env:
@@ -196,38 +144,7 @@ jobs:
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
-        run: |
-          php -r "
-            \$host = getenv('DB_HOST');
-            \$port = getenv('DB_PORT');
-            \$db   = getenv('DB_DATABASE');
-            \$user = getenv('DB_USERNAME');
-            \$pass = getenv('DB_PASSWORD');
-            \$ssl_ca = getenv('MYSQL_ATTR_SSL_CA');
-            
-            try {
-              \$dsn = \"mysql:host=\$host;port=\$port;dbname=\$db\";
-              \$options = [
-                PDO::MYSQL_ATTR_SSL_CA => \$ssl_ca,
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-              ];
-              \$pdo = new PDO(\$dsn, \$user, \$pass, \$options);
-              echo 'Connected successfully';
-            } catch (PDOException \$e) {
-              echo 'Connection failed: ' . \$e->getMessage();
-            }
-          "
-
-      - name: Test database connection2
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: vocabularybuilding-server.mysql.database.azure.com
-          DB_PORT: 3306
-          DB_DATABASE: vocabularybuilding-database
-          DB_USERNAME: uvlutslbxt
-          DB_PASSWORD: MRGkcZL5
-          MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
+          MYSQL_ATTR_SSL_CA: /home/site/wwwroot/ssl/DigiCertGlobalRootCA.crt.pem
         run: |
           php -r "
             \$host = getenv('DB_HOST');
@@ -252,13 +169,13 @@ jobs:
 
       - name: Run migrations and seed database
         env:
-          DB_CONNECTION: mysql
-          DB_HOST: vocabularybuilding-server.mysql.database.azure.com
-          DB_PORT: 3306
-          DB_DATABASE: vocabularybuilding-database
-          DB_USERNAME: uvlutslbxt
-          DB_PASSWORD: MRGkcZL5
-          MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ATTR_SSL_CA: /home/site/wwwroot/ssl/DigiCertGlobalRootCA.crt.pem
 
         run: |
           php artisan config:clear
