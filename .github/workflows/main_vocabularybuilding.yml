@@ -29,9 +29,6 @@ jobs:
       - name: Update Composer
         run: composer self-update --2
 
-      - name: Check PHP version
-        run: php -v
-
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
@@ -89,9 +86,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-
-      - name: Check PHP version on deployment
-        run: php -v
 
       - name: Create .env file
         run: |
@@ -181,8 +175,3 @@ jobs:
           php artisan config:clear
           php artisan migrate --force
           php artisan db:seed --force
-
-      - name: Verify .env file on Azure
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'VocabularyBuilding'
