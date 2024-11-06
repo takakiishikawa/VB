@@ -10,7 +10,7 @@ class Tooltip extends Component {
                 {((className == "help-icon") || (className == "help-icon-all")) && (
                     <div className="tooltip__help-icon">
                         <span className="tooltip__help-icon-text">
-                            Vocabulary {majorSegmentId*1000-999} ~ {majorSegmentId*1000}
+                            Vocab {majorSegmentId*1000-999} ~ {majorSegmentId*1000}
                         </span>
                         <span className="tooltip__help-icon-text">
                             {levelSentence}

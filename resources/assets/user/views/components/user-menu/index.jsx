@@ -57,7 +57,7 @@ class UserMenu extends Component {
             <div className="user-menu" >
                 <div className="user-menu__container">
                     <div className={`user-menu__item ${isOpen ? "active" : ""}`} onClick={this.toggleMenu}>
-                        <MenuIcon className="user-menu__item-humburger" />
+                        <MenuIcon className="user-menu__item-humburger" style={{fontSize: 30}} />
                         <img src={UserMenuImage} alt="user-manu-image" className="user-menu__item-image"/>
                     </div>
                     {isOpen && (

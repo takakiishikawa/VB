@@ -32,9 +32,9 @@ class MajorSegment extends Component {
 
 
     iconCreate = (status) => {
-        return status == 1 ? <LockOpenIcon className={`major-segment__wrapper__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 25}} />
-            : status == 2 ? <CheckCircleOutlineIcon className={`major-segment__wrapper__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 25}} />
-                : <LockIcon className={`major-segment__wrapper__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 25}} />
+        return status == 1 ? <LockOpenIcon className={`major-segment__wrapper__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 30}} />
+            : status == 2 ? <CheckCircleOutlineIcon className={`major-segment__wrapper__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 30}} />
+                : <LockIcon className={`major-segment__wrapper__item-status-icon ${this.statusClass(status)}`}  style={{fontSize: 30}} />
     }
 
     preventLink = (event) => {
@@ -73,7 +73,7 @@ class MajorSegment extends Component {
                                     className="major-segment__wrapper__item active"
                                     onClick={() => this.props.fetchSidebarState(activeMajorSegmentId)}
                                 >
-                                    <LockOpenIcon className="major-segment__wrapper__item-status-icon unlocked" style={{fontSize: 35}} />
+                                    <LockOpenIcon className="major-segment__wrapper__item-status-icon unlocked" style={{fontSize: 40}} />
                                     <div className="major-segment__wrapper__item-help-container"
                                         onClick={this.preventLink}
                                         //0: unique id for active major segment
@@ -82,7 +82,7 @@ class MajorSegment extends Component {
                                     >
                                         <HelpIcon
                                             className="major-segment__wrapper__item-help-icon"
-                                            style={{fontSize: 35}}
+                                            style={{fontSize: 40}}
                                         />
                                         {this.state.showTooltipId === 0 ?
                                             <Tooltip 
@@ -113,7 +113,7 @@ class MajorSegment extends Component {
                                                     onMouseEnter={() => this.showTooltip(majorSegment.id)}
                                                     onMouseLeave={() => this.hideTooltip()}
                                                 >
-                                                    <HelpIcon className="major-segment__wrapper__item-help-icon" style={{fontSize: 25}} onClick={this.preventLink} />
+                                                    <HelpIcon className="major-segment__wrapper__item-help-icon" style={{fontSize: 30}} onClick={this.preventLink} />
                                                     {this.state.showTooltipId === majorSegment.id ? 
                                                         <Tooltip 
                                                             levelSentence={levelSentence[majorSegment.id]}

@@ -87,12 +87,12 @@
           &-help-container {
             left: 75.5%;
             top: 5.5%;
-            width: 35px;
+            width: 40px;
             position: relative;
             cursor: default;
 
             &.all {
-              width: 25px;
+              width: 30px;
             }
           }
 
@@ -124,10 +124,10 @@
             color: $color-text;
 
             &.unlocked {
-              font-size: 16px;
+              font-size: 18px;
             }
             &.all {
-              font-size: 12px;
+              font-size: 14px;
             }
           }
 
