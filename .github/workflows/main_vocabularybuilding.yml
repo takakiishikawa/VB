@@ -46,7 +46,7 @@ jobs:
         run: |
           rm -rf public/build
           npm run build
-          cp public/build/.vite/manifest.json public/build/
+          ln -sf .vite/manifest.json public/build/manifest.json
 
       - name: Create deployment package
         run: |
