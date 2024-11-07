@@ -127,6 +127,7 @@ jobs:
           app-name: 'VocabularyBuilding'
           slot-name: 'Production'
           package: .
+          clean: true  # デプロイ前にクリーンアップを実行
 
       - name: List all environment variables
         run: env | sort
