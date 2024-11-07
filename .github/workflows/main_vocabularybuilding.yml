@@ -46,6 +46,7 @@ jobs:
         run: |
           rm -rf public/build
           npm run build
+          cp public/build/.vite/manifest.json public/build/
 
       - name: Create deployment package
         run: |
@@ -100,6 +101,7 @@ jobs:
           mkdir -p storage/framework/sessions
           mkdir -p storage/framework/views
           chmod -R 775 storage/framework
+          chmod -R 775 bootstrap/cache
 
       - name: Set up environment variables
         run: |
