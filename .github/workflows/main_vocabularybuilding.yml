@@ -94,10 +94,12 @@ jobs:
           echo "LOG_LEVEL=debug" >> .env
           # 他の必要な環境変数も追加
 
-      - name: Set storage permissions
+      - name: Prepare Laravel directories
         run: |
-          chmod -R 775 storage
-          chmod -R 775 bootstrap/cache
+          mkdir -p storage/framework/cache
+          mkdir -p storage/framework/sessions
+          mkdir -p storage/framework/views
+          chmod -R 775 storage/framework
 
       - name: Set up environment variables
         run: |
