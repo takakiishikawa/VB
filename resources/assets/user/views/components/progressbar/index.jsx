@@ -27,18 +27,22 @@ class Progressbar extends Component {
         return (
             <>
                 {typeof articleCount !== 'undefined' ? 
-                    <div className="progress-bar">
-                        <div className="progress-bar__completed" style={{width: this.calcCompletedProgress(articleCount, articleList)}}/>
-                        <div className={`progress-bar__uncompleted ${articleCount == 0 && "radius"} `} style={{width: this.calcUncompletedProgress(articleCount, articleList)}}/>
+                    <>
+                        <div className="progress-bar">
+                            <div className="progress-bar__completed" style={{width: this.calcCompletedProgress(articleCount, articleList)}}/>
+                            <div className={`progress-bar__uncompleted ${articleCount == 0 && "radius"} `} style={{width: this.calcUncompletedProgress(articleCount, articleList)}}/>
+                        </div>
                         <div>{articleCount} / 10</div>
-                    </div>
+                    </>
                 : null}
                 {typeof wordCount !== 'undefined' ?
-                    <div className="progress-bar">
-                        <div className="progress-bar__completed" style={{width: this.calcWordCompletedProgress(wordCount)}}/>
-                        <div className={`progress-bar__uncompleted ${wordCount == 0 && "radius"} `} style={{width: this.calcWordUncompletedProgress(wordCount)}}/>
+                    <>
+                        <div className="progress-bar">
+                            <div className="progress-bar__completed" style={{width: this.calcWordCompletedProgress(wordCount)}}/>
+                            <div className={`progress-bar__uncompleted ${wordCount == 0 && "radius"} `} style={{width: this.calcWordUncompletedProgress(wordCount)}}/>
+                        </div>
                         <div>{wordCount} / 100</div>
-                    </div>
+                    </>
                 : null}
             </>
         )
