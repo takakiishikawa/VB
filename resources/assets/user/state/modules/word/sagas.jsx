@@ -26,7 +26,6 @@ function* fetchAnswerListSaga(action) {
     try {
         const segmentId = action.payload;
         const answerList = yield select(getAnswerList);
-        console.log(answerList, 'saga');
         yield call(fetchAnswerList, segmentId, answerList);
     }
     catch (error) {

@@ -175,16 +175,15 @@ class SegmentController extends Controller
             $tryCount++;
         }
 
-        //status更新
-        $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
+        if ($articleCount >= 10) {
+            \Log::info("Successfully created 10 articles.");
+            //status更新
+            $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
             ->where('segment_id', $segmentId)
             ->first();
 
-        $userSegmentStatus->status = $userSegmentStatus->status+1;
-        $userSegmentStatus->save();
-
-        if ($articleCount >= 10) {
-            \Log::info("Successfully created 10 articles.");
+            $userSegmentStatus->status = $userSegmentStatus->status+1;
+            $userSegmentStatus->save();
         } else {
             \Log::info("Exceeded maximum tries without creating 10 articles. Tries: $tryCount");
         }

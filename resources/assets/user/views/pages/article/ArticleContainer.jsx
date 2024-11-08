@@ -6,7 +6,6 @@ import Article from './';
 class ArticleContainer extends Component {
     componentDidMount() {
         const {segmentId, articleId} = this.props.match.params;
-        console.log(articleId, "test");
         this.props.fetchArticleList(segmentId, articleId);
     }
 

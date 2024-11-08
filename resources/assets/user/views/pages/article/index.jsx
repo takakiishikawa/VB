@@ -141,8 +141,7 @@ class Article extends Component {
                     >
                         <ArrowBackIcon style={{fontSize:27, color: "#222222"}} />
                     </Link>
-                    {console.log(1)}
-                    {type == 'article' ?
+                    {type !== 'word' ?
                         <Progressbar
                             articleCount={articleCount}
                             articleList={articleList}

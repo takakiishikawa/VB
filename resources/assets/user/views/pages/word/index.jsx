@@ -20,27 +20,20 @@ class Word extends Component {
         const {segmentId} = this.props;
         document.addEventListener('keydown', this.handleKeyDown);
         if (this.props.wordCount === 100) {
-            console.log(1);
             this.props.fetchAnswerList(segmentId);
             this.props.resetAnswerList();
             this.props.resetWordCount();
             this.props.history.push(`/segment/${this.props.majorSegmentId}/${segmentId}`);
-            console.log(2);
-
         }
     }
 
     componentDidUpdate() {
         const {segmentId} = this.props;
         if (this.props.wordCount === 100) {
-            console.log(3);
-
             this.props.fetchAnswerList(segmentId);
             this.props.resetAnswerList();
             this.props.resetWordCount();
             this.props.history.push(`/segment/${this.props.majorSegmentId}/${segmentId}`);
-            console.log(4);
-
         }
     }
 
@@ -87,7 +80,6 @@ class Word extends Component {
             });
             this.nextWord();
         } else {
-            console.log(correctWord, 'correctWord')
             this.props.addAnswerList({
                 word: correctWord,
                 testPass: false

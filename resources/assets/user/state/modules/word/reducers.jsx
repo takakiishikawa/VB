@@ -19,7 +19,6 @@ const wordReducer = ((state = initialState, action) => {
                 wordCount: state.wordCount + 1,
             }
         case ADD_ANSWER_LIST:
-            console.log(action.payload, 'reducer');
             return {
                 ...state,
                 answerList: [...state.answerList, action.payload]
