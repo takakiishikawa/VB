@@ -82,7 +82,7 @@ class Word extends Component {
             this.props.addAnswerList({
                 word: correctWord,
                 testPass: false
-            });
+            }); 
             this.goArticle(userArticleId);
         }
     }
