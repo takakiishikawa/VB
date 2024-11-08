@@ -33,13 +33,22 @@ class Article extends Component {
     }
 
     handleKeyDown = (event) => {
+        const {type} = this.props.history.location.state || {};
+
         if (event.keyCode === 39) {
-            this.nextArticle();
+            if (type == 'word') {
+                this.nextWord();
+            } else {
+                this.nextArticle();
+            }
         } else if (event.keyCode === 37) {
-            this.backArticle();
+            if (type == 'word') {
+                this.nextWord();
+            } else {
+                this.backArticle();
+            }
         }
     }
-
 
     nextArticle = () => {
         this.setState({
