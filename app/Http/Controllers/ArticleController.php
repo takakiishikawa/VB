@@ -28,7 +28,7 @@ class ArticleController extends Controller
             }])
             ->get(['id', 'title', 'article', 'article_theme_id']);
 
-        //$articleIdをxとする。UserArticleにおいて、user_id,segment_idが一致するレコードの中から、照準にx番目のidを取得する
+        //$articleIdをxとする。UserArticleにおいて、user_id,segment_idが一致するレコードの中から、昇順にx番目のidを取得する
         $userArticleId = UserArticle::where('user_id', $userId)
             ->where('segment_id', $segmentId)
             ->orderBy('id')

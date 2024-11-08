@@ -54,6 +54,10 @@ class SegmentController extends Controller
             }
             return response()->json(['message' => 'Article generated successfully'], 200);
         } catch (\Exception $e) {
+            \Log::error('Exception in generateArticle:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json(['error' => 'Unexpected error occurred while generating the article.'], 500);
         }
     }

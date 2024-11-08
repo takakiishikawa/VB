@@ -6,7 +6,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Progressbar from '../../components/progressbar';
-import ArticleContainer from '../article/ArticleContainer';
 import './Word.scss';
 
 class Word extends Component {
@@ -20,8 +19,7 @@ class Word extends Component {
     componentDidMount() {
         const {segmentId} = this.props;
         document.addEventListener('keydown', this.handleKeyDown);
-        //要変更100
-        if (this.props.wordCount === 3) {
+        if (this.props.wordCount === 100) {
             this.props.fetchAnswerList(segmentId);
             this.props.resetAnswerList();
             this.props.resetWordCount();
@@ -30,8 +28,7 @@ class Word extends Component {
 
     componentDidUpdate() {
         const {segmentId} = this.props;
-        //要変更100
-        if (this.props.wordCount === 3) {
+        if (this.props.wordCount === 100) {
             this.props.fetchAnswerList(segmentId);
             this.props.resetAnswerList();
             this.props.resetWordCount();
@@ -99,11 +96,13 @@ class Word extends Component {
 
     goArticle(userArticleId) {
         this.props.incrementWordCount();
+        //記事のx番目、を抽出したいので、一の位を出す
+        const articleId = userArticleId % 10;
         this.setState({
             answerWord: null
         }, () => {
             this.props.history.push({
-                pathname: `/segment/${this.props.majorSegmentId}/${this.props.segmentId}/article/${userArticleId}`,
+                pathname: `/segment/${this.props.majorSegmentId}/${this.props.segmentId}/article/${articleId + 1}`,
                 state: {type: 'word'}
             });
         });
@@ -177,7 +176,6 @@ class Word extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         );
