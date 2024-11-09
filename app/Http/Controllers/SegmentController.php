@@ -92,7 +92,7 @@ class SegmentController extends Controller
             "- Topic: {$articleTheme->name}\n" .
             "- Use at least 10 words from this list: {$promptWordList}\n" .
             "- This article used should be easy to understand, using simple vocabulary and grammar structures.\n" .
-            "- Keep the article between 300 and 500 characters in length.\n" .
+            "- Keep the article less than 400 characters in length.\n" .
             "Only return a JSON with 'title' and 'article'.\n" .
             '{"title": "Your Article Title Here", "article": "Your article content goes here."}';
 
