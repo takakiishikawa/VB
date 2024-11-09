@@ -94,7 +94,7 @@ class SegmentController extends Controller
             "- This article used should be easy to understand, using simple vocabulary and grammar structures.\n" .
             "- Keep the article less than 400 characters in length.\n" .
             "Only return a JSON with 'title' and 'article'.\n" .
-            '{"title": "Your Article Title Here", "article": "Your article content goes here."}';
+            '{"title": "Your unique Article Title Here", "article": "Your article content goes here."}';
 
             \Log::info('prompt', ['prompt' => $prompt]);
 
