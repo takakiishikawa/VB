@@ -24,7 +24,9 @@ class WordController extends Controller
 
         $userWordList = UserWord::where('user_id', $userId)
             ->where('segment_id', $segmentId)
-
+            ->whereDoesntHave('userWordTest', function($query) {
+                $query->where('test_pass', 1);
+            })
             ->with([
                 'word' => function ($query) {
                     $query->select('id', 'name', 'jp');
