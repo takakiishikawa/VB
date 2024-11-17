@@ -149,6 +149,22 @@ class SegmentController extends Controller
                 continue;            
             }
 
+            \Log::info('記事生成成功');
+            \Log::info("現在のtry回数: $tryCount, 現在の記事数: $articleCount");
+            $articleCount++;
+            $tryCount++;
+        }
+
+        if ($articleCount >= 10) {
+            \Log::info("Successfully created 10 articles.");
+            //status更新
+            $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
+            ->where('segment_id', $segmentId)
+            ->first();
+
+            $userSegmentStatus->status = $userSegmentStatus->status+1;
+            $userSegmentStatus->save();
+
             //DB保存
             $UserArticle = UserArticle::create([
                 'user_id' => $userId,
@@ -169,21 +185,6 @@ class SegmentController extends Controller
                     'segment_id' => $segmentId
                 ]);
             }
-            \Log::info('記事生成成功');
-            \Log::info("現在のtry回数: $tryCount, 現在の記事数: $articleCount");
-            $articleCount++;
-            $tryCount++;
-        }
-
-        if ($articleCount >= 10) {
-            \Log::info("Successfully created 10 articles.");
-            //status更新
-            $userSegmentStatus = UserSegmentStatus::where('user_id', $userId)
-            ->where('segment_id', $segmentId)
-            ->first();
-
-            $userSegmentStatus->status = $userSegmentStatus->status+1;
-            $userSegmentStatus->save();
         } else {
             \Log::info("Exceeded maximum tries without creating 10 articles. Tries: $tryCount");
         }
