@@ -43,7 +43,9 @@ class Word extends Component {
 
     handleKeyDown = (event) => {
         const {wordList, wordCount} = this.props;
+        console.log(this.props, 'test1')
         const currentWord = wordList[wordCount];
+        console.log(currentWord, 'test2')
         const userArticleId = currentWord.userArticleId;
         //37: left, 38: up, 39: right, 40: down
         if (event.keyCode === 37) {
@@ -70,14 +72,17 @@ class Word extends Component {
     }
 
     confirmAnswer = (userArticleId) => {
+        console.log(1)
         const {wordList, wordCount} = this.props;
         const {answerWord} = this.state;
         const correctWord = wordList[wordCount].word;
+        console.log(2)
         if (answerWord == correctWord) {
             this.props.addAnswerList({
                 word: correctWord,
                 testPass: true
             });
+            console.log(3)
             this.nextWord();
         } else {
             this.props.addAnswerList({
@@ -89,6 +94,7 @@ class Word extends Component {
     }
 
     nextWord() {
+        console.log(4)
         this.props.incrementWordCount();
         this.setState({
             answerWord: null
@@ -110,13 +116,19 @@ class Word extends Component {
     }
 
     render() {
+        console.log(6)
         const {wordList, segmentId, majorSegmentId, wordCount} = this.props;
+        console.log(this.props, ' tet')
         const currentWord = wordList[wordCount];
+
+        console.log(7)
 
         if (!currentWord) {
             return;
         }
         
+        console.log(8)
+
         return (
             <div>
                 <div className="header">

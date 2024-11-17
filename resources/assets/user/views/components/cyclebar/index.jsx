@@ -13,7 +13,7 @@ class Cyclebar extends Component {
     }
 
     render() {
-        const cycleList = ['R1', 'R2', 'R3', 'W1', 'W2', 'W3'];
+        const cycleList = ['精読1', '精読2', '精読3', '単語1', '単語2', '単語3'];
         const currentCycle = this.props.segmentCycle.cycle;
 
         return (

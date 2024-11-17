@@ -33,13 +33,20 @@ class SegmentSidebar extends Component {
     }
 
     getSegmentRange = (segment_id, major_segment_id) => {
-        const thousand = major_segment_id * 1000;
-        const major_segment_id_minus_one = major_segment_id - 1;
-        const segmentNumber = segment_id - major_segment_id_minus_one * 10;
-        const end = thousand + segmentNumber * 100;
-        const start = end - 99;
-
-        return `${start} - ${end}`;
+        if (major_segment_id === 1) {
+            const end = segment_id * 100;
+            const start = end - 99;
+            return `${start} - ${end}`;
+        }
+        // major_segment_id が 2 以上の場合（1001-2000などの範囲）
+        else {
+            const baseStart = (major_segment_id - 1) * 1000 + 1;
+            const segmentNumber = segment_id - (major_segment_id - 1) * 10;
+            const start = baseStart + (segmentNumber - 1) * 100;
+            const end = start + 99;
+            return `${start} - ${end}`;
+        }
+    
     } 
 
     render() {
@@ -50,14 +57,14 @@ class SegmentSidebar extends Component {
             <div className="sidebar">
                 <div className="sidebar__container">
                     <Link to="/" className="sidebar__logo">
-                        VB
+                        ボキャビル
                     </Link>
                     <Link to="/" className="sidebar__back" style={{textDecoration: "none"}}>
                         <ArrowBackIcon className="sidebar__back-icon" />
-                        <span className="sidebar__back-text">Back To Home</span>
+                        <span className="sidebar__back-text">前のページへ戻る</span>
                     </Link>
                     <div className="sidebar__title">
-                        VB {majorSegment*1000}
+                        範囲：{majorSegment*1000-999} ~ {majorSegment*1000}
                     </div>
                     {segments.map((segment) => {
                         const status = userSegmentStatuses[segment.id];
@@ -70,7 +77,7 @@ class SegmentSidebar extends Component {
                                 onClick={!status ? this.preventLink : null}
                             >
                                 {this.iconCreate(status)}
-                                <span className="sidebar__item-text">{this.getSegmentRange(segment.id, majorSegment)}</span>
+                                <span className="sidebar__item-text">単語：{this.getSegmentRange(segment.id, majorSegment)}</span>
                             </Link>
                         )
                     })}

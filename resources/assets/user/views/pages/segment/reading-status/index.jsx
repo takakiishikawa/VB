@@ -11,9 +11,17 @@ class ReadingStatus extends Component {
     }
 
     vbCount = (majorSegmentId, segmentId, index) => {
-        const countEnd = majorSegmentId*1000 + (segmentId-1)*100 + (index+1) *10;
-        const countStart =countEnd -9;
-        return `${countStart} -${countEnd}`;
+        if (majorSegmentId == 1) {
+            const countEnd = segmentId * 100 - 90 + (index * 10);
+            const countStart = countEnd - 9;
+            return `${countStart} - ${countEnd}`;
+        }
+        // major_segment_id が 2 以上の場合（1001-2000などの範囲）
+        else {
+            const countEnd = majorSegmentId*1000 + (segmentId-1)*100 + (index+1)*10;
+            const countStart = countEnd - 9;
+            return `${countStart} - ${countEnd}`;
+        }
     }
 
     render() {
@@ -27,10 +35,10 @@ class ReadingStatus extends Component {
                     <table className="reading-table">
                         <thead>
                             <tr>
-                                <th className="vb">VB</th>
-                                <th className="title">Title</th>
-                                <th className="theme">Theme</th>
-                                <th className="status">Status</th>
+                                <th className="vb">単語</th>
+                                <th className="title">タイトル</th>
+                                <th className="theme">タグ</th>
+                                <th className="status">未読 / 既読</th>
                             </tr>
                         </thead>
                         <tbody>

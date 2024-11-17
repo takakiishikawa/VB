@@ -67,7 +67,7 @@ class MajorSegment extends Component {
                         <div className="major-segment__container">
                             <div className="major-segment__wrapper">
                                 <Tooltip />
-                                <div className="major-segment__wrapper__text">Active</div>
+                                <div className="major-segment__wrapper__text">学習中</div>
                                 <Link 
                                     to={`/segment/${activeMajorSegmentId}/1`} 
                                     className="major-segment__wrapper__item active"
@@ -92,11 +92,13 @@ class MajorSegment extends Component {
                                             /> : null }
                                     </div>
                                     <MenuBookIcon className="major-segment__wrapper__item-book-icon unlocked" style={{fontSize: 115}} />
-                                    <span className="major-segment__wrapper__item-level unlocked">Level {activeMajorSegmentId}</span>
+                                    <span className="major-segment__wrapper__item-level unlocked">
+                                        {`${(activeMajorSegmentId - 1) * 1000 + 1}~${activeMajorSegmentId * 1000}`}
+                                    </span>
                                 </Link>
                             </div>
                             <div className="major-segment__wrapper all">
-                                <div className="major-segment__wrapper__text">All</div>
+                                <div className="major-segment__wrapper__text">すべての単語</div>
                                 <div className="major-segment__wrapper__list">
                                     {majorSegments && majorSegments.map((majorSegment) => {
                                         const status = userMajorSegmentStatuses.find(item => item.major_segment_id === majorSegment.id)?.status ?? null;
@@ -122,7 +124,9 @@ class MajorSegment extends Component {
                                                         /> : null}
                                                 </div>
                                                 <MenuBookIcon className={`major-segment__wrapper__item-book-icon ${this.statusClass(status)}`}  style={{fontSize: 85}} />
-                                                <span className="major-segment__wrapper__item-level all">Level {majorSegment.id}</span>
+                                                <span className="major-segment__wrapper__item-level all">
+                                                    {`${(majorSegment.id - 1) * 1000 + 1}~${majorSegment.id * 1000}`}
+                                                </span>
                                             </Link>
                                         )
                                     })}

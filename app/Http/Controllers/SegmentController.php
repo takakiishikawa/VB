@@ -88,13 +88,13 @@ class SegmentController extends Controller
             $promptWordList = implode(', ', $wordList);
 
             //prompt生成
-            $prompt = "Create a simple English article with the following details:\n" .
+            $prompt = "Create a very brief English text:\n" .
             "- Topic: {$articleTheme->name}\n" .
-            "- Use at least 10 words from this list: {$promptWordList}\n" .
-            "- This article used should be easy to understand, using simple vocabulary and grammar structures.\n" .
-            "- Keep the article less than 400 characters in length.\n" .
-            "Only return a JSON with 'title' and 'article'.\n" .
-            '{"title": "Your unique Article Title Here", "article": "Your article content goes here."}';
+            "- Naturally use 10+ words from:: {$promptWordList}\n" .
+            "- Keep the grammar simple and clear.\n" .
+            "- Maximum 150 words\n" . 
+            "Only return a JSON with 'title' and 'content'.\n" .
+            '{"title": "Title", "text": "Content"}';
 
             \Log::info('prompt', ['prompt' => $prompt]);
 
@@ -125,7 +125,7 @@ class SegmentController extends Controller
                 continue;
             }
             $titleData = $content['title'];
-            $articleData = $content['article'];
+            $articleData = $content['text'];
             \Log::info('titleData', ['titleData' => $titleData]);
             \Log::info('articleData', ['articleData' => $articleData]);
 

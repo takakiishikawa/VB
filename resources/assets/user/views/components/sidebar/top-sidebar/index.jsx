@@ -17,21 +17,21 @@ class TopSidebar extends Component {
             <div className="sidebar">
                 <div className="sidebar__container">
                     <Link to="/" className="sidebar__logo">
-                        VB
+                        ボキャビル
                     </Link>
                     <nav className="sidebar__nav">
                         <Link to="/" className={`sidebar__nav__item ${pathName === "/" ? "active" : ""} `}>
                             <span className="sidebar__nav__item-icon"><HomeIcon /></span>
-                            <span className="sidebar__nav__item-text">Home</span>
+                            <span className="sidebar__nav__item-text">トップ</span>
                         </Link>
 
                         <Link to="/theme" className={`sidebar__nav__item ${pathName === "/theme" ? "active" : ""}`}>
                             <span className="sidebar__nav__item-icon"><FormatListBulletedIcon /></span>
-                            <span className="sidebar__nav__item-text">Theme</span>
+                            <span className="sidebar__nav__item-text">記事生成タグ</span>
                         </Link>
                         <Link to="/analytics" className={`sidebar__nav__item ${pathName === "/analytics" ? "active" : ""} `}>
                             <span className="sidebar__nav__item-icon"><QueryStatsIcon /></span>
-                            <span className="sidebar__nav__item-text">Analytics</span>
+                            <span className="sidebar__nav__item-text">ダッシュボード</span>
                         </Link>
                     </nav>
                 </div>

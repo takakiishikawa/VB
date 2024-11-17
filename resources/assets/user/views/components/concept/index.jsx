@@ -9,7 +9,7 @@ class Concept extends Component {
                 <TopSidebar />
                 <div className="main-container">
                     <UserMenu />
-                    <h1>Concept</h1>
+                    <h1>コンセプト</h1>
                 </div>
             </div>
         );
