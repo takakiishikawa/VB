@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -17,19 +18,77 @@ class Article extends Component {
         };
     }
 
+
     componentDidMount = () => {
         document.addEventListener('keydown', this.handleKeyDown);
     }
 
-    componentDidUpdate = () => {
+    componentDidUpdate = (prevProps, prevState) => {
+        if (
+            (prevProps.articleList !== this.props.articleList && this.props.articleList.length > 0) ||
+            prevState.articleCount !== this.state.articleCount
+        ) {
+            const articleInfo = this.props.articleList[this.state.articleCount];
+            const fullText = `${articleInfo.title}. ${articleInfo.article}`;
+            this.playText(fullText);
+        }
+
         if (this.state.articleCount === this.props.articleList.length) {
             this.props.updateReadingStatus(this.props.segmentId);
             this.props.history.push(`/segment/${this.props.majorSegmentId}/${this.props.segmentId}`);
+    
         }
     }
 
     componentWillUnmount = () => {
         document.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    //text to speech
+    playText = async (fullText) => {
+        const TTS_API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY || process.env.REACT_APP_GOOGLE_TTS_API_KEY;
+
+        try {
+            const response = await axios.post(
+                'https://texttospeech.googleapis.com/v1/text:synthesize',
+                {
+                    input: {
+                        text: fullText
+                    },
+                    voice: {
+                        languageCode: 'en-US',
+                        ssmlGender: 'MALE',        // 男性の声の方が一般的に聞き取りやすい
+                        name: 'en-US-Neural2-D'
+                    },
+                    audioConfig: {
+                        audioEncoding: 'MP3',
+                        pitch: 0,
+                        speakingRate: 1,
+                        volumeGainDb: 1,
+                        effectsProfileId: [
+                            'headphone-class-device' // ヘッドホン用に最適化
+                        ]
+                    }
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    params: {
+                        key: TTS_API_KEY
+                    }
+                }
+            );
+            
+            const audio = new Audio(`data:audio/mp3;base64,${response.data.audioContent}`);
+            //Chromeの自動再生の取り決め回避
+            audio.muted = true; // 最初はミュート
+            await audio.play();
+            audio.muted = false; // 再生開始後にミュート解除
+
+        } catch (error) {
+            console.error('Failed to play audio:', error.response?.data || error);
+        }
     }
 
     handleKeyDown = (event) => {

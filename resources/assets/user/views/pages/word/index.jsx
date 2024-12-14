@@ -35,17 +35,67 @@ class Word extends Component {
             this.props.resetWordCount();
             this.props.history.push(`/segment/${this.props.majorSegmentId}/${segmentId}`);
         }
+        
+        // 単語が変わったときに音声再生
+        if (prevProps.wordCount !== this.props.wordCount && this.props.wordList[this.props.wordCount]) {
+            this.playText(this.props.wordList[this.props.wordCount].word);
+        }     
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyDown);
     }
 
+    //text to speech
+    playText = async (fullText) => {
+        const TTS_API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY || process.env.REACT_APP_GOOGLE_TTS_API_KEY;
+
+        try {
+            const response = await axios.post(
+                'https://texttospeech.googleapis.com/v1/text:synthesize',
+                {
+                    input: {
+                        text: fullText
+                    },
+                    voice: {
+                        languageCode: 'en-US',
+                        ssmlGender: 'FEMALE',        // 男性の声の方が一般的に聞き取りやすい
+                        name: 'en-US-Neural2-H'
+                    },
+                    audioConfig: {
+                        audioEncoding: 'MP3',
+                        pitch: 0,
+                        speakingRate: 1,
+                        volumeGainDb: 1,
+                        effectsProfileId: [
+                            'headphone-class-device' // ヘッドホン用に最適化
+                        ]
+                    }
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    params: {
+                        key: TTS_API_KEY
+                    }
+                }
+            );
+            
+            const audio = new Audio(`data:audio/mp3;base64,${response.data.audioContent}`);
+            //Chromeの自動再生の取り決め回避
+            audio.muted = true; // 最初はミュート
+            await audio.play();
+            audio.muted = false; // 再生開始後にミュート解除
+
+        } catch (error) {
+            console.error('Failed to play audio:', error.response?.data || error);
+        }
+    }
+
     handleKeyDown = (event) => {
         const {wordList, wordCount} = this.props;
-        console.log(this.props, 'test1')
         const currentWord = wordList[wordCount];
-        console.log(currentWord, 'test2')
         const userArticleId = currentWord.userArticleId;
         //37: left, 38: up, 39: right, 40: down
         if (event.keyCode === 37) {

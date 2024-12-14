@@ -43,6 +43,8 @@ Route::prefix('/api')->group(function () {
     });
 });
 
+Route::post('/text-to-speech', [TextToSpeechController::class, 'convert']);
+
 //apiを通すために、最後の記述する
 Route::get('/{reactRoutes?}', function () {
     return view('top');

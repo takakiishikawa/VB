@@ -45,6 +45,7 @@ class WordController extends Controller
                 })
                 ->where('id', '!=', $word->id)
                 ->select('id', 'jp', 'name')
+                ->inRandomOrder()  // ←この1行を追加
                 ->take(2)
                 ->get();
     
@@ -52,6 +53,7 @@ class WordController extends Controller
             } else {
                 $similarWordList = Word::where('id', '!=', $word->id)
                     ->select('id', 'jp', 'name')
+                    ->inRandomOrder()  // ←この1行を追加
                     ->take(2)
                     ->get();
                 
