@@ -63,7 +63,7 @@ class UserMenu extends Component {
                     {isOpen && (
                         <div className="user-menu__popup">
                             <Link to="/concept" className="user-menu__popup-item">コンセプト</Link>
-                            <Link to="/profile" className="user-menu__popup-item">プロフィール</Link>
+                            <Link to="/profile" className="user-menu__popup-item">プロフィル</Link>
                             <div className="user-menu__popup-item user-menu__popup-item-logout" onClick={this.logout}>ログアウト</div>
                         </div>
                     )}
